@@ -1,28 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cut.c                                           :+:      :+:    :+:   */
+/*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/30 11:21:12 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/30 12:03:43 by ahallain         ###   ########.fr       */
+/*   Created: 2021/01/30 15:46:10 by ahallain          #+#    #+#             */
+/*   Updated: 2021/01/30 17:17:03 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "lib.h"
+#include <stddef.h>
+#include <dirent.h>
+#include <unistd.h>
+#include "utils/lib.h"
+#include "utils/env.h"
 
-char	**ft_cut(char *str, char c)
+int	execute(char **args, char **env)
 {
-	size_t	name_len;
-	char	**ret;
+	char			**folders;
+	size_t			index;
+	int				ret;
+	DIR				*dirp;
+	struct dirent	*dp;
 
-	name_len = ft_strlen(str, c);
-	if (!(ret = malloc(sizeof(char **) * 3)))
-		return (0);
-	ret[0] = ft_strndup(str, name_len);
-	ret[1] = ft_strndup(str + name_len + 1, 0);
-	ret[2] = 0;
+	(void)args;
+	folders = ft_split(env_get(env, "PATH"), ':');
+	ret = 256;
+	index = 0;
+	while (folders[index])
+	{
+		dirp = opendir(folders[index++]);
+		dp = readdir(dirp);
+		closedir(dirp);
+	}
 	return (ret);
 }

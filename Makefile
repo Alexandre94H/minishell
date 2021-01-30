@@ -1,14 +1,14 @@
-SOURCES				=	get_next_line/get_next_line_utils.c \
-						get_next_line/get_next_line.c \
+SOURCES				=	utils/get_next_line_utils.c \
+						utils/get_next_line.c \
 						utils/ft_put.c \
 						utils/ft_split.c \
-						utils/ft_strncmp.c \
 						utils/ft_strndup.c \
 						utils/ft_atoi.c \
-						utils/ft_cut.c \
 						utils/ft_equals.c \
 						utils/env.c \
 						functions/exit.c \
+						call_function.c \
+						execute.c \
 						dispatch.c \
 						prompt.c \
 						main.c

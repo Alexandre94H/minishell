@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 12:32:21 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/30 12:34:51 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/01/30 17:17:30 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 bool	ft_equals(char *str1, char *str2)
 {
-	while (*str1 && *str1++ == *str2++)
-		;
+	while (*str1 && *str1 == *str2)
+	{
+		str1++;
+		str2++;
+	}
 	return (*str1 == *str2);
 }

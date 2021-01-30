@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/11 16:30:03 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/30 10:56:44 by ahallain         ###   ########.fr       */
+/*   Created: 2019/11/12 20:13:18 by ahallain          #+#    #+#             */
+/*   Updated: 2021/01/30 09:52:34 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-int		ft_strncmp(const char *s1, const char *s2, size_t n)
-{
-	unsigned char	*us1;
-	unsigned char	*us2;
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 32
+# endif
 
-	us1 = (unsigned char*)s1;
-	us2 = (unsigned char*)s2;
-	while ((*us1 || *us2) && n--)
-		if (*us1++ != *us2++)
-			return (*--us1 - *--us2);
-	return (0);
-}
+# include <stddef.h>
+
+int		ft_strcchr(char *src, int c);
+size_t	ft_strlen(char *src, int c);
+char	*ft_stradd(char **dst, char *str);
+char	*ft_firstchr(char *src, int c);
+char	*ft_chrmove(char **dst, int c);
+int		get_next_line(int fd, char **line);
+
+#endif

@@ -6,14 +6,14 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:07:43 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/30 12:06:00 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/01/30 17:11:27 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "utils/lib.h"
 #include "utils/env.h"
-#include "get_next_line/get_next_line.h"
+#include "utils/get_next_line.h"
 #include "default.h"
 
 int	prompt(char **env)
@@ -24,8 +24,11 @@ int	prompt(char **env)
 	ret = -1;
 	while (ret == -1)
 	{
+		ft_putstr("\e[33m");
+		ft_putstr(env_get(env, "LOGNAME"));
+		ft_putstr("\e[0m in \e[35m");
 		ft_putstr(env_get(env, "PWD"));
-		ft_putstr("$ ");
+		ft_putstr("\e[0m\n$ ");
 		get_next_line(2, &line);
 		ret = dispatch(line, env);
 		free(line);

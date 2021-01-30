@@ -1,39 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dispatch.c                                         :+:      :+:    :+:   */
+/*   call_function.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/30 10:18:13 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/30 16:30:45 by ahallain         ###   ########.fr       */
+/*   Created: 2021/01/30 16:01:30 by ahallain          #+#    #+#             */
+/*   Updated: 2021/01/30 17:17:49 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "default.h"
 #include "utils/lib.h"
+#include "functions/functions.h"
 
-int	dispatch(char *content, char **env)
+int	call_function(char **args, char **env)
 {
 	int			ret;
-	char		**args;
 	static int	last_output;
 
-	args = ft_split(content, ' ');
-	ret = call_function(args, env);
-	if (ret > 255)
-		ret = execute(args, env);
-	free(args);
-	if (ret > 255)
-	{
-		ft_putstr("command not found: ");
-		ft_putstr(args[0]);
-		ft_putchar('\n');
-	}
-	else if (ret < 0)
-		return (-1 * (ret + 1));
-	else
-		last_output = ret;
-	return (-1);
+	(void)env;
+	ret = 256;
+	if (ft_equals(*args, "exit"))
+		ret = f_exit(args, last_output);
+	return (ret);
 }
