@@ -1,21 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   lib.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/30 09:42:00 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/30 10:12:36 by ahallain         ###   ########.fr       */
+/*   Created: 2021/01/30 10:03:54 by ahallain          #+#    #+#             */
+/*   Updated: 2021/01/30 10:05:20 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "default.h"
+#ifndef LIB_H
+# define LIB_H
 
-int		main(int argc, char **argv, char** env)
-{
-	(void)argc;
-	(void)argv;
-	prompt(env);
-	return (0);
-}
+void ft_putchar(char c);
+void ft_putstr(char *str);
+#endif

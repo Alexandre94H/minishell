@@ -1,21 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   default.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/30 09:42:00 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/30 10:12:36 by ahallain         ###   ########.fr       */
+/*   Created: 2021/01/30 10:10:31 by ahallain          #+#    #+#             */
+/*   Updated: 2021/01/30 10:11:06 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "default.h"
+#ifndef DEFAULT_H
+# define DEFAULT_H
 
-int		main(int argc, char **argv, char** env)
-{
-	(void)argc;
-	(void)argv;
-	prompt(env);
-	return (0);
-}
+void	prompt(char **env);
+#endif

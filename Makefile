@@ -1,5 +1,7 @@
 SOURCES				=	get_next_line/get_next_line_utils.c \
 						get_next_line/get_next_line.c \
+						utils/lib.c \
+						prompt.c \
 						main.c
 
 OBJECTS				=	${SOURCES:.c=.o}

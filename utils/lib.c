@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   lib.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/30 09:42:00 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/30 10:12:36 by ahallain         ###   ########.fr       */
+/*   Created: 2021/01/30 10:04:01 by ahallain          #+#    #+#             */
+/*   Updated: 2021/01/30 10:04:01 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "default.h"
+#include <unistd.h>
 
-int		main(int argc, char **argv, char** env)
+void	ft_putchar(char c)
 {
-	(void)argc;
-	(void)argv;
-	prompt(env);
-	return (0);
+	write(1, &c, 1);
+}
+
+void	ft_putstr(char *str)
+{
+	while (*str)
+		ft_putchar(*str++);
 }
