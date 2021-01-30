@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lib.h                                              :+:      :+:    :+:   */
+/*   dispatch.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/30 10:03:54 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/30 10:39:20 by ahallain         ###   ########.fr       */
+/*   Created: 2021/01/30 10:18:13 by ahallain          #+#    #+#             */
+/*   Updated: 2021/01/30 10:40:54 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIB_H
-# define LIB_H
+#include "utils/lib.h"
+#include "functions/functions.h"
 
-#include <stddef.h>
+int	dispatch(char *content, char **env)
+{
+	int		ret;
+	char	**args;
 
-void	ft_putchar(char c);
-void	ft_putstr(char *str);
-void	ft_putnbr(int n);
-char	**ft_split(char const *s, char c);
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
-#endif
+	(void)env;
+	ret = -1;
+	args = ft_split(content, ' ');
+	if (!*args)
+		return (ret);
+	if (!ft_strncmp(*args, "exit", 256))
+		return (f_exit());
+	return (ret);
+}

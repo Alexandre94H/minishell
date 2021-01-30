@@ -1,23 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lib.h                                              :+:      :+:    :+:   */
+/*   ft_put.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/30 10:03:54 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/30 10:39:20 by ahallain         ###   ########.fr       */
+/*   Created: 2021/01/30 10:04:01 by ahallain          #+#    #+#             */
+/*   Updated: 2021/01/30 10:39:53 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIB_H
-# define LIB_H
+#include <unistd.h>
 
-#include <stddef.h>
+void	ft_putchar(char c)
+{
+	write(1, &c, 1);
+}
 
-void	ft_putchar(char c);
-void	ft_putstr(char *str);
-void	ft_putnbr(int n);
-char	**ft_split(char const *s, char c);
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
-#endif
+void	ft_putstr(char *str)
+{
+	while (*str)
+		ft_putchar(*str++);
+}
+
+void	ft_putnbr(int n)
+{
+	if (n < 0)
+	{
+		ft_putchar('-');
+		if (n == -2147483648)
+		{
+			ft_putchar('2');
+			n = -147483648;
+		}
+		n *= -1;
+	}
+	if (n > 9)
+		ft_putnbr(n / 10);
+	ft_putchar(n % 10 + '0');
+}

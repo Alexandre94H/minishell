@@ -1,6 +1,10 @@
 SOURCES				=	get_next_line/get_next_line_utils.c \
 						get_next_line/get_next_line.c \
-						utils/lib.c \
+						utils/ft_put.c \
+						utils/ft_split.c \
+						utils/ft_strncmp.c \
+						functions/exit.c \
+						dispatch.c \
 						prompt.c \
 						main.c
 
