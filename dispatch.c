@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:18:13 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/30 18:48:14 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/01/30 22:56:30 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	dispatch(char *content, char **env)
 	static int	last_output;
 
 	args = ft_split(content, ' ');
-	ret = call_function(args, env);
+	ret = call_function(args, env, last_output);
 	if (ret > 255)
 		ret = execute(args, env);
 	free(args);
@@ -31,6 +31,5 @@ int	dispatch(char *content, char **env)
 		return (-1 * (ret + 1));
 	else
 		last_output = ret;
-	(void)last_output;
 	return (-1);
 }

@@ -6,21 +6,24 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 16:01:30 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/30 17:17:49 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/01/30 23:00:04 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils/lib.h"
 #include "functions/functions.h"
 
-int	call_function(char **args, char **env)
+int	call_function(char **args, char **env, int last_output)
 {
 	int			ret;
-	static int	last_output;
 
 	(void)env;
 	ret = 256;
-	if (ft_equals(*args, "exit"))
+	if (ft_equals(*args, "echo"))
+		ret = f_echo(args);
+	else if (ft_equals(*args, "exit"))
 		ret = f_exit(args, last_output);
+	else
+		ft_putstr("not minishell function\n");
 	return (ret);
 }
