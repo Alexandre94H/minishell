@@ -6,7 +6,12 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:03:52 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/30 10:03:53 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/01/30 11:17:39 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef ENV_H
+# define ENV_H
+
+char	*env_get(char **env, char *name);
+#endif

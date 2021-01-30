@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   ft_cut.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/30 10:03:49 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/30 12:07:55 by ahallain         ###   ########.fr       */
+/*   Created: 2021/01/30 11:21:12 by ahallain          #+#    #+#             */
+/*   Updated: 2021/01/30 12:03:43 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "lib.h"
 
-char	*env_get(char **env, char *name)
+char	**ft_cut(char *str, char c)
 {
-	char	**cut;
-	char	*ret;
+	size_t	name_len;
+	char	**ret;
 
-	(void)name;
-	while (*env)
-	{
-		cut = ft_cut(*env++, '=');
-		if (cut[0] == name)
-			break;
-	}
-	free(cut[0]);
-	ret = cut[1];
+	name_len = ft_strlen(str, c);
+	if (!(ret = malloc(sizeof(char **) * 3)))
+		return (0);
+	ret[0] = ft_strndup(str, name_len);
+	ret[1] = ft_strndup(str + name_len + 1, 0);
+	ret[2] = 0;
 	return (ret);
 }
