@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:18:13 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/30 16:30:45 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/01/30 18:48:14 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,11 @@ int	dispatch(char *content, char **env)
 		ret = execute(args, env);
 	free(args);
 	if (ret > 255)
-	{
-		ft_putstr("command not found: ");
-		ft_putstr(args[0]);
-		ft_putchar('\n');
-	}
+		ft_putstr("command not found\n");
 	else if (ret < 0)
 		return (-1 * (ret + 1));
 	else
 		last_output = ret;
+	(void)last_output;
 	return (-1);
 }

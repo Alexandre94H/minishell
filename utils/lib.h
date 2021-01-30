@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:03:54 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/30 12:35:11 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/01/30 18:59:05 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,5 @@ char	*ft_strndup(const char *s1, size_t len);
 char	**ft_cut(char *str, char c);
 size_t	ft_strlen(char *src, int c);
 bool	ft_equals(char *str1, char *str2);
+char	*ft_stradd(char **dst, char *str);
 #endif
