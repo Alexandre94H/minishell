@@ -6,13 +6,13 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:12:00 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/30 10:27:04 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/01/30 11:02:45 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
-static size_t	ft_count(char const *s, char c)
+size_t	ft_count(char const *s, char c)
 {
 	size_t	index;
 	size_t	len;
@@ -40,7 +40,7 @@ static size_t	ft_count(char const *s, char c)
 	return (count);
 }
 
-static char		*ft_write(char const *s, size_t index, size_t len)
+char	*ft_write(char const *s, size_t index, size_t len)
 {
 	char	*str;
 	size_t	index1;
@@ -54,7 +54,7 @@ static char		*ft_write(char const *s, size_t index, size_t len)
 	return (str);
 }
 
-static char		**ft_set(char const *s, char c, char **tab)
+char	**ft_set(char const *s, char c, char **tab)
 {
 	size_t	index;
 	size_t	index1;
@@ -83,7 +83,7 @@ static char		**ft_set(char const *s, char c, char **tab)
 	return (tab);
 }
 
-char			**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	char	**tab;
 

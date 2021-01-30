@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:18:13 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/30 10:40:54 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/01/30 11:07:44 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 
 int	dispatch(char *content, char **env)
 {
-	int		ret;
-	char	**args;
+	int			ret;
+	char		**args;
+	static int	last_output;
 
 	(void)env;
 	ret = -1;
@@ -24,6 +25,6 @@ int	dispatch(char *content, char **env)
 	if (!*args)
 		return (ret);
 	if (!ft_strncmp(*args, "exit", 256))
-		return (f_exit());
+		return (f_exit(args, last_output));
 	return (ret);
 }

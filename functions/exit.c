@@ -6,11 +6,15 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:21:09 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/30 10:31:44 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/01/30 11:08:23 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	f_exit()
+#include "../utils/lib.h"
+
+int	f_exit(char **args, int last_output)
 {
-	return (0);
+	if (args[1])
+		return (ft_atoi(args[1]));
+	return (last_output);
 }

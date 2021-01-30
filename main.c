@@ -6,13 +6,13 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 09:42:00 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/30 10:24:58 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/01/30 10:56:08 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "default.h"
 
-int		main(int argc, char **argv, char** env)
+int		main(int argc, char **argv, char **env)
 {
 	(void)argc;
 	(void)argv;

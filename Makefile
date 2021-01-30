@@ -3,6 +3,7 @@ SOURCES				=	get_next_line/get_next_line_utils.c \
 						utils/ft_put.c \
 						utils/ft_split.c \
 						utils/ft_strncmp.c \
+						utils/ft_atoi.c \
 						functions/exit.c \
 						dispatch.c \
 						prompt.c \
