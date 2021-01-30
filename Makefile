@@ -6,6 +6,7 @@ SOURCES				=	get_next_line/get_next_line_utils.c \
 						utils/ft_strndup.c \
 						utils/ft_atoi.c \
 						utils/ft_cut.c \
+						utils/ft_equals.c \
 						utils/env.c \
 						functions/exit.c \
 						dispatch.c \

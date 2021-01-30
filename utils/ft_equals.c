@@ -1,32 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   ft_equals.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/30 10:03:49 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/30 12:35:36 by ahallain         ###   ########.fr       */
+/*   Created: 2021/01/30 12:32:21 by ahallain          #+#    #+#             */
+/*   Updated: 2021/01/30 12:34:51 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "lib.h"
+#include <stdbool.h>
 
-char	*env_get(char **env, char *name)
+bool	ft_equals(char *str1, char *str2)
 {
-	char	**cut;
-	char	*ret;
-
-	while (*env)
-	{
-		cut = ft_cut(*env++, '=');
-		if (ft_equals(cut[0], name))
-		{
-			free(cut[0]);
-			ret = cut[1];
-			return (ret);
-		}
-	}
-	return ("");
+	while (*str1 && *str1++ == *str2++)
+		;
+	return (*str1 == *str2);
 }
