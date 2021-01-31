@@ -1,22 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   functions.h                                        :+:      :+:    :+:   */
+/*   f_env.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/30 10:17:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/31 12:00:17 by ahallain         ###   ########.fr       */
+/*   Created: 2021/01/31 11:59:05 by ahallain          #+#    #+#             */
+/*   Updated: 2021/01/31 12:00:13 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FUNCTIONS_H
-# define FUNCTIONS_H
+#include "../utils/lib.h"
+#include "../utils/env.h"
 
-int	f_echo(char **args);
-int	f_cd(char **args, char **env);
-int	f_pwd(char **env);
-int	f_export(char **args, char **env);
-int	f_env(char **env);
-int	f_exit(char **args, int last_output);
-#endif
+int	f_env(char **env)
+{
+	while (*env)
+	{
+		ft_putstr(*env++);
+		ft_putchar('\n');
+	}
+	return (0);
+}
