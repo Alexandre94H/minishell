@@ -11,6 +11,7 @@ SOURCES				=	utils/get_next_line_utils.c \
 						functions/f_cd.c \
 						functions/f_pwd.c \
 						functions/f_export.c \
+						functions/f_unset.c \
 						functions/f_env.c \
 						functions/f_exit.c \
 						call_function.c \

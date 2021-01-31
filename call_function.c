@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 16:01:30 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/31 12:00:39 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/01/31 12:13:33 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	call_function(char **args, char **env, int last_output)
 		ret = f_pwd(env);
 	else if (ft_equals(*args, "export"))
 		ret = f_export(args, env);
+	else if (ft_equals(*args, "unset"))
+		ret = f_unset(args, env);
 	else if (ft_equals(*args, "env"))
 		ret = f_env(env);
 	else if (ft_equals(*args, "exit"))

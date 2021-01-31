@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:03:49 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/31 11:48:05 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/01/31 12:33:04 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ char	*env_set(char **env, char *key, char *value)
 	size_t	index;
 	char	*name;
 	bool	equal;
-	size_t	length;
-	char	**new_env;
 
 	index = 0;
 	while (env[index])
@@ -50,17 +48,7 @@ char	*env_set(char **env, char *key, char *value)
 			break;
 		index++;
 	}
-	if (!env[index])
-	{
-		length = index;
-		if (!(new_env = malloc(sizeof(char **) * (length + 2))))
-			return (0);
-		env[length + 1] = 0;
-		index = -1;
-		while (++index < length)
-			new_env[index] = env[index];
-	}
-	else
+	if (env[index])
 		free(env[index]);
 	if (!(env[index] = malloc(sizeof(char *))))
 		return (0);
@@ -69,4 +57,36 @@ char	*env_set(char **env, char *key, char *value)
 	ft_stradd(&env[index], "=");
 	ft_stradd(&env[index], value);
 	return (env[index]);
+}
+
+size_t	env_rm(char **env, char *key)
+{
+	size_t	index;
+	size_t	length;
+	size_t	total_length;
+	char	*name;
+
+	index = 0;
+	length = 0;
+	while (env[index])
+	{
+		name = ft_strndup(env[index], ft_strlen(env[index], '='));
+		if (ft_equals(name, key))
+			env[index - length] = env[index];
+		else
+		{
+			free(env[index]);
+			length++;
+		}
+		free(name);
+		index++;
+	}
+	total_length = index;
+	index = length;
+	while (index < total_length)
+	{
+		env[index] = 0;
+		index++;
+	}
+	return (length);
 }

@@ -1,19 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.h                                              :+:      :+:    :+:   */
+/*   f_unset.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/30 10:03:52 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/31 12:15:21 by ahallain         ###   ########.fr       */
+/*   Created: 2021/01/31 12:02:59 by ahallain          #+#    #+#             */
+/*   Updated: 2021/01/31 12:09:57 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENV_H
-# define ENV_H
+#include "../utils/lib.h"
+#include "../utils/env.h"
 
-char	*env_get(char **env, char *name);
-char	*env_set(char **env, char *key, char *value);
-size_t	env_rm(char **env, char *key);
-#endif
+int	f_unset(char **args, char **env)
+{
+	if (!args[1])
+	{
+		ft_putstr("need something to unset\n");
+		return (1);
+	}
+	env_rm(env, args[1]);
+	return (0);
+}
