@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:03:49 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/31 11:19:39 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/01/31 11:48:05 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@
 
 char	*env_get(char **env, char *key)
 {
-	char	*temp;
+	char	*name;
 	bool	equal;
 
 	while (*env)
 	{
-		temp = ft_strndup(*env, ft_strlen(*env, '='));
-		equal = ft_equals(temp, key);
-		free(temp);
+		name = ft_strndup(*env, ft_strlen(*env, '='));
+		equal = ft_equals(name, key);
+		free(name);
 		if (equal)
 			return (*env + ft_strlen(*env, '=') + 1);
 		env++;
