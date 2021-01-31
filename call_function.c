@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 16:01:30 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/31 10:31:57 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/01/31 11:37:05 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,7 @@ int	call_function(char **args, char **env, int last_output)
 		ret = f_exit(args, last_output);
 	else if (ft_equals(*args, "cd"))
 		ret = f_cd(args, env);
+	else if (ft_equals(*args, "pwd"))
+		ret = f_pwd(env);
 	return (ret);
 }

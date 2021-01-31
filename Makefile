@@ -9,6 +9,7 @@ SOURCES				=	utils/get_next_line_utils.c \
 						utils/env.c \
 						functions/f_echo.c \
 						functions/f_cd.c \
+						functions/f_pwd.c \
 						functions/f_exit.c \
 						call_function.c \
 						execute.c \

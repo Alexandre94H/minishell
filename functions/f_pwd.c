@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   functions.h                                        :+:      :+:    :+:   */
+/*   f_pwd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/30 10:17:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/31 11:36:54 by ahallain         ###   ########.fr       */
+/*   Created: 2021/01/31 11:35:39 by ahallain          #+#    #+#             */
+/*   Updated: 2021/01/31 11:36:50 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FUNCTIONS_H
-# define FUNCTIONS_H
+#include "../utils/lib.h"
+#include "../utils/env.h"
 
-int	f_exit(char **args, int last_output);
-int	f_echo(char **args);
-int	f_cd(char **args, char **env);
-int	f_pwd(char **env);
-#endif
+int	f_pwd(char **env)
+{
+	ft_putstr(env_get(env, "PWD"));
+	ft_putchar('\n');
+	return (0);
+}
