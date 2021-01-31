@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 16:01:30 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/30 23:00:04 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/01/31 10:19:58 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,5 @@ int	call_function(char **args, char **env, int last_output)
 		ret = f_echo(args);
 	else if (ft_equals(*args, "exit"))
 		ret = f_exit(args, last_output);
-	else
-		ft_putstr("not minishell function\n");
 	return (ret);
 }
