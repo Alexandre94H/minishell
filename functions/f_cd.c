@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 10:23:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/31 14:23:58 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/01/31 20:13:35 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,10 @@ int		init_path(char *arg, char *current, char **new)
 int		f_cd(char **args, char **env)
 {
 	char	*new;
+	char	*arg;
 
-	if (!args[1])
+	arg = args[1];
+	if (!arg)
 	{
 		ft_putstr("need a path\n");
 		return (1);
@@ -76,14 +78,14 @@ int		f_cd(char **args, char **env)
 	if (!(new = malloc(sizeof(char *))))
 		return (-1);
 	*new = 0;
-	args[1] += init_path(args[1], env_get(env, "PWD"), &new);
-	if (*args[1] == '/')
-		args[1]++;
-	if (*args[1])
+	arg += init_path(arg, env_get(env, "PWD"), &new);
+	if (*arg == '/')
+		arg++;
+	if (*arg)
 	{
 		if (new[ft_strlen(new, 0) - 1] != '/')
 			ft_stradd(&new, "/");
-		ft_stradd(&new, args[1]);
+		ft_stradd(&new, arg);
 	}
 	chdir(new);
 	env_set(env, "PWD", new);
