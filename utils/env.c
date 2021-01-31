@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:03:49 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/31 12:33:04 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/01/31 13:50:27 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,17 +72,17 @@ size_t	env_rm(char **env, char *key)
 	{
 		name = ft_strndup(env[index], ft_strlen(env[index], '='));
 		if (ft_equals(name, key))
-			env[index - length] = env[index];
-		else
 		{
 			free(env[index]);
 			length++;
 		}
+		else
+			env[index - length] = env[index];
 		free(name);
 		index++;
 	}
 	total_length = index;
-	index = length;
+	index = total_length - length;
 	while (index < total_length)
 	{
 		env[index] = 0;
