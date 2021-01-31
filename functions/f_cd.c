@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 10:23:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/31 11:33:46 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/01/31 14:23:58 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,59 @@
 #include "../utils/env.h"
 #include "../utils/lib.h"
 
-int	f_cd(char **args, char **env)
+char	*get_parent(char *path)
 {
-	char	*current;
-	char	*new;
-	char	**split;
 	size_t	index;
 	size_t	length;
-	
-	current = env_get(env, "PWD");
+	char	*parent;
+	char	**split;
+
+	split = ft_split(path, '/');
+	length = 0;
+	while (split[length])
+		length++;
+	if (!(parent = malloc(sizeof(char *))))
+		return (0);
+	*parent = 0;
+	index = 0;
+	while (index < length - 1)
+	{
+		ft_stradd(&parent, "/");
+		ft_stradd(&parent, split[index]);
+		free(split[index]);
+		index++;
+	}
+	free(split[index + 1]);
+	free(split);
+	return (parent);
+}
+
+int		init_path(char *arg, char *current, char **new)
+{
+	char	*temp;
+	int		ret;
+
+	if (*arg == '/')
+		return (0);
+	if (ft_equals(arg, "..") || !ft_stristr(arg, "../"))
+	{
+		temp = get_parent(current);
+		ft_stradd(new, temp);
+		free(temp);
+		return (2);
+	}
+	if (ft_equals(arg, ".") || !ft_stristr(arg, "./"))
+		ret = 1;
+	else
+		ret = 0;
+	ft_stradd(new, current);
+	return (ret);
+}
+
+int		f_cd(char **args, char **env)
+{
+	char	*new;
+
 	if (!args[1])
 	{
 		ft_putstr("need a path\n");
@@ -32,38 +76,13 @@ int	f_cd(char **args, char **env)
 	if (!(new = malloc(sizeof(char *))))
 		return (-1);
 	*new = 0;
-	if (*args[1] == '/')
-		ft_stradd(&new, args[1]);
-	if (ft_equals(args[1], "..") || !ft_stristr(args[1], "../"))
-	{
-		split = ft_split(current, '/');
-		length = 0;
-		while (split[length])
-			length++;
-		index = 0;
-		while (index < length - 1)
-		{
-			if (index)
-				ft_stradd(&new, "/");
-			ft_stradd(&new, split[index]);
-			free(split[index]);
-			index++;
-		}
-		free(split[index + 1]);
-		free(split);
-		args[1] += 2;
-	}
-	else
-	{
-		if (ft_equals(args[1], ".") || !ft_stristr(args[1], "./"))
-			args[1]++;
-		ft_stradd(&new, current);
-	}
+	args[1] += init_path(args[1], env_get(env, "PWD"), &new);
 	if (*args[1] == '/')
 		args[1]++;
 	if (*args[1])
 	{
-		ft_stradd(&new, "/");
+		if (new[ft_strlen(new, 0) - 1] != '/')
+			ft_stradd(&new, "/");
 		ft_stradd(&new, args[1]);
 	}
 	chdir(new);

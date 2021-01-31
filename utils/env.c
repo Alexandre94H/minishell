@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:03:49 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/31 13:50:27 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/01/31 13:53:24 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*env_set(char **env, char *key, char *value)
 		equal = ft_equals(name, key);
 		free(name);
 		if (equal)
-			break;
+			break ;
 		index++;
 	}
 	if (env[index])
@@ -82,11 +82,8 @@ size_t	env_rm(char **env, char *key)
 		index++;
 	}
 	total_length = index;
-	index = total_length - length;
-	while (index < total_length)
-	{
+	index = total_length - length - 1;
+	while (++index < total_length)
 		env[index] = 0;
-		index++;
-	}
 	return (length);
 }
