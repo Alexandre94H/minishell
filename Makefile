@@ -3,10 +3,12 @@ SOURCES				=	utils/get_next_line_utils.c \
 						utils/ft_put.c \
 						utils/ft_split.c \
 						utils/ft_strndup.c \
+						utils/ft_stristr.c \
 						utils/ft_atoi.c \
 						utils/ft_equals.c \
 						utils/env.c \
 						functions/f_echo.c \
+						functions/f_cd.c \
 						functions/f_exit.c \
 						call_function.c \
 						execute.c \
