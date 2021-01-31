@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:18:13 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/31 20:05:33 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/01/31 20:45:11 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,49 @@
 #include "default.h"
 #include "utils/lib.h"
 
-int	run(char *content, char **env, int last_output)
+size_t	fill_args(char *content, char **args)
+{
+	size_t	length;
+	size_t	index;
+	
+	length = 0;
+	index = 0;
+	while (content[index])
+		if (content[index] == ' ')
+		{
+			if (args)
+				args[length] = ft_strndup(content, index);
+			length++;
+			content += index + 1;
+			index = 0;
+		}
+		else
+			index++;
+	if (args)
+		args[length] = ft_strndup(content, index);
+	return (length + 1);
+}
+
+char	**split_args(char *content)
+{
+	char	**args;
+	size_t	length;
+
+	length = fill_args(content, 0);
+	if (!(args = malloc(sizeof(char **) * (length + 1))))
+		return (0);
+	args[length] = 0;
+	fill_args(content, args);
+	return (args);
+}
+
+int		run(char *content, char **env, int last_output)
 {
 	char	**args;
 	size_t	index;
 	int		ret;
 
-	args = ft_split(content, ' ');
+	args = split_args(content);
 	ret = call_function(args, env, last_output);
 	if (ret > 255)
 		ret = execute(args, env);
@@ -32,7 +68,7 @@ int	run(char *content, char **env, int last_output)
 	return (ret);
 }
 
-int	dispatch(char *content, char **env)
+int		dispatch(char *content, char **env)
 {
 	char		**contents;
 	size_t		index;
