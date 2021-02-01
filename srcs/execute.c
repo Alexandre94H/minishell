@@ -6,19 +6,19 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 15:46:10 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/31 10:34:45 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/01 13:50:41 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
 #include <stddef.h>
 #include <stdbool.h>
-#include <dirent.h>
-#include <unistd.h>
 #include <stdlib.h>
-#include <sys/wait.h>
-#include "utils/lib.h"
-#include "utils/env.h"
 #include <stdio.h>
+#include <sys/wait.h>
+#include <dirent.h>
+#include "../utils/lib.h"
+#include "../utils/env.h"
 
 int	execute_file(char *folder, char *file, char **args, char **env)
 {

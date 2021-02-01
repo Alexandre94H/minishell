@@ -14,11 +14,12 @@ SOURCES				=	utils/get_next_line_utils.c \
 						functions/f_unset.c \
 						functions/f_env.c \
 						functions/f_exit.c \
-						call_function.c \
-						execute.c \
-						dispatch.c \
-						prompt.c \
-						main.c
+						srcs/call_function.c \
+						srcs/args.c \
+						srcs/execute.c \
+						srcs/dispatch.c \
+						srcs/prompt.c \
+						srcs/main.c
 
 OBJECTS				=	${SOURCES:.c=.o}
 

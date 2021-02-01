@@ -1,20 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   default.h                                          :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/30 10:10:31 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/30 22:56:18 by ahallain         ###   ########.fr       */
+/*   Created: 2021/01/30 09:42:00 by ahallain          #+#    #+#             */
+/*   Updated: 2021/02/01 13:50:47 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DEFAULT_H
-# define DEFAULT_H
+#include <stddef.h>
+#include "default.h"
+#include "../utils/lib.h"
 
-int	prompt(char **env);
-int	dispatch(char *content, char **env);
-int	execute(char **args, char **env);
-int	call_function(char **args, char **env, int last_output);
-#endif
+int		main(int argc, char **argv, char **env)
+{
+	size_t	index;
+
+	(void)argc;
+	(void)argv;
+	index = 0;
+	while (env[index])
+	{
+		env[index] = ft_strndup(env[index], 0);
+		index++;
+	}
+	return (prompt(env));
+}

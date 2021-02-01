@@ -6,15 +6,15 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:07:43 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/31 11:56:07 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/01 13:50:56 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "utils/lib.h"
-#include "utils/env.h"
-#include "utils/get_next_line.h"
 #include "default.h"
+#include "../utils/lib.h"
+#include "../utils/env.h"
+#include "../utils/get_next_line.h"
 
 int	prompt(char **env)
 {
