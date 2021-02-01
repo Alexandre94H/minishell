@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 09:42:00 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/01 13:50:47 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/01 18:49:51 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "default.h"
 #include "../utils/lib.h"
 
-int		main(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **env)
 {
 	size_t	index;
 

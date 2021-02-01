@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:18:13 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/01 13:50:17 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/01 19:33:04 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		run(char *content, char **env, int last_output)
 	size_t	index;
 	int		ret;
 
-	args = split_args(content);
+	args = split_args(content, env);
 	ret = call_function(args, env, last_output);
 	if (ret > 255)
 		ret = execute(args, env);
