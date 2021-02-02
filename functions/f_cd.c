@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 10:23:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/31 20:13:35 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/02 16:01:10 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,16 @@ char	*get_parent(char *path)
 		return (0);
 	*parent = 0;
 	index = 0;
-	while (index < length - 1)
+	while (index < length)
 	{
 		ft_stradd(&parent, "/");
-		ft_stradd(&parent, split[index]);
+		if (index != length - 1)
+			ft_stradd(&parent, split[index]);
 		free(split[index]);
 		index++;
 	}
-	free(split[index + 1]);
+	if (!length)
+		ft_stradd(&parent, "/");
 	free(split);
 	return (parent);
 }
@@ -64,6 +66,31 @@ int		init_path(char *arg, char *current, char **new)
 	return (ret);
 }
 
+void	change_path(char *arg, char *new, char **env)
+{
+	if (ft_equals(arg, "/"))
+		ft_stradd(&new, arg);
+	else
+	{
+		if (*arg == '/')
+			arg++;
+		if (*arg)
+		{
+			if (new[ft_strlen(new, 0) - 1] != '/')
+				ft_stradd(&new, "/");
+			ft_stradd(&new, arg);
+		}
+	}
+	if (chdir(new) == -1)
+		ft_putstr("invalid path\n");
+	else
+	{
+		env_set(env, "OLDPWD", env_get(env, "PWD"));
+		env_set(env, "PWD", new);
+	}
+	free(new);
+}
+
 int		f_cd(char **args, char **env)
 {
 	char	*new;
@@ -75,20 +102,12 @@ int		f_cd(char **args, char **env)
 		ft_putstr("need a path\n");
 		return (1);
 	}
+	else if (ft_equals(arg, "-"))
+		arg = env_get(env, "OLDPWD");
 	if (!(new = malloc(sizeof(char *))))
 		return (-1);
 	*new = 0;
 	arg += init_path(arg, env_get(env, "PWD"), &new);
-	if (*arg == '/')
-		arg++;
-	if (*arg)
-	{
-		if (new[ft_strlen(new, 0) - 1] != '/')
-			ft_stradd(&new, "/");
-		ft_stradd(&new, arg);
-	}
-	chdir(new);
-	env_set(env, "PWD", new);
-	free(new);
+	change_path(arg, new, env);
 	return (0);
 }

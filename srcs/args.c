@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 13:45:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/02 14:32:30 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/02 16:01:59 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ size_t	fill_args(char *content, char **args, char **env)
 	size_t	length;
 	size_t	index;
 	char	*c;
-	
+
 	if (!(c = malloc(sizeof(char *) * 2)))
 		return (0);
 	c[1] = 0;

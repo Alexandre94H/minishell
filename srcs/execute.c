@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 15:46:10 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/01 13:50:41 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/02 14:53:02 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	execute_file(char *folder, char *file, char **args, char **env)
 	else if (pid == 0)
 		execve(temp, args, env);
 	else
-		waitpid(pid, &status, WSTOPPED);
+		wait(&status);
 	free(temp);
 	return (WEXITSTATUS(status));
 }
