@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:03:54 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/02 14:36:33 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/02 16:38:47 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,5 @@ char	*ft_stradd(char **dst, char *str);
 int		ft_stristr(char *str, char *value);
 void	ft_replace(char **str, char *from, char *to);
 int		ft_isalpha(int c);
+char	*ft_itoa(int n);
 #endif

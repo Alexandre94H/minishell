@@ -6,12 +6,13 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 13:45:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/02 16:01:59 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/02 16:38:19 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
 #include <stdlib.h>
+#include <errno.h>
 #include "../utils/lib.h"
 #include "../utils/env.h"
 
@@ -43,6 +44,7 @@ void	add_env(char **str, char **env)
 		free(name);
 		index++;
 	}
+	ft_replace(str, "$?", ft_itoa(errno));
 }
 
 char	*arg_no_null(char *arg, size_t length, char **env)
