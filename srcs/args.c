@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 13:45:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/01 20:35:47 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/02 14:32:30 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,28 @@
 void	add_env(char **str, char **env)
 {
 	size_t	index;
+	size_t	index1;
 	char	*name;
+	char	*key;
 
 	index = 0;
 	while (env[index])
 	{
 		name = ft_strndup(env[index], ft_strlen(env[index], '='));
-		ft_replace(str, name, env_get(env, name));
+		index1 = ft_strlen(name, 0);
+		index1++;
+		if (!(key = malloc(sizeof(char *) * (index1 + 1))))
+			return ;
+		key[index1] = 0;
+		*key = '$';
+		index1 = 0;
+		while (name[index1])
+		{
+			key[index1 + 1] = name[index1];
+			index1++;
+		}
+		ft_replace(str, key, env_get(env, name));
+		free(key);
 		free(name);
 		index++;
 	}

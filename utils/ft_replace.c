@@ -6,11 +6,12 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 18:50:14 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/01 20:36:06 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/02 14:23:28 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include "lib.h"
 
 size_t	edit_str(char *str, char *new, char *from, char *to)
 {
@@ -39,6 +40,7 @@ size_t	edit_str(char *str, char *new, char *from, char *to)
 				}
 				index += index1;
 				length += index2 - index1;
+				continue ;
 			}
 		}
 		if (new)
