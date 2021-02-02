@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:18:13 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/02 20:54:03 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/02 22:05:48 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int		run(char *content, char **env)
 		while (args[index])
 			free(args[index++]);
 		free(args);
+		exit(1);
 	} else {
 		wait(&status);
 		errno = WEXITSTATUS(status);
@@ -59,7 +60,8 @@ int		dispatch(char *content, char **env)
 	while (!ret && contents[index])
 	{
 		ret = run(contents[index], env);
-		errno = ret - 1;
+		if (ret)
+			errno = ret - 1;
 		free(contents[index++]);
 	}
 	free(contents);

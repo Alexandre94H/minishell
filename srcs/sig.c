@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   default.h                                          :+:      :+:    :+:   */
+/*   sig.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/30 10:10:31 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/02 21:30:25 by ahallain         ###   ########.fr       */
+/*   Created: 2021/02/02 21:07:58 by ahallain          #+#    #+#             */
+/*   Updated: 2021/02/02 23:21:38 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DEFAULT_H
-# define DEFAULT_H
+#include <signal.h>
+#include <stdio.h>
+#include "../utils/lib.h"
 
-int		prompt(char **env);
-int		dispatch(char *content, char **env);
-void	execute(char **args, char **env);
-void	call_function(char **args, char **env);
-char	**split_args(char *content, char **env);
-void	sig();
-#endif
+void	nothing(int signum)
+{
+	(void)signum;
+}
+
+void	sig()
+{
+	signal(SIGINT, nothing);
+	signal(SIGQUIT, nothing);
+}

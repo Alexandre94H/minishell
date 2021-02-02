@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:07:43 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/02 20:53:23 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/02 23:21:56 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,10 @@ int	prompt(char **env)
 		ft_putstr("\e[0m in \e[35m");
 		ft_putstr(env_get(env, "PWD"));
 		ft_putstr("\e[0m\n$ ");
-		get_next_line(2, &line);
+		ret = !get_next_line(2, &line);
 		if (*line)
 			ret = dispatch(line, env);
 		free(line);
-		ft_putchar('\n');
 	}
 	return (errno);
 }

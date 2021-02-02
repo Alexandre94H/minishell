@@ -22,6 +22,7 @@ SOURCES				=	utils/get_next_line_utils.c \
 						srcs/execute.c \
 						srcs/dispatch.c \
 						srcs/prompt.c \
+						srcs/sig.c \
 						srcs/main.c
 
 OBJECTS				=	${SOURCES:.c=.o}
