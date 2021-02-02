@@ -6,10 +6,11 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:07:43 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/01 13:50:56 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/02 20:53:23 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <errno.h>
 #include <stdlib.h>
 #include "default.h"
 #include "../utils/lib.h"
@@ -21,8 +22,8 @@ int	prompt(char **env)
 	int		ret;
 	char	*line;
 
-	ret = -1;
-	while (ret == -1)
+	ret = 0;
+	while (!ret)
 	{
 		ft_putstr("\e[33m");
 		ft_putstr(env_get(env, "LOGNAME"));
@@ -35,5 +36,5 @@ int	prompt(char **env)
 		free(line);
 		ft_putchar('\n');
 	}
-	return (ret);
+	return (errno);
 }

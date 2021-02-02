@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 10:23:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/02 16:01:10 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/02 20:21:04 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int		f_cd(char **args, char **env)
 	else if (ft_equals(arg, "-"))
 		arg = env_get(env, "OLDPWD");
 	if (!(new = malloc(sizeof(char *))))
-		return (-1);
+		return (1);
 	*new = 0;
 	arg += init_path(arg, env_get(env, "PWD"), &new);
 	change_path(arg, new, env);

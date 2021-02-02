@@ -6,19 +6,21 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 16:01:30 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/01 13:50:10 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/02 20:50:11 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <errno.h>
+#include <stdlib.h>
+#include <stdbool.h>
 #include "../utils/lib.h"
 #include "../functions/functions.h"
 
-int	call_function(char **args, char **env, int last_output)
+void	call_function(char **args, char **env)
 {
 	int			ret;
 
-	(void)env;
-	ret = 256;
+	ret = -1;
 	if (ft_equals(*args, "echo"))
 		ret = f_echo(args);
 	else if (ft_equals(*args, "cd"))
@@ -31,7 +33,7 @@ int	call_function(char **args, char **env, int last_output)
 		ret = f_unset(args, env);
 	else if (ft_equals(*args, "env"))
 		ret = f_env(env);
-	else if (ft_equals(*args, "exit"))
-		ret = f_exit(args, last_output);
-	return (ret);
+	if (ret != -1)
+		exit(ret);
+	return ;
 }

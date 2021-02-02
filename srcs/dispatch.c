@@ -6,30 +6,45 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:18:13 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/01 19:33:04 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/02 20:54:03 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <errno.h>
 #include <stddef.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
 #include "default.h"
 #include "../utils/lib.h"
+#include "../functions/functions.h"
 
-int		run(char *content, char **env, int last_output)
+int		run(char *content, char **env)
 {
 	char	**args;
 	size_t	index;
-	int		ret;
+	int		pid;
+	int		status;
 
 	args = split_args(content, env);
-	ret = call_function(args, env, last_output);
-	if (ret > 255)
-		ret = execute(args, env);
-	index = 0;
-	while (args[index])
-		free(args[index++]);
-	free(args);
-	return (ret);
+	if (ft_equals(*args, "exit"))
+		return (f_exit(args) + 1);
+	pid = fork();
+	if (pid == -1)
+		return (1);
+	else if (pid == 0)
+	{
+		call_function(args, env);
+		execute(args, env);
+		index = 0;
+		while (args[index])
+			free(args[index++]);
+		free(args);
+	} else {
+		wait(&status);
+		errno = WEXITSTATUS(status);
+	}
+	return (0);
 }
 
 int		dispatch(char *content, char **env)
@@ -37,23 +52,18 @@ int		dispatch(char *content, char **env)
 	char		**contents;
 	size_t		index;
 	int			ret;
-	static int	last_output;
 
 	contents = ft_split(content, ';');
 	index = 0;
-	while (contents[index])
+	ret = 0;
+	while (!ret && contents[index])
 	{
-		ret = run(contents[index], env, last_output);
+		ret = run(contents[index], env);
+		errno = ret - 1;
 		free(contents[index++]);
-		if (ret < 0)
-			break ;
 	}
 	free(contents);
-	if (ret > 255)
-		ft_putstr("command not found\n");
-	else if (ret < 0)
-		return (-1 * (ret + 1));
-	else
-		last_output = ret;
-	return (-1);
+	if (ret)
+		return (1);
+	return (0);
 }
