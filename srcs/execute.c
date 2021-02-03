@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 15:46:10 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/03 07:44:54 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/03 08:22:02 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,10 @@ int	execute(char **args, char **env)
 	int				ret;
 
 	folders = ft_split(env_get(env, "PATH"), ':');
-	ret = 0;
+	ret = 256;
 	index = 0;
-	while (!ret && folders[index])
+	while (ret == 256 && folders[index])
 	{
-		ret = 256;
 		dirp = opendir(folders[index]);
 		while ((dp = readdir(dirp)))
 			if (ft_equals(*args, dp->d_name))
