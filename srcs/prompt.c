@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:07:43 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/03 07:55:37 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/03 09:08:48 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,16 @@
 
 void	prompt_header(char **env)
 {
-	ft_putstr("\e[33m");
+	ft_putstr("\e[93m");
 	ft_putstr(env_get(env, "LOGNAME"));
-	ft_putstr("\e[0m in \e[35m");
+	ft_putstr("\e[0m in \e[95m");
 	ft_putstr(env_get(env, "PWD"));
+	ft_putstr("\e[0m with exit code ");
+	if (errno)
+		ft_putstr("\e[91m");
+	else
+		ft_putstr("\e[92m");
+	ft_putnbr(errno);
 	ft_putchar('\n');
 }
 
@@ -38,12 +44,10 @@ int		prompt(char **env)
 		ft_putstr("\e[0m$ ");
 		ret = !get_next_line(2, &line);
 		if (*line)
-		{
 			ret = dispatch(line, env);
-			ft_putchar('\n');
-			if (!ret)
-				prompt_header(env);
-		}
+		ft_putchar('\n');
+		if (*line && !ret)
+			prompt_header(env);
 		free(line);
 	}
 	return (errno);
