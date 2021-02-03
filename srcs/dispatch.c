@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:18:13 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/02 22:05:48 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/03 07:46:56 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,36 +19,26 @@
 #include "../utils/lib.h"
 #include "../functions/functions.h"
 
-int		run(char *content, char **env)
+char	run(char *content, char **env)
 {
 	char	**args;
 	size_t	index;
-	int		pid;
-	int		status;
+	int		ret;
 
 	args = split_args(content, env);
-	if (ft_equals(*args, "exit"))
-		return (f_exit(args) + 1);
-	pid = fork();
-	if (pid == -1)
-		return (1);
-	else if (pid == 0)
-	{
-		call_function(args, env);
-		execute(args, env);
-		index = 0;
-		while (args[index])
-			free(args[index++]);
-		free(args);
-		exit(1);
-	} else {
-		wait(&status);
-		errno = WEXITSTATUS(status);
-	}
-	return (0);
+	ret = call_function(args, env);
+	if (ret == 256)
+		ret = execute(args, env);
+	if (ret == 256)
+		ft_putstr("command not found\n");
+	index = 0;
+	while (args[index])
+		free(args[index++]);
+	free(args);
+	return (ret);
 }
 
-int		dispatch(char *content, char **env)
+char	dispatch(char *content, char **env)
 {
 	char		**contents;
 	size_t		index;
@@ -60,12 +50,12 @@ int		dispatch(char *content, char **env)
 	while (!ret && contents[index])
 	{
 		ret = run(contents[index], env);
-		if (ret)
-			errno = ret - 1;
 		free(contents[index++]);
 	}
 	free(contents);
-	if (ret)
+	if (ret > 0)
+		errno = ret;
+	else if (ret < 0)
 		return (1);
 	return (0);
 }

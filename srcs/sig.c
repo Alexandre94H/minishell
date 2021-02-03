@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:07:58 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/02 23:21:38 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/03 07:51:42 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,15 @@
 #include <stdio.h>
 #include "../utils/lib.h"
 
-void	nothing(int signum)
+void	call(int signum)
 {
-	(void)signum;
+	ft_putstr("\b\b  \b\b");
+	if (signum == SIGINT)
+		ft_putstr("\n$ ");
 }
 
 void	sig()
 {
-	signal(SIGINT, nothing);
-	signal(SIGQUIT, nothing);
+	signal(SIGINT, call);
+	signal(SIGQUIT, call);
 }

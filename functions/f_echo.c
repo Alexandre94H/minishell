@@ -6,14 +6,14 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 22:54:30 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/31 10:18:49 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/03 07:28:46 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdbool.h>
 #include "../utils/lib.h"
 
-int	f_echo(char **args)
+char	f_echo(char **args)
 {
 	bool	new_line;
 

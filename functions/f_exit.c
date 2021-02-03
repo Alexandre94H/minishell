@@ -6,16 +6,16 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:21:09 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/02 20:21:41 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/03 07:28:54 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <errno.h>
 #include "../utils/lib.h"
 
-int	f_exit(char **args)
+char	f_exit(char **args)
 {
 	if (args[1])
 		errno = ft_atoi(args[1]);
-	return (errno);
+	return (-1);
 }

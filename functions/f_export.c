@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 11:39:24 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/02 16:08:33 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/03 07:28:57 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "../utils/lib.h"
 #include "../utils/env.h"
 
-int	f_export(char **args, char **env)
+char	f_export(char **args, char **env)
 {
 	size_t	key_length;
 	size_t	index;

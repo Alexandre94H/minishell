@@ -6,14 +6,14 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 11:59:05 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/31 13:51:51 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/03 07:28:50 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../utils/lib.h"
 #include "../utils/env.h"
 
-int	f_env(char **env)
+char	f_env(char **env)
 {
 	while (*env)
 	{

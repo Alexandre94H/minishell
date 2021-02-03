@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 10:23:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/02 20:21:04 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/03 07:28:34 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ char	*get_parent(char *path)
 	return (parent);
 }
 
-int		init_path(char *arg, char *current, char **new)
+char	init_path(char *arg, char *current, char **new)
 {
 	char	*temp;
-	int		ret;
+	char	ret;
 
 	if (*arg == '/')
 		return (0);
@@ -91,7 +91,7 @@ void	change_path(char *arg, char *new, char **env)
 	free(new);
 }
 
-int		f_cd(char **args, char **env)
+char	f_cd(char **args, char **env)
 {
 	char	*new;
 	char	*arg;

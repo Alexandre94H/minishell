@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 16:01:30 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/02 20:50:11 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/03 07:41:48 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 #include "../utils/lib.h"
 #include "../functions/functions.h"
 
-void	call_function(char **args, char **env)
+int	call_function(char **args, char **env)
 {
-	int			ret;
+	int	ret;
 
-	ret = -1;
+	ret = 256;
 	if (ft_equals(*args, "echo"))
 		ret = f_echo(args);
 	else if (ft_equals(*args, "cd"))
@@ -33,7 +33,7 @@ void	call_function(char **args, char **env)
 		ret = f_unset(args, env);
 	else if (ft_equals(*args, "env"))
 		ret = f_env(env);
-	if (ret != -1)
-		exit(ret);
-	return ;
+	else if (ft_equals(*args, "exit"))
+		ret = f_exit(env);
+	return (ret);
 }
