@@ -20,6 +20,7 @@ SOURCES				=	utils/get_next_line_utils.c \
 						srcs/call_function.c \
 						srcs/args.c \
 						srcs/execute.c \
+						srcs/arrow.c \
 						srcs/dispatch.c \
 						srcs/prompt.c \
 						srcs/sig.c \

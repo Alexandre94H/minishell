@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 16:37:00 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/02 16:37:53 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/04 14:21:22 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static size_t	ft_count(int n)
 	return (count + 1);
 }
 
-static char		*ft_setnbr(int n, char *nbr)
+char			*ft_setnbr(int n, char *nbr)
 {
 	size_t	index;
 

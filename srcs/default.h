@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:10:31 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/03 07:45:46 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/04 14:13:16 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,5 @@ int		execute(char **args, char **env);
 int		call_function(char **args, char **env);
 char	**split_args(char *content, char **env);
 void	sig();
+int		arrow(char *prefix, char *file);
 #endif

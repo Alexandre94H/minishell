@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 15:46:10 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/03 08:22:02 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/04 16:31:45 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	execute_file(char *folder, char *file, char **args, char **env)
 {
 	char	*temp;
 	pid_t	pid;
-	int		status;
 
 	if (!(temp = malloc(sizeof(char *))))
 		return (-1);
@@ -35,11 +34,12 @@ int	execute_file(char *folder, char *file, char **args, char **env)
 	if (pid < 0)
 		return (-1);
 	else if (pid == 0)
+	{
 		execve(temp, args, env);
-	else
-		wait(&status);
+		exit(1);
+	}
 	free(temp);
-	return (WEXITSTATUS(status));
+	return (0);
 }
 
 int	execute(char **args, char **env)
