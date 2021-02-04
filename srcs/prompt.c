@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:07:43 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/04 08:48:44 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/04 13:00:22 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,11 @@ int		prompt(char **env)
 		{
 			ret = dispatch(line, env);
 			ft_putchar('\n');
-			prompt_header(env);
 		}
-		else if(ret)
+		if(ret)
 			ft_putstr("Bye :D\n");
+		else
+			prompt_header(env);
 		free(line);
 	}
 	return (errno);
