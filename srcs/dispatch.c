@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:18:13 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/04 16:58:35 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/05 09:59:40 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,11 @@ char	fork_run(char *content, char **new)
 	else if (pid == 0)
 	{
 		close(pipefd[0]);
-		run(content, new);
-		exit(1);
+		dup2(pipefd[1], STDOUT_FILENO);
+		exit(run(content, new));
 	}
 	close(pipefd[1]);
+	dup2(pipefd[0], STDIN_FILENO);
 	return (0);
 }
 
@@ -85,7 +86,7 @@ char	dispatch(char *content, char **env)
 		index1 = 0;
 		while (!ret && contents[index1])
 		{
-			if (fork)
+			if (fork && pipes[index + 1])
 				ret = fork_run(contents[index1], env);
 			else
 				ret = run(contents[index1], env);
