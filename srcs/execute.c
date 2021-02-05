@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 15:46:10 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/05 10:18:14 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/05 17:11:00 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,16 @@ int	execute(char **args, char **env)
 	index = 0;
 	while (ret == 256 && folders[index])
 	{
-		dirp = opendir(folders[index]);
-		while ((dp = readdir(dirp)))
-			if (ft_equals(*args, dp->d_name))
-			{
-				ret = execute_file(folders[index], dp->d_name, args, env);
-				break ;
-			}
-		closedir(dirp);
+		if ((dirp = opendir(folders[index])) != NULL)
+		{
+			while ((dp = readdir(dirp)))
+				if (ft_equals(*args, dp->d_name))
+				{
+					ret = execute_file(folders[index], dp->d_name, args, env);
+					break ;
+				}
+			closedir(dirp);
+		}
 		index++;
 	}
 	free(folders);
