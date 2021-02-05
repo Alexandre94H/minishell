@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:18:13 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/05 09:59:40 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/05 10:19:02 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,25 +45,36 @@ char	run(char *content, char **env)
 	return (ret);
 }
 
-char	fork_run(char *content, char **new)
+char	fork_run(char *content, char **new, bool last)
 {
 	pid_t	pid;
     int		pipefd[2];
+	int		status;
 
-	if (pipe(pipefd) == -1)
-		return (1);
+	if (!last)
+		if (pipe(pipefd) == -1)
+			return (1);
 	pid = fork();
 	if (pid < 0)
 		return (-1);
 	else if (pid == 0)
 	{
-		close(pipefd[0]);
-		dup2(pipefd[1], STDOUT_FILENO);
+		if (!last)
+		{
+			close(pipefd[0]);
+			dup2(pipefd[1], STDOUT_FILENO);
+			close(pipefd[1]);
+		}
 		exit(run(content, new));
 	}
-	close(pipefd[1]);
-	dup2(pipefd[0], STDIN_FILENO);
-	return (0);
+	if (!last)
+	{
+		close(pipefd[1]);
+		dup2(pipefd[0], STDIN_FILENO);
+		close(pipefd[0]);
+	}
+	wait(&status);
+	return (WEXITSTATUS(status));
 }
 
 char	dispatch(char *content, char **env)
@@ -86,8 +97,8 @@ char	dispatch(char *content, char **env)
 		index1 = 0;
 		while (!ret && contents[index1])
 		{
-			if (fork && pipes[index + 1])
-				ret = fork_run(contents[index1], env);
+			if (fork)
+				ret = fork_run(contents[index1], env, !pipes[index + 1]);
 			else
 				ret = run(contents[index1], env);
 			free(contents[index1++]);
@@ -98,8 +109,12 @@ char	dispatch(char *content, char **env)
 	free(pipes);
 	if (ret < 0)
 		return (1);
-	while (wait(&status) != -1)
-		ret = WEXITSTATUS(status);
+	if (fork)
+		while (index--)
+		{
+			wait(&status);
+			ret = WEXITSTATUS(status);
+		}
 	errno = ret;
 	return (0);
 }

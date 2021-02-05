@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 15:46:10 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/04 16:31:45 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/05 10:18:14 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <dirent.h>
+#include <sys/wait.h>
 #include "../utils/lib.h"
 #include "../utils/env.h"
 
@@ -23,6 +24,7 @@ int	execute_file(char *folder, char *file, char **args, char **env)
 {
 	char	*temp;
 	pid_t	pid;
+	int		status;
 
 	if (!(temp = malloc(sizeof(char *))))
 		return (-1);
@@ -38,8 +40,9 @@ int	execute_file(char *folder, char *file, char **args, char **env)
 		execve(temp, args, env);
 		exit(1);
 	}
+	wait(&status);
 	free(temp);
-	return (0);
+	return (WEXITSTATUS(status));
 }
 
 int	execute(char **args, char **env)
