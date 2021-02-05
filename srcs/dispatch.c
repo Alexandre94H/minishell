@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:18:13 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/05 10:19:02 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/05 15:37:43 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,15 @@
 #include "../utils/lib.h"
 #include "../functions/functions.h"
 
-char	run(char *content, char **env)
+char	run(char **content, char **env)
 {
 	char	**args;
 	size_t	index;
 	int		ret;
 
 	args = split_args(content, env);
+	if (!args || !*args)
+		return (-1);
 	ret = call_function(args, env);
 	if (ret == 256)
 		ret = execute(args, env);
@@ -45,7 +47,7 @@ char	run(char *content, char **env)
 	return (ret);
 }
 
-char	fork_run(char *content, char **new, bool last)
+char	fork_run(char **content, char **new, bool last)
 {
 	pid_t	pid;
     int		pipefd[2];
@@ -57,21 +59,25 @@ char	fork_run(char *content, char **new, bool last)
 	pid = fork();
 	if (pid < 0)
 		return (-1);
-	else if (pid == 0)
+	if (!last)
 	{
-		if (!last)
+		if (pid == 0)
 		{
 			close(pipefd[0]);
 			dup2(pipefd[1], STDOUT_FILENO);
 			close(pipefd[1]);
 		}
-		exit(run(content, new));
+		else
+		{
+			close(pipefd[1]);
+			dup2(pipefd[0], STDIN_FILENO);
+			close(pipefd[0]);
+		}
 	}
-	if (!last)
+	if (pid == 0)
 	{
-		close(pipefd[1]);
-		dup2(pipefd[0], STDIN_FILENO);
-		close(pipefd[0]);
+		run(content, new);
+		exit(errno);
 	}
 	wait(&status);
 	return (WEXITSTATUS(status));
@@ -98,9 +104,9 @@ char	dispatch(char *content, char **env)
 		while (!ret && contents[index1])
 		{
 			if (fork)
-				ret = fork_run(contents[index1], env, !pipes[index + 1]);
+				ret = fork_run(contents + index1, env, !pipes[index + 1]);
 			else
-				ret = run(contents[index1], env);
+				ret = run(contents + index1, env);
 			free(contents[index1++]);
 		}
 		free(contents);
