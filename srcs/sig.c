@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:07:58 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/04 10:39:47 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/05 20:30:46 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	call(int signum)
 	}
 }
 
-void	sig()
+void	sig(void)
 {
 	signal(SIGINT, call);
 	signal(SIGQUIT, call);

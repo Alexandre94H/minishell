@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 13:45:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/05 20:00:56 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/05 22:45:29 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,19 +99,19 @@ size_t	add_arg(char ***args, char *content, char **env)
 		if (content[index] == '\'' || content[index] == '"')
 		{
 			replace_env = content[index] == '"';
-			index1 = 0;
+			index1 = 1;
 			while (content[index + index1] && content[index + index1] != content[index])
 				index1++;
-			part = ft_strndup(content + index, index1);
+			part = ft_strndup(content + index + 1, index1 - 1);
 			if (replace_env)
 				add_env(&part, env);
 			ft_stradd(&arg, part);
 			free(part);
-			index += index1;
+			index += index1 + 1;
 		}
 		else
 		{
-			index1 = 0;
+			index1 = 1;
 			while (content[index + index1] && content[index + index1] != ' ' && content[index + index1] != '\'' && content[index + index1] != '"')
 				index1++;
 			part = ft_strndup(content + index, index1);
