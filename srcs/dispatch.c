@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:18:13 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/05 15:37:43 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/05 19:55:52 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ char	fork_run(char **content, char **new, bool last)
 		exit(errno);
 	}
 	wait(&status);
-	return (WEXITSTATUS(status));
+	errno = WEXITSTATUS(status);
+	return (errno);
 }
 
 char	dispatch(char *content, char **env)
@@ -91,10 +92,9 @@ char	dispatch(char *content, char **env)
 	size_t		index;
 	size_t		index1;
 	int			ret;
-	int			status;
 
-	fork = ft_stristr(content, "|") == -1 ? false : true;
 	pipes = ft_split(content, '|');
+	fork = pipes[0] && pipes[1] ? true : false;
 	ret = 0;
 	index = 0;
 	while (pipes[index])
@@ -115,12 +115,5 @@ char	dispatch(char *content, char **env)
 	free(pipes);
 	if (ret < 0)
 		return (1);
-	if (fork)
-		while (index--)
-		{
-			wait(&status);
-			ret = WEXITSTATUS(status);
-		}
-	errno = ret;
 	return (0);
 }

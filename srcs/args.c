@@ -6,15 +6,17 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 13:45:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/05 16:42:42 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/05 20:00:56 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <errno.h>
 #include <stddef.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include "default.h"
 #include "../utils/lib.h"
+#include "../utils/env.h"
 
 int		remove_arrow(char **content, size_t index)
 {
@@ -42,6 +44,39 @@ int		remove_arrow(char **content, size_t index)
 	return (ret);
 }
 
+void	add_env(char **str, char **env)
+{
+	size_t	index;
+	size_t	index1;
+	char	*name;
+	char	*temp;
+
+	index = 0;
+	while (env[index])
+	{
+		name = ft_strndup(env[index], ft_strlen(env[index], '='));
+		index1 = ft_strlen(name, 0);
+		index1++;
+		if (!(temp = malloc(sizeof(char *) * (index1 + 1))))
+			return ;
+		temp[index1] = 0;
+		*temp = '$';
+		index1 = 0;
+		while (name[index1])
+		{
+			temp[index1 + 1] = name[index1];
+			index1++;
+		}
+		ft_replace(str, temp, env_get(env, name));
+		free(temp);
+		free(name);
+		index++;
+	}
+	temp = ft_itoa(errno);
+	ft_replace(str, "$?", temp);
+	free(temp);
+}
+
 size_t	add_arg(char ***args, char *content, char **env)
 {
 	size_t	index;
@@ -51,7 +86,6 @@ size_t	add_arg(char ***args, char *content, char **env)
 	char	**new_args;
 	bool	replace_env;
 
-	(void)env;
 	index = 0;
 	while (content[index] == ' ')
 		index++;
@@ -69,6 +103,8 @@ size_t	add_arg(char ***args, char *content, char **env)
 			while (content[index + index1] && content[index + index1] != content[index])
 				index1++;
 			part = ft_strndup(content + index, index1);
+			if (replace_env)
+				add_env(&part, env);
 			ft_stradd(&arg, part);
 			free(part);
 			index += index1;
@@ -79,6 +115,7 @@ size_t	add_arg(char ***args, char *content, char **env)
 			while (content[index + index1] && content[index + index1] != ' ' && content[index + index1] != '\'' && content[index + index1] != '"')
 				index1++;
 			part = ft_strndup(content + index, index1);
+			add_env(&part, env);
 			ft_stradd(&arg, part);
 			free(part);
 			index += index1;
@@ -101,6 +138,7 @@ size_t	add_arg(char ***args, char *content, char **env)
 char	**split_args(char **content, char **env)
 {
 	size_t	index;
+	size_t	ret;
 	char	**args;
 
 	index = 0;
@@ -114,7 +152,11 @@ char	**split_args(char **content, char **env)
 		return (NULL);
 	*args = 0;
 	index = 0;
-	while ((*content)[index])
-		index += add_arg(&args, (*content) + index, env);
+	ret = 1;
+	while (ret && (*content)[index])
+	{
+		ret = add_arg(&args, (*content) + index, env);
+		index += ret;
+	}
 	return (args);
 }
