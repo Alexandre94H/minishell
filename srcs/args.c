@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 13:45:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/05 22:45:29 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/06 10:28:18 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,8 @@ size_t	add_arg(char ***args, char *content, char **env)
 	*arg = 0;
 	while (content[index] && content[index] != ' ')
 	{
-		if (content[index] == '\'' || content[index] == '"')
+		if ((!index || content[index - 1] != '\\')
+			&& (content[index] == '\'' || content[index] == '"'))
 		{
 			replace_env = content[index] == '"';
 			index1 = 1;

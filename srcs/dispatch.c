@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:18:13 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/06 08:27:13 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/06 12:43:42 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	run(char **content, char **env)
 		ret = execute(args, env);
 	if (ret == 256)
 	{
-		ft_putstr("command not found\n");
+		ft_putstr_fd("command not found\n", 2);
 		errno = 1;
 	}
 	else if (ret >= 0)

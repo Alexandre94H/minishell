@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 10:23:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/03 07:28:34 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/06 12:47:34 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	change_path(char *arg, char *new, char **env)
 		}
 	}
 	if (chdir(new) == -1)
-		ft_putstr("invalid path\n");
+		ft_putstr_fd("invalid path\n", 2);
 	else
 	{
 		env_set(env, "OLDPWD", env_get(env, "PWD"));
@@ -96,13 +96,18 @@ char	f_cd(char **args, char **env)
 	char	*new;
 	char	*arg;
 
-	arg = args[1];
-	if (!arg)
+	if (!args[1])
 	{
-		ft_putstr("need a path\n");
+		ft_putstr_fd("need a path\n", 2);
 		return (1);
 	}
-	else if (ft_equals(arg, "-"))
+	if (args[2])
+	{
+		ft_putstr_fd("too many arguments\n", 2);
+		return (1);
+	}
+	arg = args[1];
+	if (ft_equals(arg, "-"))
 		arg = env_get(env, "OLDPWD");
 	if (!(new = malloc(sizeof(char *))))
 		return (1);
