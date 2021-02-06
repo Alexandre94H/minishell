@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 16:01:30 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/03 07:41:48 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/06 08:33:39 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,6 @@ int	call_function(char **args, char **env)
 	else if (ft_equals(*args, "env"))
 		ret = f_env(env);
 	else if (ft_equals(*args, "exit"))
-		ret = f_exit(env);
+		ret = f_exit(args);
 	return (ret);
 }
