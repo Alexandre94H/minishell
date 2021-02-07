@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:18:13 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/06 12:43:42 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/07 17:26:16 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,11 @@ char	run(char **content, char **env)
 
 	args = split_args(content, env);
 	if (!args || !*args)
-		return (-1);
+	{
+		if (!args)
+			errno = 1;
+		return (0);
+	}
 	ret = call_function(args, env);
 	if (ret == 256)
 		ret = execute(args, env);

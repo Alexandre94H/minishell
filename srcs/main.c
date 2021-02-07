@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 09:42:00 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/05 21:20:28 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/07 17:27:21 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int argc, char **argv, char **env)
 	index = 0;
 	while (env[index])
 	{
-		env[index] = ft_strndup(env[index], 0);
+		env[index] = ft_strndup(env[index], -1);
 		index++;
 	}
 	ret = prompt(env);

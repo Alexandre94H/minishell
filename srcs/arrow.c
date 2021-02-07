@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 11:50:30 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/06 16:55:53 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/07 17:09:36 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	arrow(char *prefix, char *file)
 {
 	int	fd;
 
-	if (*prefix == '<' && prefix[1] == '<')
+	if (*prefix == '<' && prefix[1] != '<')
 		fd = open(file, O_RDONLY);
 	else if (*prefix == '>')
 	{
@@ -42,9 +42,9 @@ int	arrow(char *prefix, char *file)
 				S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	}
 	else
-		fd = -1;
-	if (fd == -1)
-		return (-1);
+		fd = -2;
+	if (fd < 0)
+		return (fd);
 	if (init_std(fd, *prefix == '<') == -1)
 		return (-1);
 	return (0);

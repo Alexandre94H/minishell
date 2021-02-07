@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:07:43 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/06 21:03:40 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/07 14:54:15 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int		prompt(char **env)
 	{
 		ft_putstr_fd("\e[0m$ ", 1);
 		ret = !get_next_line(2, &line);
-		if (!ret && *line)
+		if (!ret)
 		{
 			ret = dispatch(line, env);
 			dup2(stdin, STDIN_FILENO);

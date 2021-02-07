@@ -7,7 +7,7 @@ SOURCES				=	utils/get_next_line_utils.c \
 						utils/ft_atoi.c \
 						utils/ft_equals.c \
 						utils/ft_replace.c \
-						utils/ft_isalpha.c \
+						utils/ft_isalnum.c \
 						utils/ft_itoa.c \
 						utils/env.c \
 						functions/f_echo.c \

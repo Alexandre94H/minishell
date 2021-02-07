@@ -6,11 +6,10 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 13:45:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/06 23:04:52 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/07 17:23:42 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <errno.h>
 #include <stddef.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -59,7 +58,7 @@ void	add_env(char **str, char **env)
 		if ((*str)[index++] == '$')
 		{
 			index1 = 0;
-			while (ft_isalpha((*str)[index + index1]) || (*str)[index + index1] == '_')
+			while (ft_isalnum((*str)[index + index1]) || (*str)[index + index1] == '_')
 				index1++;
 			if (!index1)
 				continue ;
@@ -138,11 +137,18 @@ char	**split_args(char **content, char **env)
 	char	**args;
 
 	index = 0;
-	while ((*content)[index])
+	ret = 0;
+	while (!ret && (*content)[index])
 	{
 		if ((*content)[index] == '<' || (*content)[index] == '>')
-			remove_arrow(content, index);
+			ret = remove_arrow(content, index);
 		index++;
+	}
+	if (ret)
+	{
+		if ((int)ret == -1)
+			ft_putstr_fd("error while loading file\n", 2);
+		return (NULL);
 	}
 	if (!(args = malloc(sizeof(char **))))
 		return (NULL);
@@ -150,9 +156,6 @@ char	**split_args(char **content, char **env)
 	index = 0;
 	ret = 1;
 	while (ret && (*content)[index])
-	{
-		ret = add_arg(&args, (*content) + index, env);
-		index += ret;
-	}
+		index += (ret = add_arg(&args, (*content) + index, env));
 	return (args);
 }
