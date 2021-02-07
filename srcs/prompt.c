@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:07:43 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/06 11:56:47 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/06 21:03:40 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ int		prompt(char **env)
 			ret = dispatch(line, env);
 			dup2(stdin, STDIN_FILENO);
 			dup2(stdout, STDOUT_FILENO);
-			ft_putchar_fd('\n', 1);
 			if (!ret)
 				prompt_header(env);
 		}

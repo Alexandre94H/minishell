@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 13:45:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/06 10:28:18 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/06 23:04:52 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,12 @@ int		remove_arrow(char **content, size_t index)
 	filename_size = 0;
 	while ((*content)[index + prefix_size + filename_size] && (*content)[index + prefix_size + filename_size] != ' ')
 		filename_size++;
+	if (!filename_size)
+		return (-1);
 	temp = ft_strndup(*content + index, prefix_size + filename_size);
 	ret = arrow(temp, temp + prefix_size);
-	ft_replace(content, temp, "");
+	if (ret != -1)
+		ft_replace(content, temp, "");
 	free(temp);
 	return (ret);
 }
@@ -48,33 +51,25 @@ void	add_env(char **str, char **env)
 {
 	size_t	index;
 	size_t	index1;
-	char	*name;
-	char	*temp;
+	char	*key;
+	char	*value;
 
 	index = 0;
-	while (env[index])
-	{
-		name = ft_strndup(env[index], ft_strlen(env[index], '='));
-		index1 = ft_strlen(name, 0);
-		index1++;
-		if (!(temp = malloc(sizeof(char *) * (index1 + 1))))
-			return ;
-		temp[index1] = 0;
-		*temp = '$';
-		index1 = 0;
-		while (name[index1])
+	while ((*str)[index])
+		if ((*str)[index++] == '$')
 		{
-			temp[index1 + 1] = name[index1];
-			index1++;
+			index1 = 0;
+			while (ft_isalpha((*str)[index + index1]) || (*str)[index + index1] == '_')
+				index1++;
+			if (!index1)
+				continue ;
+			key = ft_strndup(*str + index, index1);
+			value = env_get(env, key);
+			free(key);
+			key = ft_strndup(*str + index - 1, index1 + 1);
+			ft_replace(str, key, value);
+			free(key);
 		}
-		ft_replace(str, temp, env_get(env, name));
-		free(temp);
-		free(name);
-		index++;
-	}
-	temp = ft_itoa(errno);
-	ft_replace(str, "$?", temp);
-	free(temp);
 }
 
 size_t	add_arg(char ***args, char *content, char **env)
