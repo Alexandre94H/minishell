@@ -9,6 +9,7 @@ SOURCES				=	utils/get_next_line_utils.c \
 						utils/ft_replace.c \
 						utils/ft_isalnum.c \
 						utils/ft_itoa.c \
+						utils/ft_rmchar.c \
 						utils/env.c \
 						functions/f_echo.c \
 						functions/f_cd.c \
