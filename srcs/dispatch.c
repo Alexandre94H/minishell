@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:18:13 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/09 17:26:19 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/09 22:42:21 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	run(char **content, char **env)
 	if (ret == 256)
 	{
 		ft_putstr_fd("command not found\n", 2);
-		errno = 1;
+		errno = 127;
 	}
 	else if (ret >= 0)
 		errno = ret;
@@ -55,7 +55,6 @@ char	fork_run(char **content, char **new, bool last)
 {
 	pid_t	pid;
     int		pipefd[2];
-	int		status;
 
 	if (!last)
 		if (pipe(pipefd) == -1)
@@ -83,8 +82,6 @@ char	fork_run(char **content, char **new, bool last)
 		run(content, new);
 		exit(errno);
 	}
-	wait(&status);
-	errno = WEXITSTATUS(status);
 	return (errno);
 }
 
@@ -96,6 +93,7 @@ char	dispatch(char *content, char **env)
 	size_t		index;
 	size_t		index1;
 	int			ret;
+	int			status;
 
 	contents = ft_split(content, ';');
 	ret = 0;
@@ -117,6 +115,11 @@ char	dispatch(char *content, char **env)
 		free(contents[index++]);
 	}
 	free(contents);
+	if (fork)
+	{
+		wait(&status);
+		errno = WEXITSTATUS(status);
+	}
 	if (ret < 0)
 		return (1);
 	return (0);

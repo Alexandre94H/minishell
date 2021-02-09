@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 15:46:10 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/05 21:19:04 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/09 22:36:42 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ int	execute_file(char *folder, char *file, char **args, char **env)
 	if (!(temp = malloc(sizeof(char *))))
 		return (-1);
 	*temp = 0;
-	ft_stradd(&temp, folder);
-	ft_stradd(&temp, "/");
-	ft_stradd(&temp, file);
+	ft_addstr(folder, &temp);
+	ft_addstr("/", &temp);
+	ft_addstr(file, &temp);
 	pid = fork();
 	if (pid < 0)
 		return (-1);

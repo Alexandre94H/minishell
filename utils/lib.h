@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:03:54 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/09 18:50:49 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/09 22:35:28 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,12 @@ char	*ft_strndup(const char *s1, long long len);
 char	**ft_cut(char *str, char c);
 size_t	ft_strlen(char *src, int c);
 bool	ft_equals(char *str1, char *str2);
-char	*ft_stradd(char **dst, char *str);
+void	ft_addstr(char *from, char **to);
 int		ft_stristr(char *str, char *value);
 void	ft_replace(char **str, char *from, char *to);
 void	ft_replace_accurate(char **str, size_t index, size_t length, char *to);
 int		ft_isalnum(int c);
 char	*ft_itoa(int n);
 void	ft_rmchar(char **str, size_t index);
+int		get_next_line(int fd, char **line);
 #endif

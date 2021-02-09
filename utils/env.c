@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:03:49 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/02 16:10:16 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/09 22:36:01 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ char	*env_set(char **env, char *key, char *value)
 	if (!(env[index] = malloc(sizeof(char *))))
 		return (0);
 	*(env[index]) = 0;
-	ft_stradd(&env[index], key);
-	ft_stradd(&env[index], "=");
-	ft_stradd(&env[index], value);
+	ft_addstr(key, &env[index]);
+	ft_addstr("=", &env[index]);
+	ft_addstr(value, &env[index]);
 	return (env[index]);
 }
 

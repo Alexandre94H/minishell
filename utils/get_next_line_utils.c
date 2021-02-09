@@ -5,86 +5,93 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/12 20:13:58 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/30 09:52:48 by ahallain         ###   ########.fr       */
+/*   Created: 2021/02/08 21:50:11 by ahallain          #+#    #+#             */
+/*   Updated: 2021/02/08 22:59:20 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include <stddef.h>
+#include <stdbool.h>
 #include <stdlib.h>
 
-int		ft_strcchr(char *src, int c)
+size_t	ft_strlen(char *str, char c)
 {
-	while (*src)
-		if (*src++ == c)
-			return (1);
-	return (0);
-}
-
-size_t	ft_strlen(char *src, int c)
-{
-	size_t len;
+	size_t	len;
 
 	len = 0;
-	while (src[len] && src[len] != c)
+	while (str[len] && str[len] != c)
 		len++;
 	return (len);
 }
 
-char	*ft_stradd(char **dst, char *str)
+void	ft_addstr(char *from, char **to)
 {
-	char	*res;
+	char	*new;
 	size_t	index;
-	size_t	len;
+	size_t	index1;
 
-	if (!(res = malloc(ft_strlen(*dst, 0) + ft_strlen(str, 0) + 1)))
-		return (NULL);
-	len = 0;
-	while ((*dst)[len])
-	{
-		res[len] = (*dst)[len];
-		len++;
-	}
+	index = ft_strlen(*to, 0) + ft_strlen(from, 0);
+	if (!(new = malloc(sizeof(char *) * (index + 1))))
+		return ;
+	new[index] = 0;
 	index = 0;
-	while (str[index])
+	while ((*to)[index])
 	{
-		res[index + len] = str[index];
+		new[index] = (*to)[index];
 		index++;
 	}
-	res[index + len] = 0;
-	free(*dst);
-	*dst = res;
-	return (res);
+	index1 = 0;
+	while (from[index1])
+	{
+		new[index + index1] = from[index1];
+		index1++;
+	}
+	free(*to);
+	*to = new;
 }
 
-char	*ft_firstchr(char *src, int c)
+bool	ft_includes(char *str, char c)
 {
-	char	*res;
+	while (*str && *str != c)
+		str++;
+	return (*str == c);
+}
+
+char	*ft_getstr(char *from, char c)
+{
 	size_t	len;
-
-	len = ft_strlen(src, c);
-	if (!(res = malloc(len + 1)))
-		return (NULL);
-	res[len] = 0;
-	while (len--)
-		res[len] = src[len];
-	return (res);
-}
-
-char	*ft_chrmove(char **dst, int c)
-{
-	char	*res;
 	size_t	index;
-	size_t	len;
+	char	*new;
 
-	index = ft_strlen(*dst, c);
-	if (!(res = malloc(ft_strlen(*dst, 0) - index + 1)))
+	len = ft_strlen(from, c);
+	if (!(new = malloc(sizeof(char *) * (len + 1))))
 		return (NULL);
-	len = ft_strlen(*dst, 0) - index;
-	res[len] = 0;
-	while (len--)
-		res[len] = (*dst)[index + 1 + len];
-	free(*dst);
-	*dst = res;
-	return (res);
+	new[len] = 0;
+	index = 0;
+	while (index < len)
+	{
+		new[index] = from[index];
+		index++;
+	}
+	return (new);
+}
+
+void	ft_rmfirst(char **str, size_t len)
+{
+	size_t	total_len;
+	size_t	index;
+	char	*new;
+
+	total_len = ft_strlen(*str, 0) - len;
+	if (!(new = malloc(sizeof(char **) * (total_len + 1))))
+		return ;
+	new[total_len] = 0;
+	index = 0;
+	while (index < total_len)
+	{
+		new[index] = (*str)[index + len];
+		index++;
+	}
+	free(*str);
+	*str = new;
 }

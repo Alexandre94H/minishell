@@ -5,25 +5,21 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/12 20:13:18 by ahallain          #+#    #+#             */
-/*   Updated: 2021/01/30 09:52:34 by ahallain         ###   ########.fr       */
+/*   Created: 2021/02/08 21:50:37 by ahallain          #+#    #+#             */
+/*   Updated: 2021/02/08 22:59:59 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 32
-# endif
-
+# include <stdbool.h>
 # include <stddef.h>
 
-int		ft_strcchr(char *src, int c);
-size_t	ft_strlen(char *src, int c);
-char	*ft_stradd(char **dst, char *str);
-char	*ft_firstchr(char *src, int c);
-char	*ft_chrmove(char **dst, int c);
 int		get_next_line(int fd, char **line);
-
+bool	ft_includes(char *str, char c);
+void	ft_addstr(char *from, char **to);
+char	*ft_getstr(char *from, char c);
+size_t	ft_strlen(char *str, char c);
+void	ft_rmfirst(char **str, size_t len);
 #endif

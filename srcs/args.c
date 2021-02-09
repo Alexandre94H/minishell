@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 13:45:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/09 21:17:00 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/09 22:41:49 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ size_t	add_arg(char ***args, char *content, char **env)
 			part = ft_strndup(content + index + 1, index1 - 1);
 			if (!strict)
 				update_str(&part, env);
-			ft_stradd(&arg, part);
+			ft_addstr(part, &arg);
 			free(part);
 			index += index1 + 1;
 		}
@@ -121,7 +121,7 @@ size_t	add_arg(char ***args, char *content, char **env)
 				index1++;
 			part = ft_strndup(content + index, index1);
 			update_str(&part, env);
-			ft_stradd(&arg, part);
+			ft_addstr(part, &arg);
 			free(part);
 			index += index1;
 		}
