@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:18:13 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/07 17:26:16 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/09 17:26:19 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,26 +97,26 @@ char	dispatch(char *content, char **env)
 	size_t		index1;
 	int			ret;
 
-	pipes = ft_split(content, '|');
-	fork = pipes[0] && pipes[1] ? true : false;
+	contents = ft_split(content, ';');
 	ret = 0;
 	index = 0;
-	while (pipes[index])
+	while (contents[index])
 	{
-		contents = ft_split(pipes[index], ';');
+		pipes = ft_split(contents[index], '|');
+		fork = pipes[0] && pipes[1] ? true : false;
 		index1 = 0;
-		while (!ret && contents[index1])
+		while (!ret && pipes[index1])
 		{
 			if (fork)
-				ret = fork_run(contents + index1, env, !pipes[index + 1]);
+				ret = fork_run(pipes + index1, env, !pipes[index1 + 1]);
 			else
-				ret = run(contents + index1, env);
-			free(contents[index1++]);
+				ret = run(pipes + index1, env);
+			free(pipes[index1++]);
 		}
-		free(contents);
-		free(pipes[index++]);
+		free(pipes);
+		free(contents[index++]);
 	}
-	free(pipes);
+	free(contents);
 	if (ret < 0)
 		return (1);
 	return (0);
