@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 18:50:14 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/03 08:43:40 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/09 18:50:14 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,38 @@ void	ft_replace(char **str, char *from, char *to)
 		return ;
 	new[length] = 0;
 	replace_loop(*str, new, from, to);
+	free(*str);
+	*str = new;
+}
+
+void	ft_replace_accurate(char **str, size_t index, size_t length, char *to)
+{
+	char	*new;
+	size_t	index1;
+	size_t	index2;
+
+	index1 = ft_strlen(*str, 0) + ft_strlen(to, 0) - length;
+	if (!(new = malloc(sizeof(char *) * (index1 + 1))))
+		return ;
+	new[index1] = 0;
+	index2 = 0;
+	index1 = 0;
+	while ((*str)[index1])
+	{
+		if (index1 == index)
+		{
+			while (to[index2])
+			{
+				new[index1 + index2] = to[index2];
+				index2++;
+			}
+			index1 += length;
+			index2 -= length;
+		}
+		else
+			new[index1 + index2] = (*str)[index1];
+		index1++;
+	}
 	free(*str);
 	*str = new;
 }

@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 13:45:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/07 22:16:44 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/09 21:17:00 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	update_str(char **str, char **env)
 	size_t	index;
 	size_t	index1;
 	char	*key;
-	char	*value;
 
 	index = 0;
 	while ((*str)[index])
@@ -65,10 +64,7 @@ void	update_str(char **str, char **env)
 			if (!index1)
 				continue ;
 			key = ft_strndup(*str + index, index1);
-			value = env_get(env, key);
-			free(key);
-			key = ft_strndup(*str + index - 1, index1 + 1);
-			ft_replace(str, key, value);
+			ft_replace_accurate(str, index, index1, env_get(env, key));
 			free(key);
 		}
 		else if ((*str)[index] == '\\')
