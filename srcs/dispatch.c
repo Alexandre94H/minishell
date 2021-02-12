@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:18:13 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/09 22:42:21 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/12 16:53:51 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,10 +116,8 @@ char	dispatch(char *content, char **env)
 	}
 	free(contents);
 	if (fork)
-	{
-		wait(&status);
-		errno = WEXITSTATUS(status);
-	}
+		while (waitpid(-1, &status, 0) == 0)
+			errno = WEXITSTATUS(status);
 	if (ret < 0)
 		return (1);
 	return (0);

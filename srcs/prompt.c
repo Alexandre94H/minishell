@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:07:43 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/09 22:34:32 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/12 17:23:49 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	prompt_header(char **env)
 	else
 		ft_putstr_fd("\e[92m", 1);
 	ft_putnbr_fd(errno, 1);
-	ft_putchar_fd('\n', 1);
+	ft_putstr_fd("\n\e[0m$ ", 1);
 }
 
 int		prompt(char **env)
@@ -42,20 +42,21 @@ int		prompt(char **env)
 	stdin = dup(STDIN_FILENO);
 	stdout = dup(STDOUT_FILENO);
 	prompt_header(env);
-	ret = 0;
-	while (!ret)
+	ret = 1;
+	while (ret)
 	{
-		ft_putstr_fd("\e[0m$ ", 1);
-		ret = !get_next_line(2, &line);
-		if (!ret)
+		ret = get_next_line(2, &line);
+		if (ret)
 		{
-			ret = dispatch(line, env);
+			ret = !dispatch(line, env);
 			dup2(stdin, STDIN_FILENO);
 			dup2(stdout, STDOUT_FILENO);
-			if (!ret)
+			if (ret)
 				prompt_header(env);
 		}
-		if(ret)
+		else if (*line)
+			ret = 1;
+		if (ret == 0)
 			ft_putstr_fd("Bye :D\n", 1);
 		free(line);
 	}
