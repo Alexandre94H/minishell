@@ -6,12 +6,11 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:18:13 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/12 16:53:51 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/13 18:24:25 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <errno.h>
-#include <stddef.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
@@ -48,17 +47,18 @@ char	run(char **content, char **env)
 	while (args[index])
 		free(args[index++]);
 	free(args);
-	return (ret);
+	return (ret < 0);
 }
 
 char	fork_run(char **content, char **new, bool last)
 {
 	pid_t	pid;
     int		pipefd[2];
+	int		status;
 
 	if (!last)
 		if (pipe(pipefd) == -1)
-			return (1);
+			return (-1);
 	pid = fork();
 	if (pid < 0)
 		return (-1);
@@ -82,18 +82,26 @@ char	fork_run(char **content, char **new, bool last)
 		run(content, new);
 		exit(errno);
 	}
-	return (errno);
+	free(*content);
+	if (content[1] && fork_run(content + 1, new, !content[2]) < 0)
+		return (-1);
+	if (last)
+	{
+		waitpid(pid, &status, 0);
+		errno = WEXITSTATUS(status);
+	}
+	else
+		waitpid(pid, NULL, 0);
+	return (0);
 }
 
 char	dispatch(char *content, char **env)
 {
-	bool		fork;
 	char		**pipes;
 	char		**contents;
 	size_t		index;
 	size_t		index1;
 	int			ret;
-	int			status;
 
 	contents = ft_split(content, ';');
 	ret = 0;
@@ -101,24 +109,19 @@ char	dispatch(char *content, char **env)
 	while (contents[index])
 	{
 		pipes = ft_split(contents[index], '|');
-		fork = pipes[0] && pipes[1] ? true : false;
-		index1 = 0;
-		while (!ret && pipes[index1])
-		{
-			if (fork)
-				ret = fork_run(pipes + index1, env, !pipes[index1 + 1]);
-			else
+		if (pipes[0] && pipes[1])
+			ret = fork_run(pipes, env, false);
+		else {
+			index1 = 0;
+			while (!ret && pipes[index1])
+			{
 				ret = run(pipes + index1, env);
-			free(pipes[index1++]);
+				free(pipes[index1++]);
+			}
 		}
 		free(pipes);
 		free(contents[index++]);
 	}
 	free(contents);
-	if (fork)
-		while (waitpid(-1, &status, 0) == 0)
-			errno = WEXITSTATUS(status);
-	if (ret < 0)
-		return (1);
-	return (0);
+	return (ret);
 }

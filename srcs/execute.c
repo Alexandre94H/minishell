@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 15:46:10 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/12 15:45:01 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/13 18:16:09 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,37 @@
 #include <unistd.h>
 #include <dirent.h>
 #include <sys/wait.h>
+#include <fcntl.h>
 #include "../utils/lib.h"
 #include "../utils/env.h"
+
+int	launch(char *file, char **args, char **env)
+{
+	pid_t	pid;
+	int		status;
+	int		fd;
+
+	if ((fd = open(file, O_RDONLY)) == -1)
+		return (256);
+	close(fd);
+	pid = fork();
+	if (pid < 0)
+		return (-1);
+	else if (pid == 0)
+	{
+		execve(file, args, env);
+		exit(1);
+	}
+	waitpid(pid, &status, 0);
+	if (!WIFSIGNALED(status))
+		errno = WEXITSTATUS(status);
+	return (errno);
+}
 
 int	execute_file(char *folder, char *file, char **args, char **env)
 {
 	char	*temp;
-	pid_t	pid;
-	int		status;
+	int		ret;
 
 	if (!(temp = malloc(sizeof(char *))))
 		return (-1);
@@ -32,42 +55,27 @@ int	execute_file(char *folder, char *file, char **args, char **env)
 	ft_addstr(folder, &temp);
 	ft_addstr("/", &temp);
 	ft_addstr(file, &temp);
-	pid = fork();
-	if (pid < 0)
-		return (-1);
-	else if (pid == 0)
-	{
-		execve(temp, args, env);
-		exit(1);
-	}
-	waitpid(pid, &status, 0);
+	ret = launch(temp, args, env);
 	free(temp);
-	return (WEXITSTATUS(status));
+	return (ret);
 }
 
 int	execute(char **args, char **env)
 {
 	char			**folders;
 	size_t			index;
-	DIR				*dirp;
-	struct dirent	*dp;
 	int				ret;
 
+	if (**args == '/')
+		return (launch(*args, args, env));
 	folders = ft_split(env_get(env, "PATH"), ':');
 	ret = 256;
 	index = 0;
 	while (ret == 256 && folders[index])
 	{
-		if ((dirp = opendir(folders[index])) != NULL)
-		{
-			while ((dp = readdir(dirp)))
-				if (ft_equals(*args, dp->d_name))
-				{
-					ret = execute_file(folders[index], dp->d_name, args, env);
-					break ;
-				}
-			closedir(dirp);
-		}
+		ret = execute_file(folders[index], *args, args, env);
+		if (ret != 256)
+			break ;
 		index++;
 	}
 	index = 0;

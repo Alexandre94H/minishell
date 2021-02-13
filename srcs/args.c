@@ -6,10 +6,11 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 13:45:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/09 22:41:49 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/13 15:54:04 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <errno.h>
 #include <stddef.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -61,10 +62,19 @@ void	update_str(char **str, char **env)
 			index1 = 0;
 			while (ft_isalnum((*str)[index + index1]) || (*str)[index + index1] == '_')
 				index1++;
+			if (!index1 && (*str)[index + index1] == '?')
+				index1++;
 			if (!index1)
 				continue ;
 			key = ft_strndup(*str + index, index1);
-			ft_replace_accurate(str, index, index1, env_get(env, key));
+			if (ft_equals(key, "?"))
+			{
+				free(key);
+				key = ft_itoa(errno);
+				ft_replace_accurate(str, index - 1, index1 + 1, key);
+			}
+			else
+				ft_replace_accurate(str, index - 1, index1 + 1, env_get(env, key));
 			free(key);
 		}
 		else if ((*str)[index] == '\\')
