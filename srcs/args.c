@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 13:45:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/13 15:54:04 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/14 22:54:50 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int		remove_arrow(char **content, size_t index)
 	return (ret);
 }
 
-void	update_str(char **str, char **env)
+void	update_str(char **str, char **env, bool force_slash)
 {
 	size_t	index;
 	size_t	index1;
@@ -77,7 +77,7 @@ void	update_str(char **str, char **env)
 				ft_replace_accurate(str, index - 1, index1 + 1, env_get(env, key));
 			free(key);
 		}
-		else if ((*str)[index] == '\\')
+		else if ((*str)[index] == '\\' && (force_slash || (*str)[index + 1] != ' '))
 		{
 			ft_rmchar(str, index);
 			if (!(*str)[index])
@@ -119,7 +119,7 @@ size_t	add_arg(char ***args, char *content, char **env)
 			}
 			part = ft_strndup(content + index + 1, index1 - 1);
 			if (!strict)
-				update_str(&part, env);
+				update_str(&part, env, false);
 			ft_addstr(part, &arg);
 			free(part);
 			index += index1 + 1;
@@ -130,7 +130,7 @@ size_t	add_arg(char ***args, char *content, char **env)
 			while (content[index + index1] && content[index + index1] != ' ' && content[index + index1] != '\'' && content[index + index1] != '"')
 				index1++;
 			part = ft_strndup(content + index, index1);
-			update_str(&part, env);
+			update_str(&part, env, true);
 			ft_addstr(part, &arg);
 			free(part);
 			index += index1;

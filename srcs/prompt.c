@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:07:43 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/13 18:31:16 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/13 18:38:48 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int		prompt(char **env)
 				prompt_header(env);
 		}
 		if (ret == 0)
-			ft_putstr_fd("Bye :D\n", 1);
+			ft_putstr_fd("bye\n", 1);
 		free(line);
 	}
 	return (errno);
