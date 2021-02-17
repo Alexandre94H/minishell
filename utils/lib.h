@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:03:54 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/09 22:35:28 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/17 16:07:45 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,5 @@ int		ft_isalnum(int c);
 char	*ft_itoa(int n);
 void	ft_rmchar(char **str, size_t index);
 int		get_next_line(int fd, char **line);
+char	**ft_addtab(char ***tab, char *str);
 #endif

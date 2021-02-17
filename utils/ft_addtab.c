@@ -1,32 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strndup.c                                       :+:      :+:    :+:   */
+/*   ft_addtab.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/30 11:39:11 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/17 16:10:35 by ahallain         ###   ########.fr       */
+/*   Created: 2021/02/17 16:03:36 by ahallain          #+#    #+#             */
+/*   Updated: 2021/02/17 16:07:33 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
 #include <stdlib.h>
 
-char	*ft_strndup(const char *s1, ssize_t len)
+char **ft_addtab(char ***tab, char *str)
 {
-	char	*s2;
+	size_t	index;
+	size_t	length;
+	char	**new;
 
-	if (len == -1)
-	{
-		len = 0;
-		while (s1[len])
-			len++;
-	}
-	if (!(s2 = malloc(sizeof(char) * (len + 1))))
+	length = 0;
+	while ((*tab)[length])
+		length++;
+	if (!(new = malloc(sizeof(char **) * (length + 2))))
 		return (NULL);
-	s2[len] = 0;
-	while (len--)
-		s2[len] = s1[len];
-	return (s2);
+	new[length + 1] = 0;
+	new[length] = str;
+	index = 0;
+	while (index < length)
+	{
+		new[index] = (*tab)[index];
+		index++;
+	}
+	free(*tab);
+	*tab = new;
+	return (*tab);
 }

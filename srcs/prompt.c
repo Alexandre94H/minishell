@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:07:43 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/13 18:38:48 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/14 22:59:51 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int		prompt(char **env)
 			get_line_force(&line);
 			ret = 1;
 		}
-		if (!*line)
+		if (ret && !*line)
 			ft_putstr_fd("$ ", 1);
 		else if (ret)
 		{

@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:18:13 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/13 18:24:25 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/17 16:15:16 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,39 @@ char	fork_run(char **content, char **new, bool last)
 	return (0);
 }
 
+char	**split_smouth(char *str, char c)
+{
+	size_t	index;
+	size_t	index1;
+	char	**tab;
+
+	if (!(tab = malloc(sizeof(char **))))
+		return (NULL);
+	*tab = 0;
+	index = 0;
+	while (str[index])
+	{
+		if (str[index] == '\'' || str[index] == '"')
+		{
+			index1 = 1;
+			while (str[index + index1] && str[index + index1] != str[index])
+				index1++;
+			index += index1 + 1;
+		}
+		else if (str[index] == c)
+		{
+			ft_addtab(&tab, ft_strndup(str, index));
+			str += index;
+			index = 0;
+		}
+		else
+			index++;
+	}
+	if (index)
+		ft_addtab(&tab, ft_strndup(str, index));
+	return (tab);
+}
+
 char	dispatch(char *content, char **env)
 {
 	char		**pipes;
@@ -103,12 +136,12 @@ char	dispatch(char *content, char **env)
 	size_t		index1;
 	int			ret;
 
-	contents = ft_split(content, ';');
+	contents = split_smouth(content, ';');
 	ret = 0;
 	index = 0;
 	while (contents[index])
 	{
-		pipes = ft_split(contents[index], '|');
+		pipes = split_smouth(contents[index], '|');
 		if (pipes[0] && pipes[1])
 			ret = fork_run(pipes, env, false);
 		else {
