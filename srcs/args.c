@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 13:45:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/14 22:54:50 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/17 20:16:57 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int		remove_arrow(char **content, size_t index)
 	temp = ft_strndup(*content + index, prefix_size + filename_size);
 	ret = arrow(temp, temp + prefix_size);
 	if (ret != -1)
-		ft_replace(content, temp, "");
+		ft_replace(content, index, prefix_size + filename_size, "");
 	free(temp);
 	return (ret);
 }
@@ -71,10 +71,10 @@ void	update_str(char **str, char **env, bool force_slash)
 			{
 				free(key);
 				key = ft_itoa(errno);
-				ft_replace_accurate(str, index - 1, index1 + 1, key);
+				ft_replace(str, index - 1, index1 + 1, key);
 			}
 			else
-				ft_replace_accurate(str, index - 1, index1 + 1, env_get(env, key));
+				ft_replace(str, index - 1, index1 + 1, env_get(env, key));
 			free(key);
 		}
 		else if ((*str)[index] == '\\' && (force_slash || (*str)[index + 1] != ' '))
@@ -162,7 +162,8 @@ char	**split_args(char **content, char **env)
 	{
 		if ((*content)[index] == '<' || (*content)[index] == '>')
 			ret = remove_arrow(content, index);
-		index++;
+		else
+			index++;
 	}
 	if (ret)
 	{
