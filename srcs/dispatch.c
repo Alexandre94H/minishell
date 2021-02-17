@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:18:13 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/17 16:15:16 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/17 16:19:52 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,10 +114,10 @@ char	**split_smouth(char *str, char c)
 				index1++;
 			index += index1 + 1;
 		}
-		else if (str[index] == c)
+		else if (str[index] == c && (!index || str[index - 1] != '\\'))
 		{
 			ft_addtab(&tab, ft_strndup(str, index));
-			str += index;
+			str += index + 1;
 			index = 0;
 		}
 		else
