@@ -6,14 +6,14 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 16:03:36 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/17 16:07:33 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/17 16:24:22 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
 #include <stdlib.h>
 
-char **ft_addtab(char ***tab, char *str)
+char	**ft_addtab(char ***tab, char *str)
 {
 	size_t	index;
 	size_t	length;

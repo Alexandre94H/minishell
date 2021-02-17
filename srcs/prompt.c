@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:07:43 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/14 22:59:51 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/17 16:25:01 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int		prompt(char **env)
 	char		*line;
 	static int	stdin;
 	static int	stdout;
-	
+
 	stdin = dup(STDIN_FILENO);
 	stdout = dup(STDOUT_FILENO);
 	prompt_header(env);

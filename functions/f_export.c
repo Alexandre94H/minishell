@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 11:39:24 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/07 17:24:17 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/17 16:21:24 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*get_key(char *arg, size_t lengh)
 	index = 0;
 	while (key[index])
 	{
-		if (!ft_isalnum(key[index])&& key[index] != '_')
+		if (!ft_isalnum(key[index]) && key[index] != '_')
 		{
 			ft_putstr_fd("invalid key\n", 1);
 			return (NULL);

@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 21:44:56 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/12 17:14:13 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/17 18:12:20 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int		get_next_line(int fd, char **line)
 		ret = includes;
 	*line = ft_getstr(sav[fd], '\n');
 	ft_rmfirst(&sav[fd], ft_strlen(sav[fd], '\n') + includes);
-	if (!ret)
+	if (!ret || !*sav[fd])
 	{
 		free(sav[fd]);
 		sav[fd] = 0;
