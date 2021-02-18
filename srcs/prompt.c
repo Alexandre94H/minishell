@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:07:43 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/17 16:25:01 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/18 09:35:54 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,20 @@ void	prompt_header(char **env)
 	ft_putstr_fd("\n\e[0m$ ", 1);
 }
 
-void	get_line_force(char **line)
+int		input(char **line)
 {
 	int	ret;
 
-	ret = 0;
-	while (ret == 0 || !**line)
-	{
-		free(*line);
-		ret = get_next_line(2, line);
-	}
+	ret = get_next_line(0, line);
+	if (!ret && **line)
+		while (ret == 0 || !**line)
+		{
+			free(*line);
+			ret = get_next_line(0, line);
+		}
+	if (ret && !**line)
+		ft_putstr_fd("$ ", 1);
+	return (ret);
 }
 
 int		prompt(char **env)
@@ -57,15 +61,8 @@ int		prompt(char **env)
 	ret = 1;
 	while (ret)
 	{
-		ret = get_next_line(2, &line);
-		if (!ret && *line)
-		{
-			get_line_force(&line);
-			ret = 1;
-		}
-		if (ret && !*line)
-			ft_putstr_fd("$ ", 1);
-		else if (ret)
+		ret = input(&line);
+		if (ret && *line)
 		{
 			ret = !dispatch(line, env);
 			dup2(stdin, STDIN_FILENO);

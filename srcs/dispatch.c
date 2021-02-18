@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:18:13 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/17 16:19:52 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/18 09:36:57 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	run(char **content, char **env)
 char	fork_run(char **content, char **new, bool last)
 {
 	pid_t	pid;
-    int		pipefd[2];
+	int		pipefd[2];
 	int		status;
 
 	if (!last)
@@ -144,7 +144,8 @@ char	dispatch(char *content, char **env)
 		pipes = split_smouth(contents[index], '|');
 		if (pipes[0] && pipes[1])
 			ret = fork_run(pipes, env, false);
-		else {
+		else
+		{
 			index1 = 0;
 			while (!ret && pipes[index1])
 			{

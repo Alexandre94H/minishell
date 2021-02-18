@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 13:45:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/17 20:16:57 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/18 09:48:30 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int		remove_arrow(char **content, size_t index)
 	int		ret;
 
 	prefix_size = 0;
-	if ((*content)[index + prefix_size] == '<' || (*content)[index + prefix_size] == '>')
+	if ((*content)[index + prefix_size] == '<'
+		|| (*content)[index + prefix_size] == '>')
 		prefix_size++;
 	else
 		return (-1);
@@ -35,7 +36,8 @@ int		remove_arrow(char **content, size_t index)
 	if ((*content)[index + prefix_size] == ' ')
 		prefix_size++;
 	filename_size = 0;
-	while ((*content)[index + prefix_size + filename_size] && (*content)[index + prefix_size + filename_size] != ' ')
+	while ((*content)[index + prefix_size + filename_size]
+		&& (*content)[index + prefix_size + filename_size] != ' ')
 		filename_size++;
 	if (!filename_size)
 		return (-1);
@@ -60,7 +62,8 @@ void	update_str(char **str, char **env, bool force_slash)
 		{
 			index++;
 			index1 = 0;
-			while (ft_isalnum((*str)[index + index1]) || (*str)[index + index1] == '_')
+			while (ft_isalnum((*str)[index + index1])
+				|| (*str)[index + index1] == '_')
 				index1++;
 			if (!index1 && (*str)[index + index1] == '?')
 				index1++;
@@ -77,7 +80,8 @@ void	update_str(char **str, char **env, bool force_slash)
 				ft_replace(str, index - 1, index1 + 1, env_get(env, key));
 			free(key);
 		}
-		else if ((*str)[index] == '\\' && (force_slash || (*str)[index + 1] != ' '))
+		else if ((*str)[index] == '\\'
+			&& (force_slash || (*str)[index + 1] != ' '))
 		{
 			ft_rmchar(str, index);
 			if (!(*str)[index])
@@ -87,6 +91,45 @@ void	update_str(char **str, char **env, bool force_slash)
 	}
 }
 
+char	*add_arg_loop(size_t *index, char *content, char **env)
+{
+	char	*part;
+	bool	strict;
+	size_t	index1;
+
+	if ((!*index || content[*index - 1] != '\\')
+		&& (content[*index] == '\'' || content[*index] == '"'))
+	{
+		strict = content[*index] == '\'';
+		index1 = 1;
+		while (content[*index + index1]
+			&& content[*index + index1] != content[*index])
+		{
+			if (content[*index + index1] == '\\'
+				&& content[*index + index1 + 1])
+				index1++;
+			index1++;
+		}
+		part = ft_strndup(content + *index + 1, index1 - 1);
+		if (!strict)
+			update_str(&part, env, false);
+		*index += index1 + 1;
+	}
+	else
+	{
+		index1 = 1;
+		while (content[*index + index1]
+			&& content[*index + index1] != ' '
+			&& content[*index + index1] != '\''
+			&& content[*index + index1] != '"')
+			index1++;
+		part = ft_strndup(content + *index, index1);
+		update_str(&part, env, true);
+		*index += index1;
+	}
+	return (part);
+}
+
 size_t	add_arg(char ***args, char *content, char **env)
 {
 	size_t	index;
@@ -94,7 +137,6 @@ size_t	add_arg(char ***args, char *content, char **env)
 	char	*arg;
 	char	*part;
 	char	**new_args;
-	bool	strict;
 
 	index = 0;
 	while (content[index] == ' ')
@@ -106,35 +148,9 @@ size_t	add_arg(char ***args, char *content, char **env)
 	*arg = 0;
 	while (content[index] && content[index] != ' ')
 	{
-		if ((!index || content[index - 1] != '\\')
-			&& (content[index] == '\'' || content[index] == '"'))
-		{
-			strict = content[index] == '\'';
-			index1 = 1;
-			while (content[index + index1] && content[index + index1] != content[index])
-			{
-				if (content[index + index1] == '\\' && content[index + index1 + 1])
-					index1++;
-				index1++;
-			}
-			part = ft_strndup(content + index + 1, index1 - 1);
-			if (!strict)
-				update_str(&part, env, false);
-			ft_addstr(part, &arg);
-			free(part);
-			index += index1 + 1;
-		}
-		else
-		{
-			index1 = 1;
-			while (content[index + index1] && content[index + index1] != ' ' && content[index + index1] != '\'' && content[index + index1] != '"')
-				index1++;
-			part = ft_strndup(content + index, index1);
-			update_str(&part, env, true);
-			ft_addstr(part, &arg);
-			free(part);
-			index += index1;
-		}
+		part = add_arg_loop(&index, content, env);
+		ft_addstr(part, &arg);
+		free(part);
 	}
 	index1 = 0;
 	while ((*args)[index1])

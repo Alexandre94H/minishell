@@ -6,23 +6,22 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 18:50:14 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/17 20:12:56 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/17 20:27:20 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "lib.h"
 
-void ft_replace(char **str, size_t index, size_t length, char *to)
+void	ft_replace(char **str, size_t index, size_t length, char *to)
 {
-	char *new;
-	size_t index1;
-	size_t index2;
-
+	char	*new;
+	size_t	index1;
+	size_t	index2;
 
 	index1 = ft_strlen(*str, 0) + ft_strlen(to, 0) - length;
 	if (!(new = malloc(sizeof(char *) * (index1 + 1))))
-		return;
+		return ;
 	new[index1] = 0;
 	index2 = 0;
 	index1 = -1;

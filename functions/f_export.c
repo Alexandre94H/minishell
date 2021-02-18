@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 11:39:24 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/17 16:21:24 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/17 20:23:22 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ char	f_export(char **args, char **env)
 	}
 	if (ft_stristr(args[1], "=") == -1)
 		return (0);
-	index = 1;
-	while (args[index])
+	index = 0;
+	while (args[++index])
 	{
 		key_length = ft_strlen(args[index], '=');
 		key = get_key(args[index], key_length);
@@ -59,7 +59,6 @@ char	f_export(char **args, char **env)
 		env_set(env, key, value);
 		free(key);
 		free(value);
-		index++;
 	}
 	return (0);
 }
