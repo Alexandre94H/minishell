@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 21:50:11 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/08 22:59:20 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/20 19:41:10 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	ft_addstr(char *from, char **to)
 	*to = new;
 }
 
-bool	ft_includes(char *str, char c)
+bool	ft_contain(char *str, char c)
 {
 	while (*str && *str != c)
 		str++;

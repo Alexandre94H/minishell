@@ -6,11 +6,12 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 10:23:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/07 12:28:57 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/19 13:02:39 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include <stdlib.h>
 #include "../utils/env.h"
 #include "../utils/lib.h"
 
@@ -38,5 +39,6 @@ char	f_cd(char **args, char **env)
 		return (1);
 	env_set(env, "OLDPWD", env_get(env, "PWD"));
 	env_set(env, "PWD", home);
+	free(home);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 13:45:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/18 09:48:30 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/18 11:19:01 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,15 @@ int		remove_arrow(char **content, size_t index)
 	if ((*content)[index + prefix_size] == '<'
 		|| (*content)[index + prefix_size] == '>')
 		prefix_size++;
-	else
-		return (-1);
 	if ((*content)[index + prefix_size] == '>')
 		prefix_size++;
-	if ((*content)[index + prefix_size] == ' ')
+	while ((*content)[index + prefix_size] == ' ')
 		prefix_size++;
 	filename_size = 0;
 	while ((*content)[index + prefix_size + filename_size]
 		&& (*content)[index + prefix_size + filename_size] != ' ')
 		filename_size++;
-	if (!filename_size)
+	if (!prefix_size || !filename_size)
 		return (-1);
 	temp = ft_strndup(*content + index, prefix_size + filename_size);
 	ret = arrow(temp, temp + prefix_size);
@@ -172,15 +170,11 @@ char	**split_args(char **content, char **env)
 	size_t	ret;
 	char	**args;
 
-	index = 0;
+	index = -1;
 	ret = 0;
-	while (!ret && (*content)[index])
-	{
+	while (!ret && (*content)[++index])
 		if ((*content)[index] == '<' || (*content)[index] == '>')
-			ret = remove_arrow(content, index);
-		else
-			index++;
-	}
+			ret = remove_arrow(content, index--);
 	if (ret)
 	{
 		if ((int)ret == -1)

@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 21:44:56 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/17 18:12:20 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/20 19:41:17 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int		get_next_line(int fd, char **line)
 	if (gnl_check(fd, &buf, &sav[fd]))
 		return (-1);
 	ret = 0;
-	while (!(includes = ft_includes(sav[fd], '\n'))
+	while (!(includes = ft_contain(sav[fd], '\n'))
 		&& (ret = read(fd, buf, BUFFERSIZE)) > 0)
 	{
 		buf[ret] = 0;

@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:03:54 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/17 18:42:23 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/20 14:53:06 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,5 @@ char	*ft_itoa(int n);
 void	ft_rmchar(char **str, size_t index);
 int		get_next_line(int fd, char **line);
 char	**ft_addtab(char ***tab, char *str);
+bool	ft_includes(char *from, char *str);
 #endif

@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:18:13 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/18 09:36:57 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/20 21:59:52 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,23 @@ char	run(char **content, char **env)
 	size_t	index;
 	int		ret;
 
+	ret = 0;
 	args = split_args(content, env);
-	if (!args || !*args)
+	if (args && *args)
 	{
-		if (!args)
-			errno = 1;
-		return (0);
+		ret = call_function(args, env);
+		if (ret == 256)
+			ret = execute(args, env);
+		if (ret == 256)
+		{
+			ft_putstr_fd("command not found\n", 2);
+			errno = 127;
+		}
+		else if (ret >= 0)
+			errno = ret;
 	}
-	ret = call_function(args, env);
-	if (ret == 256)
-		ret = execute(args, env);
-	if (ret == 256)
-	{
-		ft_putstr_fd("command not found\n", 2);
-		errno = 127;
-	}
-	else if (ret >= 0)
-		errno = ret;
+	else if (!args)
+		errno = 1;
 	index = 0;
 	while (args[index])
 		free(args[index++]);
@@ -104,26 +104,22 @@ char	**split_smouth(char *str, char c)
 	if (!(tab = malloc(sizeof(char **))))
 		return (NULL);
 	*tab = 0;
-	index = 0;
-	while (str[index])
-	{
+	index = -1;
+	while (str[++index])
 		if (str[index] == '\'' || str[index] == '"')
 		{
 			index1 = 1;
 			while (str[index + index1] && str[index + index1] != str[index])
 				index1++;
-			index += index1 + 1;
+			index += index1;
 		}
 		else if (str[index] == c && (!index || str[index - 1] != '\\'))
 		{
 			ft_addtab(&tab, ft_strndup(str, index));
 			str += index + 1;
-			index = 0;
+			index = -1;
 		}
-		else
-			index++;
-	}
-	if (index)
+	if (index || *str == c)
 		ft_addtab(&tab, ft_strndup(str, index));
 	return (tab);
 }
@@ -148,10 +144,10 @@ char	dispatch(char *content, char **env)
 		{
 			index1 = 0;
 			while (!ret && pipes[index1])
-			{
-				ret = run(pipes + index1, env);
+				ret = run(pipes + index1++, env);
+			index1 = 0;
+			while (pipes[index1])
 				free(pipes[index1++]);
-			}
 		}
 		free(pipes);
 		free(contents[index++]);
