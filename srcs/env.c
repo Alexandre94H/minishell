@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 13:45:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/21 19:26:39 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/21 20:47:37 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@
 void	env_loop(size_t index, char **str, char **env)
 {
 	size_t	index1;
-	char	*key;
+	char	*value;
 
 	index1 = 0;
-	if ((*str)[index + index1] == '?')
+	if ((*str)[index] == '?')
 		index1++;
 	else
 		while (ft_isalnum((*str)[index + index1])
@@ -32,16 +32,17 @@ void	env_loop(size_t index, char **str, char **env)
 			index1++;
 	if (!index1)
 		return ;
-	key = ft_strndup(*str + index, index1);
-	if (ft_equals(key, "?"))
+	if ((*str)[index] == '?')
 	{
-		free(key);
-		key = ft_itoa(errno);
-		ft_replace(str, index - 1, index1 + 1, key);
+		value = ft_itoa(errno);
+		ft_replace(str, index - 1, index1 + 1, value);
 	}
-	else if (ft_strlen(key, 0))
-		ft_replace(str, index - 1, index1 + 1, env_get(env, key));
-	free(key);
+	else
+	{
+		value = ft_strndup(*str + index, index1);
+		ft_replace(str, index - 1, index1 + 1, env_get(env, value));
+	}
+	free(value);
 }
 
 void	update_str(char **str, char **env, bool force_slash)
@@ -59,7 +60,8 @@ void	update_str(char **str, char **env, bool force_slash)
 				index--;
 		}
 		else if ((*str)[index] == '$'
-			&& ft_isalnum((*str)[index + 1]))
+			&& (ft_isalnum((*str)[index + 1])
+			|| (*str)[index + 1] == '?'))
 		{
 			env_loop(index + 1, str, env);
 			if (!(*str)[index] || (*str)[index] == '$')
