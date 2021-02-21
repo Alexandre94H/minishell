@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:03:54 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/21 10:04:24 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/21 19:07:21 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,5 @@ int		get_next_line(int fd, char **line);
 char	**ft_addtab(char ***tab, char *str);
 bool	ft_includes(char *from, char *str);
 void	ft_freetab(void	***tab);
+bool	ft_isspace(char c);
 #endif

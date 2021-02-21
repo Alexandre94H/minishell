@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:18:13 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/21 12:30:40 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/21 19:08:47 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ char	**split_smouth(char *str, char c)
 			str += index + 1;
 			index = -1;
 		}
-	if (!*tab || (index && str[index - 1] != ' '))
+	if (!*tab || (index && !ft_isspace(str[index - 1])))
 		ft_addtab(&tab, ft_strndup(str, index));
 	return (tab);
 }

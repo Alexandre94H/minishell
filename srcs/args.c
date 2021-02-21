@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 13:45:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/21 18:18:07 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/21 19:27:10 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ int		remove_arrow(char **content, size_t index)
 		prefix_size++;
 	if ((*content)[index + prefix_size] == '>')
 		prefix_size++;
-	while ((*content)[index + prefix_size] == ' ')
+	while (ft_isspace((*content)[index + prefix_size]))
 		prefix_size++;
 	filename_size = 0;
 	while ((*content)[index + prefix_size + filename_size]
-		&& (*content)[index + prefix_size + filename_size] != ' ')
+		&& !ft_isspace((*content)[index + prefix_size + filename_size]))
 		filename_size++;
 	if (!prefix_size || !filename_size)
 		return (-1);
@@ -79,13 +79,13 @@ char	*add_arg_loop(size_t *index, char *content, char **env)
 
 	if ((!*index || content[*index - 1] != '\\')
 		&& (content[*index] == '\'' || content[*index] == '"'))
-		{
+	{
 		*index += add_arg_loop_mark(index, content, env) + 1;
 		return (NULL);
-		}
+	}
 	index1 = 1;
 	while (content[*index + index1]
-		&& content[*index + index1] != ' '
+		&& !ft_isspace(content[*index + index1])
 		&& content[*index + index1] != '\''
 		&& content[*index + index1] != '"')
 		index1++;
@@ -104,12 +104,12 @@ size_t	add_arg(char ***args, char *content, char **env)
 	char	**new_args;
 
 	index = 0;
-	while (content[index] == ' ')
+	while (ft_isspace(content[index]))
 		index++;
 	if (!(arg = malloc(sizeof(char *))))
 		return (0);
 	*arg = 0;
-	while (content[index] && content[index] != ' ')
+	while (content[index] && !ft_isspace(content[index]))
 	{
 		part = add_arg_loop(&index, content, env);
 		if (part)

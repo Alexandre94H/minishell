@@ -6,11 +6,12 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:04:01 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/06 11:51:00 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/21 19:20:00 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include "lib.h"
 
 void	ft_putchar_fd(char c, int fd)
 {
@@ -19,8 +20,7 @@ void	ft_putchar_fd(char c, int fd)
 
 void	ft_putstr_fd(char *str, int fd)
 {
-	while (*str)
-		ft_putchar_fd(*str++, fd);
+	write(fd, str, ft_strlen(str, 0));
 }
 
 void	ft_putnbr_fd(int n, int fd)
