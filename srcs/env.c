@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 13:45:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/21 20:58:28 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/21 21:02:37 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ void	update_str(char **str, char **env, bool force_slash)
 				index--;
 		}
 		else if ((*str)[index] == '$'
-			&& (!(*str)[index + 1]
-			|| !ft_isspace((*str)[index + 1])))
+			&& (*str)[index + 1]
+			&& !ft_isspace((*str)[index + 1]))
 		{
 			env_loop(index + 1, str, env);
 			if (!(*str)[index] || (*str)[index] == '$')
