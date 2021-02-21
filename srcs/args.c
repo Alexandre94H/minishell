@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 13:45:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/21 19:27:10 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/21 20:00:11 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,29 +47,23 @@ int		remove_arrow(char **content, size_t index)
 	return (ret);
 }
 
-size_t	add_arg_loop_mark(size_t *index, char *content, char **env)
+char	*add_arg_loop_mark(size_t *index, char *content, char **env)
 {
-	char	*part;
 	bool	strict;
 	size_t	index1;
+	char	*part;
 
 	strict = content[*index] == '\'';
 	index1 = 1;
 	while (content[*index + index1]
-		&& content[*index + index1] != content[*index])
-	{
-		if (content[*index + index1] == '\\'
-			&& content[*index + index1 + 1])
-			index1++;
+		&& (content[*index + index1 - 1] == '\\'
+		|| content[*index + index1] != content[*index]))
 		index1++;
-	}
 	part = ft_strndup(content + *index + 1, index1 - 1);
-	(void)part;
-	(void)strict;
-	(void)env;
 	if (!strict)
 		update_str(&part, env, false);
-	return (index1);
+	*index += index1 - !content[*index + index1] + 1;
+	return (part);
 }
 
 char	*add_arg_loop(size_t *index, char *content, char **env)
@@ -79,10 +73,7 @@ char	*add_arg_loop(size_t *index, char *content, char **env)
 
 	if ((!*index || content[*index - 1] != '\\')
 		&& (content[*index] == '\'' || content[*index] == '"'))
-	{
-		*index += add_arg_loop_mark(index, content, env) + 1;
-		return (NULL);
-	}
+		return (add_arg_loop_mark(index, content, env));
 	index1 = 1;
 	while (content[*index + index1]
 		&& !ft_isspace(content[*index + index1])
@@ -98,10 +89,8 @@ char	*add_arg_loop(size_t *index, char *content, char **env)
 size_t	add_arg(char ***args, char *content, char **env)
 {
 	size_t	index;
-	size_t	index1;
 	char	*arg;
 	char	*part;
-	char	**new_args;
 
 	index = 0;
 	while (ft_isspace(content[index]))
@@ -112,23 +101,10 @@ size_t	add_arg(char ***args, char *content, char **env)
 	while (content[index] && !ft_isspace(content[index]))
 	{
 		part = add_arg_loop(&index, content, env);
-		if (part)
-		{
-			ft_addstr(part, &arg);
-			free(part);
-		}
+		ft_addstr(part, &arg);
+		free(part);
 	}
-	index1 = 0;
-	while ((*args)[index1])
-		index1++;
-	if (!(new_args = malloc(sizeof(char **) * (index1 + 2))))
-		return (0);
-	new_args[index1] = arg;
-	new_args[index1 + 1] = 0;
-	while (index1--)
-		new_args[index1] = (*args)[index1];
-	free(*args);
-	*args = new_args;
+	ft_addtab((void ***)args, arg);
 	return (index);
 }
 
