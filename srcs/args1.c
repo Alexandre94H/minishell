@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   args.c                                             :+:      :+:    :+:   */
+/*   args1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 13:45:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/20 22:39:53 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/21 10:52:08 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,48 +45,6 @@ int		remove_arrow(char **content, size_t index)
 		ft_replace(content, index, prefix_size + filename_size, "");
 	free(temp);
 	return (ret);
-}
-
-void	update_str(char **str, char **env, bool force_slash)
-{
-	size_t	index;
-	size_t	index1;
-	char	*key;
-
-	index = 0;
-	while ((*str)[index])
-	{
-		if ((*str)[index] == '$')
-		{
-			index++;
-			index1 = 0;
-			while (ft_isalnum((*str)[index + index1])
-				|| (*str)[index + index1] == '_')
-				index1++;
-			if (!index1 && (*str)[index + index1] == '?')
-				index1++;
-			if (!index1)
-				continue ;
-			key = ft_strndup(*str + index, index1);
-			if (ft_equals(key, "?"))
-			{
-				free(key);
-				key = ft_itoa(errno);
-				ft_replace(str, index - 1, index1 + 1, key);
-			}
-			else
-				ft_replace(str, index - 1, index1 + 1, env_get(env, key));
-			free(key);
-		}
-		else if ((*str)[index] == '\\'
-			&& (force_slash || (*str)[index + 1] != ' '))
-		{
-			ft_rmchar(str, index);
-			if (!(*str)[index])
-				index--;
-		}
-		index++;
-	}
 }
 
 char	*add_arg_loop(size_t *index, char *content, char **env)
