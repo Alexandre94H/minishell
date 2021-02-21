@@ -22,8 +22,8 @@ SOURCES				=	utils/get_next_line_utils.c \
 						functions/f_env.c \
 						functions/f_exit.c \
 						srcs/call_function.c \
-						srcs/args1.c \
-						srcs/args2.c \
+						srcs/args.c \
+						srcs/env.c \
 						srcs/execute.c \
 						srcs/arrow.c \
 						srcs/dispatch.c \

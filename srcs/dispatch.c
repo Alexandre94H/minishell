@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:18:13 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/21 10:38:06 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/21 12:30:40 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	run(char **content, char **env)
 
 	ret = 0;
 	args = split_args(content, env);
-	if (args)
+	if (args && *args && **args)
 	{
 		ret = call_function(args, env);
 		if (ret == 256)
@@ -92,7 +92,7 @@ char	**split_smouth(char *str, char c)
 			index1 = 1;
 			while (str[index + index1] && str[index + index1] != str[index])
 				index1++;
-			index += index1;
+			index += index1 - 1;
 		}
 		else if (str[index] == c && (!index || str[index - 1] != '\\'))
 		{

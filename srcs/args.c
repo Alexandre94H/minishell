@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   args1.c                                            :+:      :+:    :+:   */
+/*   args.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 13:45:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/21 10:52:08 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/21 18:18:07 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,42 +47,51 @@ int		remove_arrow(char **content, size_t index)
 	return (ret);
 }
 
-char	*add_arg_loop(size_t *index, char *content, char **env)
+size_t	add_arg_loop_mark(size_t *index, char *content, char **env)
 {
 	char	*part;
 	bool	strict;
 	size_t	index1;
 
+	strict = content[*index] == '\'';
+	index1 = 1;
+	while (content[*index + index1]
+		&& content[*index + index1] != content[*index])
+	{
+		if (content[*index + index1] == '\\'
+			&& content[*index + index1 + 1])
+			index1++;
+		index1++;
+	}
+	part = ft_strndup(content + *index + 1, index1 - 1);
+	(void)part;
+	(void)strict;
+	(void)env;
+	if (!strict)
+		update_str(&part, env, false);
+	return (index1);
+}
+
+char	*add_arg_loop(size_t *index, char *content, char **env)
+{
+	char	*part;
+	size_t	index1;
+
 	if ((!*index || content[*index - 1] != '\\')
 		&& (content[*index] == '\'' || content[*index] == '"'))
-	{
-		strict = content[*index] == '\'';
-		index1 = 1;
-		while (content[*index + index1]
-			&& content[*index + index1] != content[*index])
 		{
-			if (content[*index + index1] == '\\'
-				&& content[*index + index1 + 1])
-				index1++;
-			index1++;
+		*index += add_arg_loop_mark(index, content, env) + 1;
+		return (NULL);
 		}
-		part = ft_strndup(content + *index + 1, index1 - 1);
-		if (!strict)
-			update_str(&part, env, false);
-		*index += index1 + 1;
-	}
-	else
-	{
-		index1 = 1;
-		while (content[*index + index1]
-			&& content[*index + index1] != ' '
-			&& content[*index + index1] != '\''
-			&& content[*index + index1] != '"')
-			index1++;
-		part = ft_strndup(content + *index, index1);
-		update_str(&part, env, true);
-		*index += index1;
-	}
+	index1 = 1;
+	while (content[*index + index1]
+		&& content[*index + index1] != ' '
+		&& content[*index + index1] != '\''
+		&& content[*index + index1] != '"')
+		index1++;
+	part = ft_strndup(content + *index, index1);
+	update_str(&part, env, true);
+	*index += index1;
 	return (part);
 }
 
@@ -103,8 +112,11 @@ size_t	add_arg(char ***args, char *content, char **env)
 	while (content[index] && content[index] != ' ')
 	{
 		part = add_arg_loop(&index, content, env);
-		ft_addstr(part, &arg);
-		free(part);
+		if (part)
+		{
+			ft_addstr(part, &arg);
+			free(part);
+		}
 	}
 	index1 = 0;
 	while ((*args)[index1])
