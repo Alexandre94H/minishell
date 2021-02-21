@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 13:45:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/18 11:19:01 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/20 22:39:53 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,8 +139,6 @@ size_t	add_arg(char ***args, char *content, char **env)
 	index = 0;
 	while (content[index] == ' ')
 		index++;
-	if (!content[index])
-		return (0);
 	if (!(arg = malloc(sizeof(char *))))
 		return (0);
 	*arg = 0;
@@ -186,7 +184,7 @@ char	**split_args(char **content, char **env)
 	*args = 0;
 	index = 0;
 	ret = 1;
-	while (ret && (*content)[index])
+	while ((ret && (*content)[index]) || !*args)
 		index += (ret = add_arg(&args, (*content) + index, env));
 	return (args);
 }

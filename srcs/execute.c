@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 15:46:10 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/13 18:16:09 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/21 09:13:39 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ int	execute(char **args, char **env)
 	size_t			index;
 	int				ret;
 
+	if (!**args)
+		return (256);
 	if (**args == '/')
 		return (launch(*args, args, env));
 	folders = ft_split(env_get(env, "PATH"), ':');

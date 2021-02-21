@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:18:13 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/20 21:59:52 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/21 09:20:36 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,15 @@ char	run(char **content, char **env)
 
 	ret = 0;
 	args = split_args(content, env);
-	if (args && *args)
+	if (args)
 	{
 		ret = call_function(args, env);
 		if (ret == 256)
 			ret = execute(args, env);
 		if (ret == 256)
-		{
 			ft_putstr_fd("command not found\n", 2);
+		if (ret == 256)
 			errno = 127;
-		}
 		else if (ret >= 0)
 			errno = ret;
 	}
@@ -119,7 +118,7 @@ char	**split_smouth(char *str, char c)
 			str += index + 1;
 			index = -1;
 		}
-	if (index || *str == c)
+	if (!*tab || (index && str[index - 1] != ' '))
 		ft_addtab(&tab, ft_strndup(str, index));
 	return (tab);
 }

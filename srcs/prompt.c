@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:07:43 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/20 20:38:09 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/20 22:11:18 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,9 @@ int		prompt(char **env)
 		ret = input(&line);
 		if (ret && *line)
 		{
-			/*if (ft_includes(line, ";;") || ft_includes(line, "||"))
-				ft_putstr_fd("parsing error (ou can't have ';;' or '||')\n", 0);
-			else
-			{*/
-				ret = !dispatch(line, env);
-				dup2(stdin, STDIN_FILENO);
-				dup2(stdout, STDOUT_FILENO);
-			//}
+			ret = !dispatch(line, env);
+			dup2(stdin, STDIN_FILENO);
+			dup2(stdout, STDOUT_FILENO);
 			if (ret)
 				prompt_header(env);
 			}
