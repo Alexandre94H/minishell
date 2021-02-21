@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:07:43 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/20 22:11:18 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/21 09:23:08 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int		prompt(char **env)
 			dup2(stdout, STDOUT_FILENO);
 			if (ret)
 				prompt_header(env);
-			}
+		}
 		if (ret == 0)
 			ft_putstr_fd("bye\n", 1);
 		free(line);

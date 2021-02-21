@@ -12,6 +12,7 @@ SOURCES				=	utils/get_next_line_utils.c \
 						utils/ft_rmchar.c \
 						utils/ft_addtab.c \
 						utils/ft_includes.c \
+						utils/ft_freetab.c \
 						utils/env.c \
 						functions/f_echo.c \
 						functions/f_cd.c \

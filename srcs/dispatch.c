@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:18:13 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/21 09:20:36 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/21 10:38:06 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,42 +55,24 @@ char	fork_run(char **content, char **new, bool last)
 	int		pipefd[2];
 	int		status;
 
-	if (!last)
-		if (pipe(pipefd) == -1)
-			return (-1);
-	pid = fork();
-	if (pid < 0)
+	if (pipe(pipefd) || (pid = fork()) < 0)
 		return (-1);
 	if (!last)
 	{
-		if (pid == 0)
-		{
-			close(pipefd[0]);
-			dup2(pipefd[1], STDOUT_FILENO);
-			close(pipefd[1]);
-		}
-		else
-		{
-			close(pipefd[1]);
-			dup2(pipefd[0], STDIN_FILENO);
-			close(pipefd[0]);
-		}
+		close(pipefd[!!pid]);
+		dup2(pipefd[!pid], !pid);
+		close(pipefd[!pid]);
 	}
 	if (pid == 0)
 	{
 		run(content, new);
 		exit(errno);
 	}
-	free(*content);
 	if (content[1] && fork_run(content + 1, new, !content[2]) < 0)
 		return (-1);
+	waitpid(pid, &status, 0);
 	if (last)
-	{
-		waitpid(pid, &status, 0);
 		errno = WEXITSTATUS(status);
-	}
-	else
-		waitpid(pid, NULL, 0);
 	return (0);
 }
 
@@ -144,11 +126,8 @@ char	dispatch(char *content, char **env)
 			index1 = 0;
 			while (!ret && pipes[index1])
 				ret = run(pipes + index1++, env);
-			index1 = 0;
-			while (pipes[index1])
-				free(pipes[index1++]);
 		}
-		free(pipes);
+		ft_freetab((void ***)&pipes);
 		free(contents[index++]);
 	}
 	free(contents);
