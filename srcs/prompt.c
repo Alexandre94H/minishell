@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:07:43 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/21 09:23:08 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/22 15:23:19 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,30 @@ int		input(char **line)
 	return (ret);
 }
 
+bool	right_syntax(char *content)
+{
+	bool		ret;
+	size_t		index;
+
+	ret = false;
+	index = 0;
+	while (content[index])
+	{
+		if (content[index] == ';'
+			|| content[index] == '|')
+			if (ret)
+				ret = false;
+			else
+				break;
+		else if (!ft_isspace(content[index]))
+			ret = true;
+		index++;
+	}
+	if (!ret)
+		ft_putstr_fd("syntax error\n", 2);
+	return (ret);
+}
+
 int		prompt(char **env)
 {
 	int			ret;
@@ -64,7 +88,8 @@ int		prompt(char **env)
 		ret = input(&line);
 		if (ret && *line)
 		{
-			ret = !dispatch(line, env);
+			if (right_syntax(line))
+				ret = !dispatch(line, env);
 			dup2(stdin, STDIN_FILENO);
 			dup2(stdout, STDOUT_FILENO);
 			if (ret)

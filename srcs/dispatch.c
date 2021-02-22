@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:18:13 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/21 19:55:42 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/22 15:08:38 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 char	run(char **content, char **env)
 {
 	char	**args;
-	size_t	index;
 	int		ret;
 
 	ret = 0;
@@ -34,18 +33,17 @@ char	run(char **content, char **env)
 		if (ret == 256)
 			ret = execute(args, env);
 		if (ret == 256)
-			ft_putstr_fd("command not found\n", 2);
-		if (ret == 256)
+		{
+			ft_putstr_fd(*args, 1);
+			ft_putstr_fd(": command not found\n", 2);
 			errno = 127;
+		}
 		else if (ret >= 0)
 			errno = ret;
 	}
 	else if (!args)
 		errno = 1;
-	index = 0;
-	while (args[index])
-		free(args[index++]);
-	free(args);
+	ft_freetab((void ***)&args);
 	return (ret < 0);
 }
 
