@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:07:43 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/22 15:23:19 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/24 15:18:35 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,25 @@ void	prompt_header(char **env)
 
 int		input(char **line)
 {
-	int	ret;
+	int		ret;
+	size_t	index;
 
-	ret = get_next_line(0, line);
-	if (!ret && **line)
-		while (ret == 0 || !**line)
+	ret = 0;
+	while (ret == 0)
+	{
+		ret = get_next_line(0, line);
+		if (ret != 0)
 		{
-			free(*line);
-			ret = get_next_line(0, line);
+			index = 0;
+			while ((*line)[index] && ft_isspace((*line)[index]))
+				index++;
+			if (!(*line)[index])
+				**line = 0;
 		}
-	if (ret && !**line)
+		if (ret == 0)
+			free(*line);
+	}
+	if (!**line)
 		ft_putstr_fd("$ ", 1);
 	return (ret);
 }
@@ -62,7 +71,7 @@ bool	right_syntax(char *content)
 			if (ret)
 				ret = false;
 			else
-				break;
+				break ;
 		else if (!ft_isspace(content[index]))
 			ret = true;
 		index++;
@@ -88,8 +97,7 @@ int		prompt(char **env)
 		ret = input(&line);
 		if (ret && *line)
 		{
-			if (right_syntax(line))
-				ret = !dispatch(line, env);
+			ret = !right_syntax(line) || !dispatch(line, env);
 			dup2(stdin, STDIN_FILENO);
 			dup2(stdout, STDOUT_FILENO);
 			if (ret)

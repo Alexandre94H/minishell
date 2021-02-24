@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 13:45:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/21 20:00:11 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/24 13:38:38 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ size_t	add_arg(char ***args, char *content, char **env)
 	index = 0;
 	while (ft_isspace(content[index]))
 		index++;
+	if (!content[index])
+		return (index);
 	if (!(arg = malloc(sizeof(char *))))
 		return (0);
 	*arg = 0;
