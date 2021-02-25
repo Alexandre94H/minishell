@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:07:43 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/24 15:18:35 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/25 17:40:47 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,34 @@ bool	right_syntax(char *content)
 				ret = false;
 			else
 				break ;
+		else if (content[index] == '<'
+			|| content[index] == '>')
+		{
+			index++;
+			if (content[index - 1] == '>' && content[index] == '>')
+				index++;
+			while (content[index] && ft_isspace(content[index]))
+				index++;
+			if (!content[index]
+				|| content[index] == ';'
+				|| content[index] == '|'
+				|| content[index] == '<'
+				|| content[index] == '>')
+			{
+				ret = false;
+				break;
+			}
+			index--;
+		}
 		else if (!ft_isspace(content[index]))
 			ret = true;
 		index++;
 	}
 	if (!ret)
+	{
 		ft_putstr_fd("syntax error\n", 2);
+		errno = 2;
+	}
 	return (ret);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:18:13 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/22 15:08:38 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/25 17:46:17 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	run(char **content, char **env)
 			ret = execute(args, env);
 		if (ret == 256)
 		{
-			ft_putstr_fd(*args, 1);
+			ft_putstr_fd(*args, 2);
 			ft_putstr_fd(": command not found\n", 2);
 			errno = 127;
 		}
@@ -43,7 +43,8 @@ char	run(char **content, char **env)
 	}
 	else if (!args)
 		errno = 1;
-	ft_freetab((void ***)&args);
+	if (args)
+		ft_freetab((void ***)&args);
 	return (ret < 0);
 }
 

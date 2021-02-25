@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 13:45:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/24 13:38:38 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/25 14:09:46 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,14 @@ int		remove_arrow(char **content, size_t index)
 	filename_size = 0;
 	while ((*content)[index + prefix_size + filename_size]
 		&& !ft_isspace((*content)[index + prefix_size + filename_size]))
+	{
+		if ((*content)[index + prefix_size + filename_size] == '\\')
+		{
+			ft_rmchar(content, index + prefix_size + filename_size);
+			filename_size++;
+		}
 		filename_size++;
+	}
 	if (!prefix_size || !filename_size)
 		return (-1);
 	temp = ft_strndup(*content + index, prefix_size + filename_size);
@@ -49,19 +56,17 @@ int		remove_arrow(char **content, size_t index)
 
 char	*add_arg_loop_mark(size_t *index, char *content, char **env)
 {
-	bool	strict;
 	size_t	index1;
 	char	*part;
 
-	strict = content[*index] == '\'';
 	index1 = 1;
 	while (content[*index + index1]
 		&& (content[*index + index1 - 1] == '\\'
 		|| content[*index + index1] != content[*index]))
 		index1++;
 	part = ft_strndup(content + *index + 1, index1 - 1);
-	if (!strict)
-		update_str(&part, env, false);
+	if (content[*index] == '"')
+		update_str(&part, env, content[*index]);
 	*index += index1 - !content[*index + index1] + 1;
 	return (part);
 }
@@ -76,12 +81,16 @@ char	*add_arg_loop(size_t *index, char *content, char **env)
 		return (add_arg_loop_mark(index, content, env));
 	index1 = 1;
 	while (content[*index + index1]
-		&& !ft_isspace(content[*index + index1])
 		&& content[*index + index1] != '\''
-		&& content[*index + index1] != '"')
+		&& content[*index + index1] != '"'
+		&& !ft_isspace(content[*index + index1]))
+	{
+		if (content[*index + index1] == '\\' && content[*index + index1 + 1])
+			index1++;
 		index1++;
+	}
 	part = ft_strndup(content + *index, index1);
-	update_str(&part, env, true);
+	update_str(&part, env, 0);
 	*index += index1;
 	return (part);
 }
@@ -132,7 +141,7 @@ char	**split_args(char **content, char **env)
 	*args = 0;
 	index = 0;
 	ret = 1;
-	while ((ret && (*content)[index]) || !*args)
+	while (ret && (*content)[index])
 		index += (ret = add_arg(&args, (*content) + index, env));
 	return (args);
 }

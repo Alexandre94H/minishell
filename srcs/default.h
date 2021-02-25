@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:10:31 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/22 15:17:10 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/25 00:08:37 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,5 @@ int		call_function(char **args, char **env);
 char	**split_args(char **content, char **env);
 void	sig();
 int		arrow(char *prefix, char *file);
-void	update_str(char **str, char **env, bool force_slash);
+void	update_str(char **str, char **env, char c);
 #endif

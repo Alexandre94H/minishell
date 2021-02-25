@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 13:45:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/21 21:02:37 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/25 14:24:30 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,16 @@ void	env_loop(size_t index, char **str, char **env)
 	free(value);
 }
 
-void	update_str(char **str, char **env, bool force_slash)
+void	update_str(char **str, char **env, char c)
 {
 	size_t	index;
 
 	index = 0;
 	while ((*str)[index])
 	{
-		if ((*str)[index] == '\\' && (force_slash
-			|| !ft_isspace((*str)[index + 1])))
+		if ((*str)[index] == '\\' && (!c
+			|| (*str)[index + 1] == c
+			|| (*str)[index + 1] == '$'))
 		{
 			ft_rmchar(str, index);
 			if (!(*str)[index])
