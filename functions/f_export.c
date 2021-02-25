@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 11:39:24 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/25 21:34:40 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/25 21:39:30 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char		f_export(char **args, char **env)
 			index1 = ft_strlen(args[index], '=');
 			temp = ft_strndup(args[index], index1);
 			if (right)
-				env_set(env, temp, args[1] + index1 + 1);
+				env_set(env, temp, args[index] + index1 + 1);
 			else
 			{
 				ft_putchar_fd('`', 1);
