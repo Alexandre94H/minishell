@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 11:39:24 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/25 21:15:28 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/25 21:34:40 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,37 @@ static void	print_env(char **env)
 
 char		f_export(char **args, char **env)
 {
+	size_t	index;
+	size_t	index1;
+	bool	right;
+	char	*temp;
+
 	if (!args[1])
 		print_env(env);
+	else
+	{
+		index = 1;
+		while (args[index])
+		{
+			index1 = 0;
+			right = !!args[index][index1];
+			while (args[index][index1] && ft_isalnum(args[index][index1]))
+				index1++;
+			if (args[index][index1] && args[index][index1] != '=')
+				right = false;
+			index1 = ft_strlen(args[index], '=');
+			temp = ft_strndup(args[index], index1);
+			if (right)
+				env_set(env, temp, args[1] + index1 + 1);
+			else
+			{
+				ft_putchar_fd('`', 1);
+				ft_putstr_fd(temp, 1);
+				ft_putstr_fd("': not a valid identifier\n", 1);
+			}
+			free(temp);
+			index++;
+		}
+	}
 	return (0);
 }
