@@ -6,59 +6,70 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 11:39:24 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/17 20:23:22 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/25 21:15:28 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
+#include <stdbool.h>
 #include <stdlib.h>
 #include "../utils/lib.h"
 #include "../utils/env.h"
 
-char	*get_key(char *arg, size_t lengh)
+static void	print_env(char **env)
 {
+	char	**sort;
+	char	*temp;
 	size_t	index;
-	char	*key;
+	size_t	index1;
+	bool	edit;
 
-	key = ft_strndup(arg, lengh);
 	index = 0;
-	while (key[index])
+	while (env[index])
+		index++;
+	if (!(sort = malloc(sizeof(char **) * (index + 1))))
+		return ;
+	sort[index] = 0;
+	while (index--)
+		sort[index] = env[index];
+	edit = true;
+	while (edit)
 	{
-		if (!ft_isalnum(key[index]) && key[index] != '_')
+		edit = false;
+		index = 0;
+		while (sort[index + 1])
 		{
-			ft_putstr_fd("invalid key\n", 1);
-			return (NULL);
+			index1 = 0;
+			while (sort[index][index1] && sort[index][index1] == sort[index + 1][index1])
+				index1++;
+			if (sort[index][index1] > sort[index + 1][index1])
+			{
+				edit = true;
+				temp = sort[index];
+				sort[index] = sort[index + 1];
+				sort[index + 1] = temp;
+			}
+			index++;
 		}
+	}
+	index = 0;
+	while (sort[index]) {
+		index1 = ft_strlen(sort[index], '=') + 1;
+		temp = ft_strndup(sort[index], index1);
+		ft_putstr_fd("declare -x ", 1);
+		ft_putstr_fd(temp, 1);
+		ft_putchar_fd('"', 1);
+		ft_putstr_fd(sort[index] + index1, 1);
+		ft_putstr_fd("\"\n", 1);
+		free(temp);
 		index++;
 	}
-	return (key);
+	free(sort);
 }
 
-char	f_export(char **args, char **env)
+char		f_export(char **args, char **env)
 {
-	size_t	key_length;
-	size_t	index;
-	char	*key;
-	char	*value;
-
 	if (!args[1])
-	{
-		ft_putstr_fd("need something to export\n", 2);
-		return (1);
-	}
-	if (ft_stristr(args[1], "=") == -1)
-		return (0);
-	index = 0;
-	while (args[++index])
-	{
-		key_length = ft_strlen(args[index], '=');
-		key = get_key(args[index], key_length);
-		if (!key)
-			break ;
-		value = ft_strndup(args[index] + key_length + 1, -1);
-		env_set(env, key, value);
-		free(key);
-		free(value);
-	}
+		print_env(env);
 	return (0);
 }
