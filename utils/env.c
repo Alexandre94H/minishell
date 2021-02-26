@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:03:49 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/09 22:36:01 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/26 17:25:35 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,20 @@ char	*env_get(char **env, char *key)
 {
 	char	*name;
 	bool	equal;
+	size_t	len;
 
 	while (*env)
 	{
-		name = ft_strndup(*env, ft_strlen(*env, '='));
+		len = ft_strlen(*env, '=');
+		name = ft_strndup(*env, len);
 		equal = ft_equals(name, key);
 		free(name);
 		if (equal)
-			return (*env + ft_strlen(*env, '=') + 1);
+		{
+			if ((*env)[len])
+				return (*env + len + 1);
+			return (0);
+		}
 		env++;
 	}
 	return ("");
@@ -48,16 +54,21 @@ char	*env_set(char **env, char *key, char *value)
 			break ;
 		index++;
 	}
-	if (env[index])
+	if (env[index] && value)
 		free(env[index]);
+	else if (env[index])
+		return env[index];
 	else
 		env[index + 1] = 0;
 	if (!(env[index] = malloc(sizeof(char *))))
 		return (0);
 	*(env[index]) = 0;
 	ft_addstr(key, &env[index]);
-	ft_addstr("=", &env[index]);
-	ft_addstr(value, &env[index]);
+	if (value)
+	{
+		ft_addstr("=", &env[index]);
+		ft_addstr(value, &env[index]);
+	}
 	return (env[index]);
 }
 

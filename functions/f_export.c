@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 11:39:24 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/25 21:39:30 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/26 17:26:07 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,17 @@ static void	print_env(char **env)
 	}
 	index = 0;
 	while (sort[index]) {
-		index1 = ft_strlen(sort[index], '=') + 1;
+		index1 = ft_strlen(sort[index], '=');
 		temp = ft_strndup(sort[index], index1);
 		ft_putstr_fd("declare -x ", 1);
 		ft_putstr_fd(temp, 1);
-		ft_putchar_fd('"', 1);
-		ft_putstr_fd(sort[index] + index1, 1);
-		ft_putstr_fd("\"\n", 1);
+		if (sort[index][index1])
+		{
+			ft_putstr_fd("=\"", 1);
+			ft_putstr_fd(sort[index] + index1 + 1, 1);
+			ft_putchar_fd('"', 1);
+		}
+		ft_putchar_fd('\n', 1);
 		free(temp);
 		index++;
 	}
@@ -89,14 +93,16 @@ char		f_export(char **args, char **env)
 				right = false;
 			index1 = ft_strlen(args[index], '=');
 			temp = ft_strndup(args[index], index1);
-			if (right)
-				env_set(env, temp, args[index] + index1 + 1);
-			else
+			if (!right)
 			{
 				ft_putchar_fd('`', 1);
 				ft_putstr_fd(temp, 1);
 				ft_putstr_fd("': not a valid identifier\n", 1);
 			}
+			else if (args[index][index1])
+				env_set(env, temp, args[index] + index1 + 1);
+			else
+				env_set(env, temp, 0);
 			free(temp);
 			index++;
 		}

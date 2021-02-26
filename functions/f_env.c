@@ -6,19 +6,22 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 11:59:05 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/06 11:54:46 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/26 17:23:02 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../utils/lib.h"
-#include "../utils/env.h"
 
 char	f_env(char **env)
 {
 	while (*env)
 	{
-		ft_putstr_fd(*env++, 1);
-		ft_putchar_fd('\n', 1);
+		if ((*env)[ft_strlen(*env, '=')])
+		{
+			ft_putstr_fd(*env, 1);
+			ft_putchar_fd('\n', 1);
+		}
+		env++;
 	}
 	return (0);
 }
