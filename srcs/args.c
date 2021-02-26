@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 13:45:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/26 19:21:01 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/26 22:40:03 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,13 @@ size_t	skip_quote(char *content)
 	size_t	index;
 
 	index = 1;
-	while (content[index]) {
+	while (content[index])
+	{
 		if (content[index] == *content
 		&& (!index
 			|| content[index] == '\''
 			|| content[index - 1] != '\\'))
-			break;
+			break ;
 		index++;
 	}
 	return (index + 1);

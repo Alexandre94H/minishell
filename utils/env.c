@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:03:49 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/26 17:25:35 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/26 22:40:21 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*env_set(char **env, char *key, char *value)
 	if (env[index] && value)
 		free(env[index]);
 	else if (env[index])
-		return env[index];
+		return (env[index]);
 	else
 		env[index + 1] = 0;
 	if (!(env[index] = malloc(sizeof(char *))))

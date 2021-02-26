@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 11:39:24 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/26 19:27:38 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/26 22:40:40 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ static void	print_env(char **env)
 		while (sort[index + 1])
 		{
 			index1 = 0;
-			while (sort[index][index1] && sort[index][index1] == sort[index + 1][index1])
+			while (sort[index][index1]
+				&& sort[index][index1] == sort[index + 1][index1])
 				index1++;
 			if (sort[index][index1] > sort[index + 1][index1])
 			{

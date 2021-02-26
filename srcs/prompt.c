@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:07:43 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/26 19:16:17 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/26 22:40:31 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ bool	right_syntax(char *content)
 				|| content[index] == '>')
 			{
 				ret = false;
-				break;
+				break ;
 			}
 			index--;
 		}
