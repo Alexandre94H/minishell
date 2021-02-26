@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 13:45:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/26 14:55:00 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/26 18:54:17 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,42 +17,6 @@
 #include "default.h"
 #include "../utils/lib.h"
 #include "../utils/env.h"
-
-int		remove_arrow(char **content, size_t index)
-{
-	size_t	prefix_size;
-	size_t	filename_size;
-	char	*temp;
-	int		ret;
-
-	prefix_size = 0;
-	if ((*content)[index + prefix_size] == '<'
-		|| (*content)[index + prefix_size] == '>')
-		prefix_size++;
-	if ((*content)[index + prefix_size] == '>')
-		prefix_size++;
-	while (ft_isspace((*content)[index + prefix_size]))
-		prefix_size++;
-	filename_size = 0;
-	while ((*content)[index + prefix_size + filename_size]
-		&& !ft_isspace((*content)[index + prefix_size + filename_size]))
-	{
-		if ((*content)[index + prefix_size + filename_size] == '\\')
-		{
-			ft_rmchar(content, index + prefix_size + filename_size);
-			filename_size++;
-		}
-		filename_size++;
-	}
-	if (!prefix_size || !filename_size)
-		return (-1);
-	temp = ft_strndup(*content + index, prefix_size + filename_size);
-	ret = arrow(temp, temp + prefix_size);
-	if (ret != -1)
-		ft_replace(content, index, prefix_size + filename_size, "");
-	free(temp);
-	return (ret);
-}
 
 char	*add_arg_loop_quote(size_t *index, char *content, char **env)
 {
@@ -135,11 +99,55 @@ size_t	skip_quote(char *content)
 	return (index + 1);
 }
 
-char	**split_args(char **content, char **env)
+char	**split_args_strict(char *content, char **env)
 {
 	size_t	index;
 	size_t	ret;
 	char	**args;
+
+	if (!(args = malloc(sizeof(char **))))
+		return (NULL);
+	*args = 0;
+	index = 0;
+	ret = 1;
+	while (ret && content[index])
+		index += (ret = add_arg(&args, content + index, env));
+	return (args);
+}
+
+int		remove_arrow(char **content, size_t index, char **env)
+{
+	size_t	prefix_size;
+	size_t	filename_size;
+	char	*temp;
+	char	**args;
+	int		ret;
+
+	if (!(args = malloc(sizeof(char **))))
+		return (0);
+	*args = 0;
+	prefix_size = 0;
+	if ((*content)[index + prefix_size] == '<'
+		|| (*content)[index + prefix_size] == '>')
+		prefix_size++;
+	if ((*content)[index + prefix_size] == '>')
+		prefix_size++;
+	while (ft_isspace((*content)[index + prefix_size]))
+		prefix_size++;
+	filename_size = add_arg(&args, *content + index + prefix_size, env);
+	temp = ft_strndup(*content + index, prefix_size + filename_size);
+	ret = arrow(temp, *args);
+	free(temp);
+	ft_freetab((void ***)&args);
+	if (ret != -1)
+		ft_replace(content, index, prefix_size + filename_size, "");
+	return (ret);
+}
+
+char	**split_args(char **content, char **env)
+{
+	size_t	index;
+	size_t	ret;
 
 	index = -1;
 	ret = 0;
@@ -148,19 +156,12 @@ char	**split_args(char **content, char **env)
 			|| (*content)[index] == '"')
 			index += skip_quote(*content + index) - 1;
 		else if ((*content)[index] == '<' || (*content)[index] == '>')
-			ret = remove_arrow(content, index--);
+			ret = remove_arrow(content, index--, env);
 	if (ret)
 	{
 		if ((int)ret == -1)
 			ft_putstr_fd("error while loading file\n", 2);
 		return (NULL);
 	}
-	if (!(args = malloc(sizeof(char **))))
-		return (NULL);
-	*args = 0;
-	index = 0;
-	ret = 1;
-	while (ret && (*content)[index])
-		index += (ret = add_arg(&args, (*content) + index, env));
-	return (args);
+	return (split_args_strict(*content, env));
 }
