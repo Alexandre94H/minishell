@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:18:13 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/25 17:46:17 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/26 14:58:02 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ char	fork_run(char **content, char **new, bool last)
 char	**split_smouth(char *str, char c)
 {
 	size_t	index;
-	size_t	index1;
 	char	**tab;
 
 	if (!(tab = malloc(sizeof(char **))))
@@ -87,12 +86,7 @@ char	**split_smouth(char *str, char c)
 	index = -1;
 	while (str[++index])
 		if (str[index] == '\'' || str[index] == '"')
-		{
-			index1 = 1;
-			while (str[index + index1] && str[index + index1] != str[index])
-				index1++;
-			index += index1 - 1;
-		}
+			index += skip_quote(str + index) - 1;
 		else if (str[index] == c && (!index || str[index - 1] != '\\'))
 		{
 			ft_addtab((void ***)&tab, ft_strndup(str, index));

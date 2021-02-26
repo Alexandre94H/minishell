@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:07:43 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/25 17:40:47 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/26 14:50:03 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,10 @@ bool	right_syntax(char *content)
 	index = 0;
 	while (content[index])
 	{
-		if (content[index] == ';'
+		if (content[index] == '\''
+			|| content[index] == '"')
+			index += skip_quote(content + index) - 1;
+		else if (content[index] == ';'
 			|| content[index] == '|')
 			if (ret)
 				ret = false;

@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 13:45:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/25 14:09:46 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/26 14:55:00 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int		remove_arrow(char **content, size_t index)
 	return (ret);
 }
 
-char	*add_arg_loop_mark(size_t *index, char *content, char **env)
+char	*add_arg_loop_quote(size_t *index, char *content, char **env)
 {
 	size_t	index1;
 	char	*part;
@@ -78,7 +78,7 @@ char	*add_arg_loop(size_t *index, char *content, char **env)
 
 	if ((!*index || content[*index - 1] != '\\')
 		&& (content[*index] == '\'' || content[*index] == '"'))
-		return (add_arg_loop_mark(index, content, env));
+		return (add_arg_loop_quote(index, content, env));
 	index1 = 1;
 	while (content[*index + index1]
 		&& content[*index + index1] != '\''
@@ -119,6 +119,22 @@ size_t	add_arg(char ***args, char *content, char **env)
 	return (index);
 }
 
+size_t	skip_quote(char *content)
+{
+	size_t	index;
+
+	index = 1;
+	while (content[index]) {
+		if (content[index] == *content
+		&& (!index
+			|| content[index] == '\''
+			|| content[index - 1] != '\\'))
+			break;
+		index++;
+	}
+	return (index + 1);
+}
+
 char	**split_args(char **content, char **env)
 {
 	size_t	index;
@@ -128,7 +144,10 @@ char	**split_args(char **content, char **env)
 	index = -1;
 	ret = 0;
 	while (!ret && (*content)[++index])
-		if ((*content)[index] == '<' || (*content)[index] == '>')
+		if ((*content)[index] == '\''
+			|| (*content)[index] == '"')
+			index += skip_quote(*content + index) - 1;
+		else if ((*content)[index] == '<' || (*content)[index] == '>')
 			ret = remove_arrow(content, index--);
 	if (ret)
 	{
