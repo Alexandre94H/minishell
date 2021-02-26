@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:07:43 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/26 14:50:03 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/26 19:16:17 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,8 @@ bool	right_syntax(char *content)
 		}
 		else if (!ft_isspace(content[index]))
 			ret = true;
-		index++;
+		if (content[index])
+			index++;
 	}
 	if (!ret)
 	{

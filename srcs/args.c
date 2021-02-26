@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 13:45:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/26 18:54:17 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/26 19:21:01 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,11 @@ char	**split_args(char **content, char **env)
 	while (!ret && (*content)[++index])
 		if ((*content)[index] == '\''
 			|| (*content)[index] == '"')
+		{
 			index += skip_quote(*content + index) - 1;
+			if (!(*content)[index])
+				index--;
+		}
 		else if ((*content)[index] == '<' || (*content)[index] == '>')
 			ret = remove_arrow(content, index--, env);
 	if (ret)
