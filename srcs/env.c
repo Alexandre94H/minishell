@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 13:45:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/25 14:24:30 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/26 19:23:48 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ void	update_str(char **str, char **env, char c)
 	{
 		if ((*str)[index] == '\\' && (!c
 			|| (*str)[index + 1] == c
-			|| (*str)[index + 1] == '$'))
+			|| (*str)[index + 1] == '$'
+			|| (*str)[index + 1] == '\\'))
 		{
 			ft_rmchar(str, index);
 			if (!(*str)[index])

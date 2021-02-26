@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 10:23:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/19 13:02:39 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/26 19:25:06 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ char	f_cd(char **args, char **env)
 		ft_putstr_fd("too many arguments\n", 2);
 		return (1);
 	}
-	if (!args[1] || ft_equals(args[1], "--"))
+	if (!args[1] || ft_equals(args[1], "--")
+		|| ft_equals(args[1], "~"))
 		home = env_get(env, "HOME");
 	else if (ft_equals(args[1], "-"))
 		home = env_get(env, "OLDPWD");

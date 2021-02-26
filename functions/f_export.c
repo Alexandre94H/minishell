@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 11:39:24 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/26 19:03:33 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/26 19:27:38 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,22 +52,23 @@ static void	print_env(char **env)
 			index++;
 		}
 	}
-	index = 0;
-	while (sort[index]) {
-		index1 = ft_strlen(sort[index], '=');
-		temp = ft_strndup(sort[index], index1);
-		ft_putstr_fd("declare -x ", 1);
-		ft_putstr_fd(temp, 1);
-		if (sort[index][index1])
+	index = -1;
+	while (sort[++index])
+		if (*(sort[index]) != '_')
 		{
-			ft_putstr_fd("=\"", 1);
-			ft_putstr_fd(sort[index] + index1 + 1, 1);
-			ft_putchar_fd('"', 1);
+			index1 = ft_strlen(sort[index], '=');
+			temp = ft_strndup(sort[index], index1);
+			ft_putstr_fd("declare -x ", 1);
+			ft_putstr_fd(temp, 1);
+			if (sort[index][index1])
+			{
+				ft_putstr_fd("=\"", 1);
+				ft_putstr_fd(sort[index] + index1 + 1, 1);
+				ft_putchar_fd('"', 1);
+			}
+			ft_putchar_fd('\n', 1);
+			free(temp);
 		}
-		ft_putchar_fd('\n', 1);
-		free(temp);
-		index++;
-	}
 	free(sort);
 }
 
