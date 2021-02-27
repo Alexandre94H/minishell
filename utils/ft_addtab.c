@@ -6,14 +6,14 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 16:03:36 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/21 19:54:11 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/27 16:29:17 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
 #include <stdlib.h>
 
-void	**ft_addtab(void ***tab, void *str)
+void	**ft_addtab(void ***tab, void *item)
 {
 	size_t	index;
 	size_t	length;
@@ -25,7 +25,7 @@ void	**ft_addtab(void ***tab, void *str)
 	if (!(new = malloc(sizeof(*tab) * (length + 2))))
 		return (NULL);
 	new[length + 1] = 0;
-	new[length] = str;
+	new[length] = item;
 	index = 0;
 	while (index < length)
 	{

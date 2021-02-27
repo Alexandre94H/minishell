@@ -1,18 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   args_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/01 13:45:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/26 19:23:48 by ahallain         ###   ########.fr       */
+/*   Created: 2021/02/27 17:27:34 by ahallain          #+#    #+#             */
+/*   Updated: 2021/02/27 18:52:35 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <errno.h>
 #include <stddef.h>
-#include <stdbool.h>
+#include <errno.h>
 #include <stdlib.h>
 #include "default.h"
 #include "../utils/lib.h"
@@ -26,9 +25,11 @@ void	env_loop(size_t index, char **str, char **env)
 	index1 = 0;
 	if ((*str)[index] == '?')
 		index1++;
+	else if ((*str)[index] == '_')
+		index1++;
 	else
-		while (ft_isalnum((*str)[index + index1])
-			|| (*str)[index + index1] == '_')
+		while ((*str)[index + index1]
+			&& ft_isalnum((*str)[index + index1]))
 			index1++;
 	if ((*str)[index] == '?')
 	{
@@ -43,30 +44,28 @@ void	env_loop(size_t index, char **str, char **env)
 	free(value);
 }
 
-void	update_str(char **str, char **env, char c)
+void	update_env(char **content, char **env)
 {
 	size_t	index;
 
 	index = 0;
-	while ((*str)[index])
-	{
-		if ((*str)[index] == '\\' && (!c
-			|| (*str)[index + 1] == c
-			|| (*str)[index + 1] == '$'
-			|| (*str)[index + 1] == '\\'))
+	while ((*content)[index])
+		if ((*content)[index] == '\''
+			&& (!index || (*content)[index - 1] != '\\'))
 		{
-			ft_rmchar(str, index);
-			if (!(*str)[index])
-				index--;
+			index++;
+			while ((*content)[index] && (*content)[index] != '\'')
+				index++;
+			if ((*content)[index])
+				index++;
 		}
-		else if ((*str)[index] == '$'
-			&& (*str)[index + 1]
-			&& !ft_isspace((*str)[index + 1]))
-		{
-			env_loop(index + 1, str, env);
-			if (!(*str)[index] || (*str)[index] == '$')
-				index--;
-		}
-		index++;
-	}
+		else if ((*content)[index] == '$')
+			if (index && (*content)[index - 1] == '\\')
+				ft_rmchar(content, index - 1);
+			else if ((*content)[index + 1] && !ft_isspace((*content)[index + 1]))
+				env_loop(index + 1, content, env);
+			else
+				index++;
+		else
+			index++;
 }
