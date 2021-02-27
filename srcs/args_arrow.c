@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/27 17:31:05 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/27 18:52:21 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/27 19:17:56 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,22 +37,31 @@ int		remove_arrow(char **content, size_t index, char **env)
 		filename_size++;
 	filename = ft_strndup(*content + index + prefix_size, filename_size);
 	update_env(&filename, env);
+	update_content(&filename);
 	ret = arrow(*content + index, filename);
 	free(filename);
-	if (ret != -1)
+	if (!ret)
 		ft_replace(content, index, prefix_size + filename_size, "");
 	return (ret);
 }
 
-void	update_arrow(char **content, char **env)
+bool	update_arrow(char **content, char **env)
 {
 	size_t	index;
+	int		ret;
 
 	index = 0;
-	while ((*content)[index])
+	ret = 0;
+	while (!ret && (*content)[index])
 		if (((*content)[index] == '<' || (*content)[index] == '>')
 			&& (!index || (*content)[index - 1] != '\\'))
-			remove_arrow(content, index, env);
+			ret = remove_arrow(content, index, env);
 		else
 			index++;
+	if (ret)
+	{
+		ft_putstr_fd("error while loading file\n", 2);
+		return (false);
+	}
+	return (true);
 }

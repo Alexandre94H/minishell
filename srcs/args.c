@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 13:45:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/27 18:53:47 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/28 00:33:10 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,12 @@ size_t	add_arg(char ***args, char *content)
 		&& (index + index1 == 0
 		|| content[index + index1 - 1] == '\\'
 		|| !ft_isspace(content[index + index1])))
-		index1++;
+		if (content[index + index1] == '\'' || content[index + index1] == '"')
+			index1 += skip_quote(content + index);
+		else
+			index1++;
+	if (!index1)
+		return (index);
 	arg = ft_strndup(content + index, index1);
 	update_content(&arg);
 	ft_addtab((void ***)args, arg);
@@ -93,7 +98,8 @@ char	**split_args(char **content, char **env)
 	char	**args;
 	size_t	index;
 
-	update_arrow(content, env);
+	if (!update_arrow(content, env))
+		return (NULL);
 	update_env(content, env);
 	if (!(args = malloc(sizeof(char **))))
 		return (NULL);

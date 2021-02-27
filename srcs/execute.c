@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 15:46:10 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/21 09:13:39 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/28 00:05:32 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <dirent.h>
 #include <sys/wait.h>
 #include <fcntl.h>
+#include "default.h"
 #include "../utils/lib.h"
 #include "../utils/env.h"
 
