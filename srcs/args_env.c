@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/27 17:27:34 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/28 16:50:06 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/28 17:06:29 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ void	env_loop(size_t index, char **str, char **env)
 	else
 	{
 		name = ft_strndup(*str + index, index1);
-		free(name);
 		value = env_backslash(env_get(env, name));
+		free(name);
 		ft_replace(str, index - 1, index1 + 1, value);
 	}
 	free(value);
