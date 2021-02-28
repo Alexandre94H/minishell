@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 13:45:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/28 00:33:10 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/28 01:18:20 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ size_t	skip_quote(char *content)
 
 void	update_content(char **content)
 {
-	size_t	index;
+	ssize_t	index;
 	bool	quote;
 
 	quote = false;
@@ -61,8 +61,9 @@ void	update_content(char **content)
 		{
 			quote = !quote;
 			ft_rmchar(content, index);
+			index--;
 		}
-		if ((*content)[index])
+		if (index < 0 || (*content)[index])
 			index++;
 	}
 }

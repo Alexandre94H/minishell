@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/27 17:31:05 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/27 19:17:56 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/28 00:36:58 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,9 @@ bool	update_arrow(char **content, char **env)
 	index = 0;
 	ret = 0;
 	while (!ret && (*content)[index])
-		if (((*content)[index] == '<' || (*content)[index] == '>')
+		if ((*content)[index] == '\'' || (*content)[index] == '"')
+			index += skip_quote(*content + index);
+		else if (((*content)[index] == '<' || (*content)[index] == '>')
 			&& (!index || (*content)[index - 1] != '\\'))
 			ret = remove_arrow(content, index, env);
 		else

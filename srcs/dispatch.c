@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:18:13 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/28 00:17:09 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/28 00:41:22 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ char	run(char **content, char **env)
 	args = split_args(content, env);
 	if (args && *args && **args)
 	{
-		sig_errno();
 		ret = call_function(args, env);
 		if (ret == 256)
 			ret = execute(args, env);
@@ -65,6 +64,7 @@ char	fork_run(char **content, char **new, bool last)
 	}
 	if (pid == 0)
 	{
+		sig_errno();
 		run(content, new);
 		exit(errno);
 	}
@@ -108,7 +108,6 @@ char	dispatch(char *content, char **env)
 	char		**pipes;
 	char		**contents;
 	size_t		index;
-	size_t		index1;
 	int			ret;
 
 	contents = split_smouth(content, ';');
@@ -121,9 +120,8 @@ char	dispatch(char *content, char **env)
 			ret = fork_run(pipes, env, false);
 		else
 		{
-			index1 = 0;
-			while (!ret && pipes[index1])
-				ret = run(pipes + index1++, env);
+			sig_errno();
+			ret = run(pipes, env);
 		}
 		ft_freetab((void ***)&pipes);
 		free(contents[index++]);
