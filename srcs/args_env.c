@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/27 17:27:34 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/28 16:34:24 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/28 16:50:06 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,35 @@
 #include "../utils/lib.h"
 #include "../utils/env.h"
 
+char	*env_backslash(char *str)
+{
+	size_t	index;
+	size_t	index1;
+	char	*value;
+
+	index1 = 0;
+	index = -1;
+	while (str[++index])
+		if (str[index] != ' ')
+			index1++;
+	if (!(value = malloc(sizeof(char *) * (index + index1 + 1))))
+		return (NULL);
+	value[index + index1] = 0;
+	index1 = 0;
+	index = -1;
+	while (str[++index])
+	{
+		if (str[index] != ' ')
+			value[index + index1++] = '\\';
+		value[index + index1] = str[index];
+	}
+	return (value);
+}
+
 void	env_loop(size_t index, char **str, char **env)
 {
 	size_t	index1;
+	char	*name;
 	char	*value;
 
 	index1 = 0;
@@ -38,8 +64,10 @@ void	env_loop(size_t index, char **str, char **env)
 	}
 	else
 	{
-		value = ft_strndup(*str + index, index1);
-		ft_replace(str, index - 1, index1 + 1, env_get(env, value));
+		name = ft_strndup(*str + index, index1);
+		free(name);
+		value = env_backslash(env_get(env, name));
+		ft_replace(str, index - 1, index1 + 1, value);
 	}
 	free(value);
 }
