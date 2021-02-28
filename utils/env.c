@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:03:49 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/26 22:40:21 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/28 15:08:27 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*env_get(char **env, char *key)
 		{
 			if ((*env)[len])
 				return (*env + len + 1);
-			return (0);
+			return (NULL);
 		}
 		env++;
 	}

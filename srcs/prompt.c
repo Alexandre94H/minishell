@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:07:43 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/27 18:34:26 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/28 10:28:59 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,8 @@ bool	right_syntax(char *content)
 		if (content[index])
 			index++;
 	}
+	if (!content[index])
+		ret = true;
 	if (!ret)
 	{
 		ft_putstr_fd("syntax error\n", 2);

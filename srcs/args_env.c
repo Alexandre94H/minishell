@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/27 17:27:34 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/27 18:52:35 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/28 16:34:24 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ void	update_env(char **content, char **env)
 		else if ((*content)[index] == '$')
 			if (index && (*content)[index - 1] == '\\')
 				ft_rmchar(content, index - 1);
-			else if ((*content)[index + 1] && !ft_isspace((*content)[index + 1]))
+			else if ((*content)[index + 1]
+				&& ft_isalnum((*content)[index + 1]))
 				env_loop(index + 1, content, env);
 			else
 				index++;

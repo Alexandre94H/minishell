@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 11:39:24 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/26 22:40:40 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/28 16:30:57 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static void	print_env(char **env)
 {
 	char	**sort;
 	char	*temp;
+	char	*value;
 	size_t	index;
 	size_t	index1;
 	bool	edit;
@@ -64,7 +65,14 @@ static void	print_env(char **env)
 			if (sort[index][index1])
 			{
 				ft_putstr_fd("=\"", 1);
-				ft_putstr_fd(sort[index] + index1 + 1, 1);
+				value = env_get(env, temp);
+				index1 = 0;
+				while (value[index1])
+				{
+					if (value[index1] == '"' || value[index1] == '$' || value[index1] == '\\')
+						ft_putchar_fd('\\', 1);
+					ft_putchar_fd(value[index1++], 1);
+				}
 				ft_putchar_fd('"', 1);
 			}
 			ft_putchar_fd('\n', 1);
