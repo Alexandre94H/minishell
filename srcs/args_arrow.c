@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/27 17:31:05 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/28 00:36:58 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/28 17:52:59 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,7 @@ int		remove_arrow(char **content, size_t index, char **env)
 	char	*filename;
 	int		ret;
 
-	prefix_size = 0;
-	if ((*content)[index + prefix_size] == '<'
-		|| (*content)[index + prefix_size] == '>')
-		prefix_size++;
+	prefix_size = 1;
 	if ((*content)[index + prefix_size] == '>')
 		prefix_size++;
 	while (ft_isspace((*content)[index + prefix_size]))

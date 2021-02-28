@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/27 17:27:34 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/28 17:06:29 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/28 18:10:26 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,7 @@ void	env_loop(size_t index, char **str, char **env)
 	char	*value;
 
 	index1 = 0;
-	if ((*str)[index] == '?')
-		index1++;
-	else if ((*str)[index] == '_')
+	if ((*str)[index] == '?' || (*str)[index] == '_')
 		index1++;
 	else
 		while ((*str)[index + index1]

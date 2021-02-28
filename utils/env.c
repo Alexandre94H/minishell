@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:03:49 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/28 17:06:04 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/28 20:31:24 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*env_get(char **env, char *key)
 	return ("");
 }
 
-char	*env_set(char **env, char *key, char *value)
+size_t	env_index(char **env, char *key)
 {
 	size_t	index;
 	char	*name;
@@ -54,6 +54,14 @@ char	*env_set(char **env, char *key, char *value)
 			break ;
 		index++;
 	}
+	return (index);
+}
+
+char	*env_set(char **env, char *key, char *value)
+{
+	size_t	index;
+
+	index = env_index(env, key);
 	if (env[index] && value)
 		free(env[index]);
 	else if (env[index])

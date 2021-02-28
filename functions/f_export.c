@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 11:39:24 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/28 16:30:57 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/02/28 20:11:59 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,9 @@ static void	print_env(char **env)
 				index1 = 0;
 				while (value[index1])
 				{
-					if (value[index1] == '"' || value[index1] == '$' || value[index1] == '\\')
+					if (value[index1] == '"'
+						|| value[index1] == '$'
+						|| value[index1] == '\\')
 						ft_putchar_fd('\\', 1);
 					ft_putchar_fd(value[index1++], 1);
 				}
@@ -81,13 +83,40 @@ static void	print_env(char **env)
 	free(sort);
 }
 
-char		f_export(char **args, char **env)
+bool		export_loop(char *arg, char **env)
 {
 	size_t	index;
-	size_t	index1;
 	bool	right;
 	char	*temp;
 
+	index = 0;
+	right = ft_isalnum(arg[index]);
+	while (arg[index] && ft_isalnum(arg[index]))
+		index++;
+	if (arg[index] && arg[index] != '=')
+		right = false;
+	index = ft_strlen(arg, '=');
+	temp = ft_strndup(arg, index);
+	if (!right)
+	{
+		ft_putchar_fd('`', 1);
+		ft_putstr_fd(temp, 1);
+		ft_putstr_fd("': not a valid identifier\n", 1);
+	}
+	else if (arg[index])
+		env_set(env, temp, arg + index + 1);
+	else
+		env_set(env, temp, 0);
+	free(temp);
+	return (right);
+}
+
+char		f_export(char **args, char **env)
+{
+	size_t	index;
+	char	ret;
+
+	ret = 0;
 	if (!args[1])
 		print_env(env);
 	else
@@ -95,27 +124,10 @@ char		f_export(char **args, char **env)
 		index = 1;
 		while (args[index])
 		{
-			index1 = 0;
-			right = ft_isalnum(args[index][index1]);
-			while (args[index][index1] && ft_isalnum(args[index][index1]))
-				index1++;
-			if (args[index][index1] && args[index][index1] != '=')
-				right = false;
-			index1 = ft_strlen(args[index], '=');
-			temp = ft_strndup(args[index], index1);
-			if (!right)
-			{
-				ft_putchar_fd('`', 1);
-				ft_putstr_fd(temp, 1);
-				ft_putstr_fd("': not a valid identifier\n", 1);
-			}
-			else if (args[index][index1])
-				env_set(env, temp, args[index] + index1 + 1);
-			else
-				env_set(env, temp, 0);
-			free(temp);
+			if (!export_loop(args[index], env))
+				ret = 1;
 			index++;
 		}
 	}
-	return (0);
+	return (ret);
 }
