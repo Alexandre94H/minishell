@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:18:13 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/28 11:10:30 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/03/01 18:55:07 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ char	fork_run(char **content, char **new, bool last)
 	}
 	if (pid == 0)
 	{
-		errno = 1;
 		sig_errno();
 		run(content, new);
 		exit(errno);

@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:07:43 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/28 10:28:59 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/03/01 11:56:45 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,23 +37,22 @@ int		input(char **line)
 	int		ret;
 	size_t	index;
 
-	ret = 0;
-	while (ret == 0)
-	{
-		ret = get_next_line(0, line);
-		if (ret != 0)
+	ret = get_next_line(0, line);
+	if (!ret && **line)
+		while (ret == 0)
 		{
-			index = 0;
-			while ((*line)[index] && ft_isspace((*line)[index]))
-				index++;
-			if (!(*line)[index])
-				**line = 0;
-		}
-		if (ret == 0)
 			free(*line);
-	}
-	if (!**line)
+			ret = get_next_line(0, line);
+		}
+	if (ret && !**line)
 		ft_putstr_fd("$ ", 1);
+	else {
+		index = 0;
+		while ((*line)[index] && ft_isspace((*line)[index]))
+			index++;
+		if (!(*line)[index])
+			**line = 0;
+	}
 	return (ret);
 }
 

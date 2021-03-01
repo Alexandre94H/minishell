@@ -6,54 +6,42 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 11:39:24 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/28 20:11:59 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/03/01 21:05:59 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include "../srcs/default.h"
 #include "../utils/lib.h"
 #include "../utils/env.h"
+
+void		print_env_value(char *value)
+{
+	size_t	index;
+
+	ft_putstr_fd("=\"", 1);
+	index = 0;
+	while (value[index])
+	{
+		if (value[index] == '"'
+			|| value[index] == '$'
+			|| value[index] == '\\')
+			ft_putchar_fd('\\', 1);
+		ft_putchar_fd(value[index++], 1);
+	}
+	ft_putchar_fd('"', 1);
+}
 
 static void	print_env(char **env)
 {
 	char	**sort;
 	char	*temp;
-	char	*value;
 	size_t	index;
 	size_t	index1;
-	bool	edit;
 
-	index = 0;
-	while (env[index])
-		index++;
-	if (!(sort = malloc(sizeof(char **) * (index + 1))))
-		return ;
-	sort[index] = 0;
-	while (index--)
-		sort[index] = env[index];
-	edit = true;
-	while (edit)
-	{
-		edit = false;
-		index = 0;
-		while (sort[index + 1])
-		{
-			index1 = 0;
-			while (sort[index][index1]
-				&& sort[index][index1] == sort[index + 1][index1])
-				index1++;
-			if (sort[index][index1] > sort[index + 1][index1])
-			{
-				edit = true;
-				temp = sort[index];
-				sort[index] = sort[index + 1];
-				sort[index + 1] = temp;
-			}
-			index++;
-		}
-	}
+	sort = sort_env(env);
 	index = -1;
 	while (sort[++index])
 		if (*(sort[index]) != '_')
@@ -63,20 +51,7 @@ static void	print_env(char **env)
 			ft_putstr_fd("declare -x ", 1);
 			ft_putstr_fd(temp, 1);
 			if (sort[index][index1])
-			{
-				ft_putstr_fd("=\"", 1);
-				value = env_get(env, temp);
-				index1 = 0;
-				while (value[index1])
-				{
-					if (value[index1] == '"'
-						|| value[index1] == '$'
-						|| value[index1] == '\\')
-						ft_putchar_fd('\\', 1);
-					ft_putchar_fd(value[index1++], 1);
-				}
-				ft_putchar_fd('"', 1);
-			}
+				print_env_value(env_get(env, temp));
 			ft_putchar_fd('\n', 1);
 			free(temp);
 		}

@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:10:31 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/27 19:18:02 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/03/01 21:04:02 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,5 @@ size_t	skip_quote(char *content);
 char	**split_args(char **content, char **env);
 int		execute(char **args, char **env);
 int		call_function(char **args, char **env);
+char	**sort_env(char **env);
 #endif
