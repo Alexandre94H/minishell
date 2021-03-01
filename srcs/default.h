@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:10:31 by ahallain          #+#    #+#             */
-/*   Updated: 2021/03/01 21:04:02 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/03/01 21:42:41 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 void	sig();
 void	sig_errno(void);
+bool	right_syntax(char *content);
 int		prompt(char **env);
 char	dispatch(char *content, char **env);
 int		arrow(char *prefix, char *file);

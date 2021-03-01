@@ -6,11 +6,12 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:07:43 by ahallain          #+#    #+#             */
-/*   Updated: 2021/03/01 11:56:45 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/03/01 21:43:19 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <errno.h>
+#include <stddef.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include "default.h"
@@ -46,64 +47,13 @@ int		input(char **line)
 		}
 	if (ret && !**line)
 		ft_putstr_fd("$ ", 1);
-	else {
+	else
+	{
 		index = 0;
 		while ((*line)[index] && ft_isspace((*line)[index]))
 			index++;
 		if (!(*line)[index])
 			**line = 0;
-	}
-	return (ret);
-}
-
-bool	right_syntax(char *content)
-{
-	bool		ret;
-	size_t		index;
-
-	ret = false;
-	index = 0;
-	while (content[index])
-	{
-		if (content[index] == '\''
-			|| content[index] == '"')
-			index += skip_quote(content + index) - 1;
-		else if (content[index] == ';'
-			|| content[index] == '|')
-			if (ret)
-				ret = false;
-			else
-				break ;
-		else if (content[index] == '<'
-			|| content[index] == '>')
-		{
-			index++;
-			if (content[index - 1] == '>' && content[index] == '>')
-				index++;
-			while (content[index] && ft_isspace(content[index]))
-				index++;
-			if (!content[index]
-				|| content[index] == ';'
-				|| content[index] == '|'
-				|| content[index] == '<'
-				|| content[index] == '>')
-			{
-				ret = false;
-				break ;
-			}
-			index--;
-		}
-		else if (!ft_isspace(content[index]))
-			ret = true;
-		if (content[index])
-			index++;
-	}
-	if (!content[index])
-		ret = true;
-	if (!ret)
-	{
-		ft_putstr_fd("syntax error\n", 2);
-		errno = 2;
 	}
 	return (ret);
 }
