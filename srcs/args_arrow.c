@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/27 17:31:05 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/28 17:52:59 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/03/02 19:03:27 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ int		remove_arrow(char **content, size_t index, char **env)
 		|| !ft_isspace((*content)[index + prefix_size + filename_size])))
 		filename_size++;
 	filename = ft_strndup(*content + index + prefix_size, filename_size);
-	update_env(&filename, env);
-	update_content(&filename);
+	update_content(&filename, env);
 	ret = arrow(*content + index, filename);
 	free(filename);
 	if (!ret)

@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/27 17:27:34 by ahallain          #+#    #+#             */
-/*   Updated: 2021/03/01 20:16:25 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/03/02 19:14:10 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,82 +17,56 @@
 #include "../utils/lib.h"
 #include "../utils/env.h"
 
-char	*env_backslash(char *str)
+char	*env_space(char *str)
 {
 	size_t	index;
 	size_t	index1;
 	char	*value;
 
 	index1 = 0;
-	index = -1;
-	while (str[++index])
-		if (str[index] != ' ')
-			index1++;
-	if (!(value = malloc(sizeof(char *) * (index + index1 + 1))))
+	index = 0;
+	if (str[index])
+		while (str[++index])
+			if (str[index - 1] == ' ' && str[index] == ' ')
+				index1++;
+	if (!(value = malloc(sizeof(char *) * (index - index1 + 1))))
 		return (NULL);
-	value[index + index1] = 0;
+	value[index - index1] = 0;
 	index1 = 0;
 	index = -1;
 	while (str[++index])
-	{
-		if (str[index] != ' ')
-			value[index + index1++] = '\\';
-		value[index + index1] = str[index];
-	}
+		if (index && str[index - 1] == ' ' && str[index] == ' ')
+			index1++;
+		else
+			value[index - index1] = str[index];
 	return (value);
 }
 
-void	env_loop(size_t index, char **str, char **env)
+void	env_loop(size_t *index, char **str, char **env)
 {
 	size_t	index1;
 	char	*name;
 	char	*value;
 
 	index1 = 0;
-	if ((*str)[index] == '?' || (*str)[index] == '_')
+	if ((*str)[*index] == '?' || (*str)[*index] == '_')
 		index1++;
 	else
-		while ((*str)[index + index1]
-			&& ft_isalnum((*str)[index + index1]))
+		while ((*str)[*index + index1]
+			&& ft_isalnum((*str)[*index + index1]))
 			index1++;
-	if ((*str)[index] == '?')
+	if ((*str)[*index] == '?')
 	{
 		value = ft_itoa(errno);
-		ft_replace(str, index - 1, index1 + 1, value);
+		ft_replace(str, *index - 1, index1 + 1, value);
 	}
 	else
 	{
-		name = ft_strndup(*str + index, index1);
-		value = env_backslash(env_get(env, name));
+		name = ft_strndup(*str + *index, index1);
+		value = env_space(env_get(env, name));
 		free(name);
-		ft_replace(str, index - 1, index1 + 1, value);
+		ft_replace(str, *index - 1, index1 + 1, value);
 	}
+	*index += ft_strlen(value, 0) - 1;
 	free(value);
-}
-
-void	update_env(char **content, char **env)
-{
-	size_t	index;
-
-	index = 0;
-	while ((*content)[index])
-		if ((*content)[index] == '\''
-			&& (!index || (*content)[index - 1] != '\\'))
-		{
-			index++;
-			while ((*content)[index] && (*content)[index] != '\'')
-				index++;
-			if ((*content)[index])
-				index++;
-		}
-		else if ((*content)[index] == '$')
-			if (index && (*content)[index - 1] == '\\')
-				ft_rmchar(content, index - 1);
-			else if ((*content)[index + 1]
-				&& ft_isalnum((*content)[index + 1]))
-				env_loop(index + 1, content, env);
-			else
-				index++;
-		else
-			index++;
 }

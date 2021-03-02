@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 11:39:24 by ahallain          #+#    #+#             */
-/*   Updated: 2021/03/01 21:05:59 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/03/02 18:53:42 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ bool		export_loop(char *arg, char **env)
 	char	*temp;
 
 	index = 0;
-	right = ft_isalnum(arg[index]);
+	right = (arg[index] >= 'A' && arg[index] >= 'Z') || (arg[index] >= 'a' && arg[index] >= 'z');
 	while (arg[index] && ft_isalnum(arg[index]))
 		index++;
 	if (arg[index] && arg[index] != '=')
