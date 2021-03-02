@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 13:45:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/03/02 19:14:48 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/03/02 19:17:13 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,7 @@ void	update_content(char **content, char **env)
 			|| (*content)[index + 1] == '"'
 			|| (*content)[index + 1] == '$'
 			|| (*content)[index + 1] == '\\'))
-		{
-			ft_rmchar(content, index);
-			index++;
-		}
+			ft_rmchar(content, index++);
 		else if (!quote && (*content)[index] == '\'')
 			update_content_apostrophe(content, &index);
 		else if ((*content)[index] == '"')
@@ -70,7 +67,7 @@ void	update_content(char **content, char **env)
 			&& (ft_isalnum((*content)[index])
 			|| (*content)[index] == '\''
 			|| (*content)[index] == '\"'))
-				env_loop(&index, content, env);
+			env_loop(&index, content, env);
 }
 
 size_t	add_arg(char ***args, char *content, char **env)

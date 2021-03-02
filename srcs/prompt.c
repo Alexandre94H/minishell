@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:07:43 by ahallain          #+#    #+#             */
-/*   Updated: 2021/03/01 21:43:19 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/03/02 19:19:43 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,6 @@ void	prompt_header(char **env)
 	ft_putstr_fd(env_get(env, "LOGNAME"), 1);
 	ft_putstr_fd("\e[0m in \e[95m", 1);
 	ft_putstr_fd(env_get(env, "PWD"), 1);
-	ft_putstr_fd("\e[0m with exit code ", 1);
-	if (errno)
-		ft_putstr_fd("\e[91m", 1);
-	else
-		ft_putstr_fd("\e[92m", 1);
-	ft_putnbr_fd(errno, 1);
 	ft_putstr_fd("\n\e[0m$ ", 1);
 }
 
