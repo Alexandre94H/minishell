@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:07:43 by ahallain          #+#    #+#             */
-/*   Updated: 2021/03/02 20:13:58 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/03/02 22:25:38 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int		input(char **line)
 		if (!(*line)[index])
 			**line = 0;
 	}
+	sig();
 	return (ret);
 }
 
@@ -65,7 +66,6 @@ int		prompt(char **env)
 	ret = 1;
 	while (ret)
 	{
-		sig();
 		ret = input(&line);
 		if (ret && *line)
 		{
