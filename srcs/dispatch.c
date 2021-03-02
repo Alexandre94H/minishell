@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:18:13 by ahallain          #+#    #+#             */
-/*   Updated: 2021/03/01 18:55:07 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/03/02 20:12:58 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,6 @@ char	dispatch(char *content, char **env)
 		{
 			sig_errno();
 			ret = run(pipes, env);
-			sig();
 		}
 		ft_freetab((void ***)&pipes);
 		free(contents[index++]);

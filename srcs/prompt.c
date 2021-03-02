@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:07:43 by ahallain          #+#    #+#             */
-/*   Updated: 2021/03/02 19:19:43 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/03/02 20:13:58 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int		prompt(char **env)
 	ret = 1;
 	while (ret)
 	{
+		sig();
 		ret = input(&line);
 		if (ret && *line)
 		{
