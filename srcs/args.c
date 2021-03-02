@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 13:45:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/03/02 19:17:13 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/03/02 19:52:03 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ void	update_content(char **content, char **env)
 		}
 		else if ((*content)[index++] == '$'
 			&& (ft_isalnum((*content)[index])
-			|| (*content)[index] == '\''
-			|| (*content)[index] == '\"'))
+			|| (*content)[index] == '\'' || (*content)[index] == '"'
+			|| (*content)[index] == '?' || (*content)[index] == '_'))
 			env_loop(&index, content, env);
 }
 
