@@ -26,6 +26,7 @@ SOURCES				=	utils/get_next_line_utils.c \
 						srcs/call_function.c \
 						srcs/args_arrow.c \
 						srcs/args_env.c \
+						srcs/args_content.c \
 						srcs/args.c \
 						srcs/execute.c \
 						srcs/arrow.c \
