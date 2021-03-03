@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 13:45:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/03/03 18:35:00 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/03/03 18:59:16 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ size_t	skip_quote(char *content)
 	return (index + !!content[index]);
 }
 
-size_t	add_arg(char ***args, char *content, char **env)
+size_t	add_arg(char ***args, char *content)
 {
 	size_t	index;
 	size_t	index1;
@@ -50,7 +50,7 @@ size_t	add_arg(char ***args, char *content, char **env)
 	if (!index1)
 		return (index);
 	arg = ft_strndup(content + index, index1);
-	update_content(&arg, env);
+	update_content(&arg);
 	ft_addtab((void ***)args, arg);
 	return (index + index1);
 }
@@ -62,11 +62,12 @@ char	**split_args(char **content, char **env)
 
 	if (!update_arrow(content, env))
 		return (NULL);
+	update_env(content, env);
 	if (!(args = malloc(sizeof(char **))))
 		return (NULL);
 	*args = 0;
 	index = 0;
 	while ((*content)[index])
-		index += add_arg(&args, (*content) + index, env);
+		index += add_arg(&args, (*content) + index);
 	return (args);
 }

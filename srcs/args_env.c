@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/27 17:27:34 by ahallain          #+#    #+#             */
-/*   Updated: 2021/03/03 18:34:36 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/03/03 20:35:32 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,56 +15,102 @@
 #include "../utils/lib.h"
 #include "../utils/env.h"
 
-char	*env_space(char *str)
+bool	backslash_need(char c, bool quote)
+{
+	if (c == ' ')
+		return (false);
+	if (quote)
+	{
+		if (c == '\\'
+			|| c == '"'
+			|| c == '$')
+		return (true);
+	}
+	else
+		return (true);
+	return (false);
+}
+
+char	*update_env_backslash(char *str, bool quote)
 {
 	size_t	index;
 	size_t	index1;
 	char	*value;
 
 	index1 = 0;
-	index = 0;
-	if (str[index])
-		while (str[++index])
-			if (str[index - 1] == ' ' && str[index] == ' ')
-				index1++;
-	if (!(value = malloc(sizeof(char *) * (index - index1 + 1))))
+	index = -1;
+	while (str[++index])
+		if (backslash_need(str[index], quote))
+			index1++;
+	if (!(value = malloc(sizeof(char *) * (index + index1 + 1))))
 		return (NULL);
-	value[index - index1] = 0;
+	value[index + index1] = 0;
 	index1 = 0;
 	index = -1;
 	while (str[++index])
-		if (index && str[index - 1] == ' ' && str[index] == ' ')
-			index1++;
-		else
-			value[index - index1] = str[index];
+	{
+		if (backslash_need(str[index], quote))
+			value[index + index1++] = '\\';
+		value[index + index1] = str[index];
+	}
 	return (value);
 }
 
-void	env_loop(size_t *index, char **str, char **env)
+void	env_loop(size_t *index, char **str, char **env, bool quote)
 {
 	size_t	index1;
 	char	*name;
 	char	*value;
 
-	index1 = 0;
-	if ((*str)[*index] == '?' || (*str)[*index] == '_')
-		index1++;
-	else
-		while ((*str)[*index + index1]
-			&& ft_isalnum((*str)[*index + index1]))
-			index1++;
-	if ((*str)[*index] == '?')
+	if ((*str)[*index + 1] == '?')
 	{
 		value = ft_itoa(errno);
-		ft_replace(str, *index - 1, index1 + 1, value);
+		ft_replace(str, *index, 2, value);
 	}
 	else
 	{
-		name = ft_strndup(*str + *index, index1);
-		value = env_space(env_get(env, name));
+		index1 = 1;
+		if (!((*str)[*index + index1] >= '0'
+			&& (*str)[*index + index1] <= '9'))
+			while ((*str)[*index + index1]
+				&& ft_isalnum((*str)[*index + index1]))
+				index1++;
+		name = ft_strndup(*str + *index + 1, index1 - 1);
+		value = update_env_backslash(env_get(env, name), quote);
 		free(name);
-		ft_replace(str, *index - 1, index1 + 1, value);
+		ft_replace(str, *index, index1, value);
 	}
-	*index += ft_strlen(value, 0) - 1;
+	*index += ft_strlen(value, 0);
 	free(value);
+}
+
+void	update_env(char **content, char **env)
+{
+	size_t	index;
+	bool	quote;
+
+	quote = false;
+	index = -1;
+	while ((*content)[++index])
+		if (!index || (*content)[index - 1] != '\\')
+		{
+			if ((*content)[index] == '\'')
+			{
+				index++;
+				while ((*content)[index] && (*content)[index] != '\'')
+					index++;
+				if (!(*content)[index])
+					index--;
+			}
+			else if ((*content)[index] == '"')
+				quote = !quote;
+			else if ((*content)[index] == '$'
+				&& (ft_isalnum((*content)[index + 1])
+				|| (*content)[index + 1] == '?'
+				|| (*content)[index + 1] == '_'))
+			{
+				env_loop(&index, content, env, quote);
+				index--;
+			}
+		}
 }
