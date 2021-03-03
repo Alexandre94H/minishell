@@ -30,6 +30,7 @@ SOURCES				=	utils/get_next_line_utils.c \
 						srcs/args.c \
 						srcs/execute.c \
 						srcs/arrow.c \
+						srcs/run.c \
 						srcs/dispatch.c \
 						srcs/prompt_syntax.c \
 						srcs/prompt.c \

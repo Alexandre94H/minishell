@@ -6,11 +6,10 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 22:54:30 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/06 21:26:07 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/03/03 18:32:12 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdbool.h>
 #include "../utils/lib.h"
 
 char	f_echo(char **args)

@@ -6,11 +6,10 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 21:50:11 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/20 19:41:10 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/03/03 18:41:12 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
 #include <stdbool.h>
 #include <stdlib.h>
 

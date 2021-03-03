@@ -6,12 +6,11 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:07:43 by ahallain          #+#    #+#             */
-/*   Updated: 2021/03/03 13:40:30 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/03/03 18:37:24 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <errno.h>
-#include <stddef.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include "default.h"

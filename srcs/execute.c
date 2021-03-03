@@ -6,19 +6,15 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 15:46:10 by ahallain          #+#    #+#             */
-/*   Updated: 2021/03/03 14:15:13 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/03/03 18:36:31 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <errno.h>
-#include <stddef.h>
-#include <stdbool.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <dirent.h>
 #include <sys/wait.h>
 #include <fcntl.h>
-#include "default.h"
 #include "../utils/lib.h"
 #include "../utils/env.h"
 

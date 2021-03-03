@@ -6,13 +6,12 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:07:58 by ahallain          #+#    #+#             */
-/*   Updated: 2021/03/03 16:21:53 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/03/03 18:37:57 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <errno.h>
 #include <signal.h>
-#include <stdlib.h>
 #include "../utils/lib.h"
 
 void	call(int signum)

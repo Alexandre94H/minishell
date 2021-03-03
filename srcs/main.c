@@ -6,11 +6,10 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 09:42:00 by ahallain          #+#    #+#             */
-/*   Updated: 2021/03/02 20:17:46 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/03/03 18:36:45 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
 #include <stdlib.h>
 #include "default.h"
 #include "../utils/lib.h"

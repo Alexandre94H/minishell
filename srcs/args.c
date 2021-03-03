@@ -6,17 +6,13 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 13:45:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/03/03 14:20:51 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/03/03 18:35:00 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
-#include <stdbool.h>
 #include <stdlib.h>
-#include <errno.h>
 #include "default.h"
 #include "../utils/lib.h"
-#include "../utils/env.h"
 
 size_t	skip_quote(char *content)
 {

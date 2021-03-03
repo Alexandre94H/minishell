@@ -6,11 +6,10 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 19:57:52 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/17 16:24:42 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/03/03 18:40:39 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
 #include <stdlib.h>
 
 void	ft_rmchar(char **str, size_t index)
