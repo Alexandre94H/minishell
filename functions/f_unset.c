@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 12:02:59 by ahallain          #+#    #+#             */
-/*   Updated: 2021/03/03 13:39:08 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/03/03 16:38:04 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,11 @@ bool	unset_loop(char *arg, char **env)
 	char	*temp;
 
 	index = 0;
-	right = (arg[index] >= 'A' && arg[index] <= 'Z')
+	right = arg[index] == '_'
+		|| (arg[index] >= 'A' && arg[index] <= 'Z')
 		|| (arg[index] >= 'a' && arg[index] <= 'z');
-	while (arg[index] && ft_isalnum(arg[index]))
+	while (arg[index]
+		&& (arg[index] == '_' || ft_isalnum(arg[index])))
 		index++;
 	if (arg[index] && arg[index] != '=')
 		right = false;

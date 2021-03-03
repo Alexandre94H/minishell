@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 11:39:24 by ahallain          #+#    #+#             */
-/*   Updated: 2021/03/03 13:39:15 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/03/03 16:38:55 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ static void	print_env(char **env)
 	sort = sort_env(env);
 	index = -1;
 	while (sort[++index])
-		if (*(sort[index]) != '_')
+		if (sort[index][0] != '_'
+			|| (sort[index][0] && sort[index][1]))
 		{
 			index1 = ft_strlen(sort[index], '=');
 			temp = ft_strndup(sort[index], index1);
@@ -65,9 +66,9 @@ bool		export_loop(char *arg, char **env)
 	char	*temp;
 
 	index = 0;
-	right = (arg[index] >= 'A' && arg[index] <= 'Z')
+	right = arg[index] == '_' || (arg[index] >= 'A' && arg[index] <= 'Z')
 		|| (arg[index] >= 'a' && arg[index] <= 'z');
-	while (arg[index] && ft_isalnum(arg[index]))
+	while (arg[index] && (arg[index] == '_' || ft_isalnum(arg[index])))
 		index++;
 	if (arg[index] && arg[index] != '=')
 		right = false;
