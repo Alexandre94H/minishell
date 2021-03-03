@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:07:58 by ahallain          #+#    #+#             */
-/*   Updated: 2021/02/28 00:05:16 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/03/03 16:13:27 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,15 @@
 void	call(int signum)
 {
 	if (signum == SIGINT)
+	{
 		ft_putstr_fd("\n$ ", 1);
+		errno = 130;
+	}
 	else
+	{
 		ft_putstr_fd("\b\b  \b\b", 1);
+		errno = 131;
+	}
 }
 
 void	sig(void)
