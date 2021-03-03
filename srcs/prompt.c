@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 10:07:43 by ahallain          #+#    #+#             */
-/*   Updated: 2021/03/02 22:25:38 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/03/03 13:40:30 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int		input(char **line)
 	int		ret;
 	size_t	index;
 
+	sig();
 	ret = get_next_line(0, line);
 	if (!ret && **line)
 		while (ret == 0)
@@ -49,7 +50,6 @@ int		input(char **line)
 		if (!(*line)[index])
 			**line = 0;
 	}
-	sig();
 	return (ret);
 }
 
