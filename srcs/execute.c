@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 15:46:10 by ahallain          #+#    #+#             */
-/*   Updated: 2021/03/02 16:53:18 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/03/03 14:15:13 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ int	execute(char **args, char **env)
 	size_t			index;
 	int				ret;
 
-	if (!**args || ft_equals(*args, ".") || ft_equals(*args, ".."))
+	if (!**args || ft_equals(*args, ".") || ft_equals(*args, "..")
+		|| (**args == '/' && !ft_isalnum((*args)[1])))
 		return (256);
 	if (**args == '/')
 		return (launch(*args, args, env));
