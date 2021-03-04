@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/03 14:19:05 by ahallain          #+#    #+#             */
-/*   Updated: 2021/03/03 18:52:04 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/03/04 11:49:11 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,10 @@ void	update_content(char **content)
 			quote = !quote;
 			ft_rmchar(content, index);
 		}
+		else if ((*content)[index] == '$' && !quote
+			&& ((*content)[index + 1] == '"'
+			|| (*content)[index + 1] == '\''))
+			ft_rmchar(content, index);
 		else
 			index++;
 }

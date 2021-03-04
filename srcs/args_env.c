@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/27 17:27:34 by ahallain          #+#    #+#             */
-/*   Updated: 2021/03/03 20:35:32 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/03/03 20:41:53 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,9 @@ void	env_loop(size_t *index, char **str, char **env, bool quote)
 	else
 	{
 		index1 = 1;
-		if (!((*str)[*index + index1] >= '0'
-			&& (*str)[*index + index1] <= '9'))
-			while ((*str)[*index + index1]
-				&& ft_isalnum((*str)[*index + index1]))
-				index1++;
+		while ((*str)[*index + index1]
+			&& ft_isalnum((*str)[*index + index1]))
+			index1++;
 		name = ft_strndup(*str + *index + 1, index1 - 1);
 		value = update_env_backslash(env_get(env, name), quote);
 		free(name);
