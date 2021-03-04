@@ -6,7 +6,7 @@
 /*   By: ahallain <ahallain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 13:45:35 by ahallain          #+#    #+#             */
-/*   Updated: 2021/03/03 18:59:16 by ahallain         ###   ########.fr       */
+/*   Updated: 2021/03/04 12:57:55 by ahallain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,11 @@ size_t	add_arg(char ***args, char *content)
 	while (content[index] && ft_isspace(content[index]))
 		index++;
 	index1 = 0;
-	while (content[index + index1]
-		&& (index + index1 == 0
-		|| content[index + index1 - 1] == '\\'
-		|| !ft_isspace(content[index + index1])))
+	while (content[index + index1] && !ft_isspace(content[index + index1]))
 		if (content[index + index1] == '\'' || content[index + index1] == '"')
 			index1 += skip_quote(content + index + index1);
+		else if (content[index + index1] == '\\')
+			index1 += 2;
 		else
 			index1++;
 	if (!index1)
